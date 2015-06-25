@@ -5,8 +5,15 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCNetwork.svg?style=flat)
 
 
-基于 `AFNetworking` 的封装，参考[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式
+基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式
 
+##功能
+1. 支持`block`和`delegate`的回调方式
+2. 支持设置主、副两个服务器地址
+3. 支持内容缓存，基于TMCache
+4. 支持统一的参数加工
+5. 支持统一的`response`加工
+6. API类使用`@protocol`约束，不用担心漏写方法
 
 ##Installation
 
