@@ -5,7 +5,7 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCNetwork.svg?style=flat)
 
 
-Custom UIPageControl with a simple animation, Support AtuoLayout.
+基于 `AFNetworking` 的封装，参考[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式
 
 
 ##Installation
@@ -15,10 +15,9 @@ Cocoapods:
 pod 'LCNetwork'
 ```
 
-##Example Usage
-```
-#import <LCNetwork.h>
-```
+##使用方法
+
+
 
 
 ##Requirements
