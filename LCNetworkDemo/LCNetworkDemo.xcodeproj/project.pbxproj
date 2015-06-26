@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */; };
+		7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */; };
+		7A80C2771B3D2FC300D53F00 /* WeatherApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2761B3D2FC300D53F00 /* WeatherApi.m */; };
 		7A83F2A41B3C00D500DA3282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A31B3C00D500DA3282 /* main.m */; };
 		7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A61B3C00D500DA3282 /* AppDelegate.m */; };
 		7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A91B3C00D500DA3282 /* ViewController.m */; };
@@ -32,6 +35,12 @@
 
 /* Begin PBXFileReference section */
 		2AD5340E0CBD7C34F7F6D0A6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7A80C26F1B3D2DE800D53F00 /* LCRequestAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCRequestAccessory.h; sourceTree = "<group>"; };
+		7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCRequestAccessory.m; sourceTree = "<group>"; };
+		7A80C2721B3D2F3900D53F00 /* LCProcessFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCProcessFilter.h; sourceTree = "<group>"; };
+		7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCProcessFilter.m; sourceTree = "<group>"; };
+		7A80C2751B3D2FC300D53F00 /* WeatherApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherApi.h; sourceTree = "<group>"; };
+		7A80C2761B3D2FC300D53F00 /* WeatherApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherApi.m; sourceTree = "<group>"; };
 		7A83F29E1B3C00D500DA3282 /* LCNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A83F2A21B3C00D500DA3282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A83F2A31B3C00D500DA3282 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -110,6 +119,12 @@
 				7A83F2A61B3C00D500DA3282 /* AppDelegate.m */,
 				7A83F2A81B3C00D500DA3282 /* ViewController.h */,
 				7A83F2A91B3C00D500DA3282 /* ViewController.m */,
+				7A80C26F1B3D2DE800D53F00 /* LCRequestAccessory.h */,
+				7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */,
+				7A80C2721B3D2F3900D53F00 /* LCProcessFilter.h */,
+				7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */,
+				7A80C2751B3D2FC300D53F00 /* WeatherApi.h */,
+				7A80C2761B3D2FC300D53F00 /* WeatherApi.m */,
 				7A83F2AB1B3C00D500DA3282 /* Main.storyboard */,
 				7A83F2AE1B3C00D500DA3282 /* Images.xcassets */,
 				7A83F2B01B3C00D500DA3282 /* LaunchScreen.xib */,
@@ -301,11 +316,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */,
+				7A80C2771B3D2FC300D53F00 /* WeatherApi.m in Sources */,
 				7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */,
 				7A83F2CE1B3C016400DA3282 /* LCBaseRequest.m in Sources */,
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,
 				7A83F2D01B3C016400DA3282 /* LCNetworkConfig.m in Sources */,
 				7A83F2CF1B3C016400DA3282 /* LCNetworkAgent.m in Sources */,
+				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
 				7A83F2A41B3C00D500DA3282 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

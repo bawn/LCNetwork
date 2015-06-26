@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LCNetworkConfig.h"
+#import "LCProcessFilter.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +18,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
+    config.mainBaseUrl = @"http://api.zdoz.net/";
+    config.logEnabled = YES;
+    LCProcessFilter *filter = [[LCProcessFilter alloc] init];
+    config.processRule = filter;
+
     return YES;
 }
 
