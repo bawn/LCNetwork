@@ -20,16 +20,19 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - DateTools (1.6.1)
   - MBProgressHUD (0.9.1)
   - TMCache (2.1.0)
 
 DEPENDENCIES:
   - AFNetworking
+  - DateTools
   - MBProgressHUD
   - TMCache
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  DateTools: 9bcc89e4f2f9004d8a7a2bd1b49269cf78968e65
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
 

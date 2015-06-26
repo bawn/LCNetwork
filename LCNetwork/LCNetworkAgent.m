@@ -87,6 +87,7 @@
         BOOL success = [self checkResult:request];
         if (success) {
             [request toggleAccessoriesWillStopCallBack];
+            [self printfRequestInfo:request];
             // 强制更新缓存
             if ([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache]) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
@@ -101,6 +102,7 @@
         }
         else{
             [request toggleAccessoriesWillStopCallBack];
+            [self printfRequestInfo:request];
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
             }
@@ -109,15 +111,7 @@
             }
             [request toggleAccessoriesDidStopCallBack];
         }
-        if (self.config.logEnabled) {
-            [self printfUrlInfo:request];
-            if (operation.error) {
-                NSLog(@"%@", operation.error);
-            }
-            else{
-                NSLog(@"%@", request.responseJSONObject);
-            }
-        }
+        
     }
     [self removeOperation:operation];
     [request clearCompletionBlock];
@@ -165,16 +159,17 @@
 
 
 
-- (void)printfUrlInfo:(LCBaseRequest *)request{
-    if([request.child requestArgument] && [request.child requestArgument].count){
-        NSMutableString *string = [NSMutableString string];
-        [[request.child requestArgument] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [string appendFormat:@"&%@=%@", key, obj];
-            
-        }];
-        NSString *subString = [string substringFromIndex:1];
+
+- (void)printfRequestInfo:(LCBaseRequest *)request{
+    if (self.config.logEnabled){
+        NSLog(@"URL:---------%@", request.requestOperation.request.URL);
+        if (request.requestOperation.error) {
+            NSLog(@"%@", request.requestOperation.error);
+        }
+        else{
+            NSLog(@"%@", request.responseJSONObject);
+        }
         
-        NSLog(@"URL:---------%@?%@----------", request.requestOperation.request.URL, subString);
     }
 }
 

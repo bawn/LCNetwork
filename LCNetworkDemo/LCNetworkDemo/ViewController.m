@@ -22,16 +22,18 @@
 }
 
 - (IBAction)buttonPress:(id)sender{
+     WeatherApi *api = [[WeatherApi alloc] init];
+    
+//    if (api.cacheJson) {
+//        NSLog(@"%@", api.cacheJson);
+//    }
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
-    WeatherApi *api = [[WeatherApi alloc] init];
+    
     [api addAccessory:accessory];
-    api.requestArgument = @{
-                            @"lat" : @"34.345",
-                            @"lng" : @"113.678"
-                            };
+    api.requestArgument = @{@"cityName" : @"杭州"};
     [api startWithCompletionBlockWithSuccess:^(WeatherApi *request) {
         //        NSLog(@"%@", request.responseJSONObject);
-        sleep(1);
+//        sleep(1);
     } failure:NULL];
     
 //    [api start];

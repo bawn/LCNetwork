@@ -40,7 +40,7 @@
 }
 
 - (void)start{
-    [self toggleAccessoriesWillStartCallBack];
+//    [self toggleAccessoriesWillStartCallBack];
     [[LCNetworkAgent sharedInstance] addRequest:self];
 }
 

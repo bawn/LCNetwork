@@ -14,18 +14,21 @@
 
 // 接口地址
 - (NSString *)apiMethodName{
-    return @"getweather2.aspx";
+    return @"getweather.aspx";
 }
-
 
 // 请求方式
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodGet;
 }
 
-// 是否强制更新缓存
+// 每次请求完缓存数据
 - (BOOL)withoutCache{
     return YES;
+}
+
+- (NSString *)requestTime{
+    return @"16:00";
 }
 
 @end
