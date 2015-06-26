@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "LCBaseRequest.h"
 
 @interface LCRequestAccessory : NSObject<LCRequestAccessory>
 
-//- (instancetype) initWithShowVC:(UIViewController *)vc;
+- (instancetype) initWithShowVC:(UIViewController *)vc;
+
 
 @end

@@ -10,10 +10,12 @@
 #import "LCNetworkAgent.h"
 #import "LCNetworkConfig.h"
 #import "TMCache.h"
+#import "AFNetworking.h"
 
 @interface LCBaseRequest ()
 
 @property (nonatomic, strong) id cacheJson;
+@property (nonatomic, strong) id responseJSONObject;
 @property (nonatomic, weak) id<LCAPIRequest> child;
 @property (nonatomic, strong) NSMutableArray *requestAccessories;
 @property (nonatomic, strong) LCNetworkConfig *config;
@@ -30,7 +32,7 @@
             _child = (id<LCAPIRequest>)self;
         }
         else {
-            NSAssert(NO, @"子类必须要实现APIRequest这个protocol。");
+            NSAssert(NO, @"子类必须要实现APIRequest这个protocol");
         }
         _config = [LCNetworkConfig sharedInstance];
     }
@@ -50,6 +52,9 @@
 }
 
 - (id)responseJSONObject{
+    if (_responseJSONObject) {
+        return _responseJSONObject;
+    }
     // 检查是否有统一的response加工
     if (self.config.processRule &&
         [self.config.processRule respondsToSelector:@selector(processResponseWithRequest:)]) {
@@ -59,6 +64,7 @@
         return self.requestOperation.responseObject;
     }
 }
+
 
 - (NSInteger)responseStatusCode{
     return self.requestOperation.response.statusCode;

@@ -10,7 +10,7 @@
 #import "WeatherApi.h"
 #import "LCRequestAccessory.h"
 
-@interface ViewController ()
+@interface ViewController ()<LCRequestDelegate>
 
 @end
 
@@ -19,22 +19,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
+}
+
+- (IBAction)buttonPress:(id)sender{
+    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     WeatherApi *api = [[WeatherApi alloc] init];
-//    [api addAccessory:accessory];
+    [api addAccessory:accessory];
     api.requestArgument = @{
                             @"lat" : @"34.345",
                             @"lng" : @"113.678"
                             };
     [api startWithCompletionBlockWithSuccess:^(WeatherApi *request) {
-//        NSLog(@"%@", request.responseJSONObject);
+        //        NSLog(@"%@", request.responseJSONObject);
+        sleep(1);
     } failure:NULL];
     
+//    [api start];
+//    api.delegate = self;
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)requestFinished:(LCBaseRequest *)request{
+    
+}
+
+- (void)requestFailed:(LCBaseRequest *)request{
+    
 }
 
 @end

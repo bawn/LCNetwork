@@ -23,7 +23,7 @@
     if (self) {
         _hud = [[MBProgressHUD alloc] initWithView:vc.view];
         [vc.view addSubview:_hud];
-        _hud.mode = MBProgressHUDModeText;
+        _hud.mode = MBProgressHUDModeIndeterminate;
         _hud.labelText = @"正在加载";
         _hud.square = YES;
     }

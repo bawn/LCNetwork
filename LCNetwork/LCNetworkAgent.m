@@ -56,6 +56,7 @@
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSDictionary *argument = [request.child requestArgument];
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
@@ -109,6 +110,7 @@
             [request toggleAccessoriesDidStopCallBack];
         }
         if (self.config.logEnabled) {
+            [self printfUrlInfo:request];
             if (operation.error) {
                 NSLog(@"%@", operation.error);
             }
@@ -160,5 +162,21 @@
     }
     return [request.child apiMethodName];
 }
+
+
+
+- (void)printfUrlInfo:(LCBaseRequest *)request{
+    if([request.child requestArgument] && [request.child requestArgument].count){
+        NSMutableString *string = [NSMutableString string];
+        [[request.child requestArgument] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [string appendFormat:@"&%@=%@", key, obj];
+            
+        }];
+        NSString *subString = [string substringFromIndex:1];
+        
+        NSLog(@"URL:---------%@?%@----------", request.requestOperation.request.URL, subString);
+    }
+}
+
 
 @end
