@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|  
   s.name             = "LCNetwork"  
-  s.version          = "0.0.3"
-  s.summary          = "LCNetwork is a high level request util based on AFNetworking"
+  s.version          = "0.0.4"
+  s.summary          = "基于AFNetworking的网络库封装"
   s.homepage         = "https://github.com/bawn/LCNetwork" 
   s.license          = 'MIT'  
   s.author           = { "bawn" => "lc5491137@gmail.com" }  
