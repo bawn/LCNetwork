@@ -40,7 +40,7 @@
 }
 
 - (void)start{
-//    [self toggleAccessoriesWillStartCallBack];
+    [self toggleAccessoriesWillStartCallBack];
     [[LCNetworkAgent sharedInstance] addRequest:self];
 }
 
@@ -75,14 +75,12 @@
         return _cacheJson;
     }
     else{
-        return [[[TMCache sharedCache] diskCache] objectForKey:[self requestHashKey:[self.child apiMethodName]]];
+        NSString *hashKey = [NSString stringWithFormat:@"%lu", (unsigned long)[self.child apiMethodName].hash];
+        return [[TMCache sharedCache].diskCache objectForKey:hashKey];
     }
 }
 
-- (NSString *)requestHashKey:(NSString *)apiName {
-    NSString *key = [NSString stringWithFormat:@"%lu", (unsigned long)[apiName hash]];
-    return key;
-}
+
 
 - (BOOL)statusCodeValidator {
     NSInteger statusCode = [self responseStatusCode];

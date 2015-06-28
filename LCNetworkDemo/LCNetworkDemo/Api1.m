@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 beike. All rights reserved.
 //
 
-#import "WeatherApi.h"
+#import "Api1.h"
 
-@implementation WeatherApi
-
+@implementation Api1
+// 参数属性
 @synthesize requestArgument;
 
 // 接口地址
@@ -22,13 +22,10 @@
     return LCRequestMethodGet;
 }
 
-// 每次请求完缓存数据
+// 是否缓存数据
 - (BOOL)withoutCache{
     return YES;
 }
 
-- (NSString *)requestTime{
-    return @"16:00";
-}
 
 @end

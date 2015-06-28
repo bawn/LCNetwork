@@ -7,10 +7,14 @@
 //
 
 #import "ViewController.h"
-#import "WeatherApi.h"
+#import "Api1.h"
+#import "Api2.h"
 #import "LCRequestAccessory.h"
 
 @interface ViewController ()<LCRequestDelegate>
+
+@property (nonatomic, weak) IBOutlet UILabel *weather1;
+@property (nonatomic, weak) IBOutlet UILabel *weather2;
 
 @end
 
@@ -19,26 +23,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    Api1 *api1 = [[Api1 alloc] init];
+    
+    if (api1.cacheJson) {
+        self.weather1.text = api1.cacheJson[@"Weather"];
+    }
 }
 
-- (IBAction)buttonPress:(id)sender{
-     WeatherApi *api = [[WeatherApi alloc] init];
+- (IBAction)api1Press:(id)sender{
+     Api1 *api1 = [[Api1 alloc] init];
     
-//    if (api.cacheJson) {
-//        NSLog(@"%@", api.cacheJson);
-//    }
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     
-    [api addAccessory:accessory];
-    api.requestArgument = @{@"cityName" : @"杭州"};
-    [api startWithCompletionBlockWithSuccess:^(WeatherApi *request) {
-        //        NSLog(@"%@", request.responseJSONObject);
-//        sleep(1);
+    [api1 addAccessory:accessory];
+    api1.requestArgument = @{@"cityName" : @"杭州"};
+    [api1 startWithCompletionBlockWithSuccess:^(Api1 *api1) {
+        self.weather1.text = api1.responseJSONObject[@"Weather"];
     } failure:NULL];
     
 //    [api start];
 //    api.delegate = self;
 
+}
+
+- (IBAction)api2Press:(id)sender{
+    Api2 *api2 = [[Api2 alloc] init];
+    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
+    
+    [api2 addAccessory:accessory];
+    api2.requestArgument = @{
+                             @"lat" : @"34.345",
+                             @"lng" : @"113.678"
+                             };
+    [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
+        self.weather2.text = api2.responseJSONObject[@"Weather"];
+    } failure:NULL];
 }
 
 - (void)didReceiveMemoryWarning {

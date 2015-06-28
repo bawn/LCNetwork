@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 - (BOOL) withoutCache;
 // 超时时间
 - (NSTimeInterval) requestTimeoutInterval;
+// 更新时间
+- (NSString *) requestTime;
 @end
 
 /*--------------------------------------------*/

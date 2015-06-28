@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */; };
 		7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */; };
-		7A80C2771B3D2FC300D53F00 /* WeatherApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2761B3D2FC300D53F00 /* WeatherApi.m */; };
+		7A80C2771B3D2FC300D53F00 /* Api1.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2761B3D2FC300D53F00 /* Api1.m */; };
 		7A83F2A41B3C00D500DA3282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A31B3C00D500DA3282 /* main.m */; };
 		7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A61B3C00D500DA3282 /* AppDelegate.m */; };
 		7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2A91B3C00D500DA3282 /* ViewController.m */; };
@@ -20,6 +20,7 @@
 		7A83F2CE1B3C016400DA3282 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2C91B3C016400DA3282 /* LCBaseRequest.m */; };
 		7A83F2CF1B3C016400DA3282 /* LCNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2CB1B3C016400DA3282 /* LCNetworkAgent.m */; };
 		7A83F2D01B3C016400DA3282 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2CD1B3C016400DA3282 /* LCNetworkConfig.m */; };
+		7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD464681B3FE3AC000E12C4 /* Api2.m */; };
 		B90659BA567364EEB1F9B4BB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66E0484201DE342B883E84B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +40,8 @@
 		7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCRequestAccessory.m; sourceTree = "<group>"; };
 		7A80C2721B3D2F3900D53F00 /* LCProcessFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCProcessFilter.h; sourceTree = "<group>"; };
 		7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCProcessFilter.m; sourceTree = "<group>"; };
-		7A80C2751B3D2FC300D53F00 /* WeatherApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherApi.h; sourceTree = "<group>"; };
-		7A80C2761B3D2FC300D53F00 /* WeatherApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherApi.m; sourceTree = "<group>"; };
+		7A80C2751B3D2FC300D53F00 /* Api1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api1.h; sourceTree = "<group>"; };
+		7A80C2761B3D2FC300D53F00 /* Api1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Api1.m; sourceTree = "<group>"; };
 		7A83F29E1B3C00D500DA3282 /* LCNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A83F2A21B3C00D500DA3282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A83F2A31B3C00D500DA3282 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,6 +61,8 @@
 		7A83F2CB1B3C016400DA3282 /* LCNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkAgent.m; sourceTree = "<group>"; };
 		7A83F2CC1B3C016400DA3282 /* LCNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkConfig.h; sourceTree = "<group>"; };
 		7A83F2CD1B3C016400DA3282 /* LCNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkConfig.m; sourceTree = "<group>"; };
+		7AD464671B3FE3AC000E12C4 /* Api2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api2.h; sourceTree = "<group>"; };
+		7AD464681B3FE3AC000E12C4 /* Api2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Api2.m; sourceTree = "<group>"; };
 		D66E0484201DE342B883E84B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E92C914ECFE8EC22DB8051DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,8 +126,10 @@
 				7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */,
 				7A80C2721B3D2F3900D53F00 /* LCProcessFilter.h */,
 				7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */,
-				7A80C2751B3D2FC300D53F00 /* WeatherApi.h */,
-				7A80C2761B3D2FC300D53F00 /* WeatherApi.m */,
+				7A80C2751B3D2FC300D53F00 /* Api1.h */,
+				7A80C2761B3D2FC300D53F00 /* Api1.m */,
+				7AD464671B3FE3AC000E12C4 /* Api2.h */,
+				7AD464681B3FE3AC000E12C4 /* Api2.m */,
 				7A83F2AB1B3C00D500DA3282 /* Main.storyboard */,
 				7A83F2AE1B3C00D500DA3282 /* Images.xcassets */,
 				7A83F2B01B3C00D500DA3282 /* LaunchScreen.xib */,
@@ -317,7 +322,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */,
-				7A80C2771B3D2FC300D53F00 /* WeatherApi.m in Sources */,
+				7A80C2771B3D2FC300D53F00 /* Api1.m in Sources */,
+				7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */,
 				7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */,
 				7A83F2CE1B3C016400DA3282 /* LCBaseRequest.m in Sources */,
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,

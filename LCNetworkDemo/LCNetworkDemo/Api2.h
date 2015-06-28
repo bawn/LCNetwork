@@ -1,13 +1,13 @@
 //
-//  WeatherApi.h
+//  Money.h
 //  LCNetworkDemo
 //
-//  Created by beike on 6/26/15.
+//  Created by lingchen on 6/28/15.
 //  Copyright (c) 2015 beike. All rights reserved.
 //
 
 #import "LCBaseRequest.h"
 
-@interface WeatherApi : LCBaseRequest<LCAPIRequest>
+@interface Api2 : LCBaseRequest<LCAPIRequest>
 
 @end

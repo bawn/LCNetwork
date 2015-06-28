@@ -47,37 +47,19 @@
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
     // 配置URL
     NSString *url = [self buildRequestUrl:request];
-    // 检查是否使用https
+    // 是否使用https
     if ([url hasPrefix:@"https"]) {
         AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
         [securityPolicy setAllowInvalidCertificates:YES];
         self.manager.securityPolicy = securityPolicy;
     }
-    // 使用自定义的超时时间
+    // 是否使用自定义超时时间
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
-    // 检查是否有请求时间
-    if ([request.child respondsToSelector:@selector(requestTime)]) {
-        NSDate *nowDate = [NSDate dateWithYear:2015 month:6 day:27 hour:1 minute:0 second:0];
-        NSString *hashKey = [[request.child apiMethodName] stringByAppendingFormat:@"%ld", (long)[request.child requestMethod]];
-        NSString *timeString = [request.child requestTime];
-        NSDate *limitDate = [NSDate dateWithString:timeString formatString:@"HH:mm"];
-        id lastDate = [[[TMCache sharedCache] diskCache] objectForKey:[self requestHashKey:hashKey]];
-        NSLog(@"%@", lastDate);
-        if (!lastDate) {
-            [[[TMCache sharedCache] diskCache] setObject:[NSDate date] forKey:[self requestHashKey:hashKey]];
-        }
-//        NSLog(@"%ld", (long)[[NSDate date] daysEarlierThan:lastDate]);
-        NSDate *newData = [NSDate dateWithYear:[lastDate year] month:[lastDate month] day:[lastDate day] hour:limitDate.hour - 16 minute:limitDate.minute second:[lastDate second]];
-        NSInteger days = [nowDate daysEarlierThan:newData];
-        if (lastDate && days == 0) {
-            return;
-        }
-        else if (lastDate && days){
-            [[[TMCache sharedCache] diskCache] setObject:[NSDate date] forKey:[self requestHashKey:hashKey]];
-        }
-        
+    // 是否自定义请求时间
+    if ([self processRequestTime:request]) {
+        return;
     }
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSDictionary *argument = [request.child requestArgument];
@@ -86,7 +68,6 @@
         argument = [self.config.processRule processArgumentWithRequest:request.child];
     }
    
-    [request toggleAccessoriesWillStartCallBack];
     if ([request.child requestMethod] == LCRequestMethodGet) {
         request.requestOperation = [self.manager GET:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [self handleRequestResult:operation];
@@ -101,7 +82,34 @@
             [self handleRequestResult:operation];
         }];
     }
-    // 把request储存到Dic中，key值是request.requestOperation的hash值
+    else if ([request.child requestMethod] == LCRequestMethodHead){
+        request.requestOperation = [self.manager HEAD:url parameters:argument success:^(AFHTTPRequestOperation *operation) {
+            [self handleRequestResult:operation];
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self handleRequestResult:operation];
+        }];
+    }
+    else if ([request.child requestMethod] == LCRequestMethodPut){
+        request.requestOperation = [_manager PUT:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self handleRequestResult:operation];
+        }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self handleRequestResult:operation];
+        }];
+    }
+    else if ([request.child requestMethod] == LCRequestMethodDelete){
+        request.requestOperation = [_manager DELETE:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self handleRequestResult:operation];
+        }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self handleRequestResult:operation];
+        }];
+    }
+    else if ([request.child requestMethod] == LCRequestMethodPatch) {
+        request.requestOperation = [_manager PATCH:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self handleRequestResult:operation];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self handleRequestResult:operation];
+        }];
+    }
     [self addOperation:request];
 }
 
@@ -128,6 +136,13 @@
         else{
             [request toggleAccessoriesWillStopCallBack];
             [self printfRequestInfo:request];
+            if ([request.child respondsToSelector:@selector(requestTime)]) {
+                
+                NSString *hashString = [[request.child apiMethodName] stringByAppendingFormat:@"%ld", (long)[request.child requestMethod]];
+                NSString *hashKey = [self requestHashKey:hashString];
+                [[TMCache sharedCache].diskCache removeObjectForKey:hashKey];
+                
+            }
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
             }
@@ -144,7 +159,9 @@
 
 - (void)removeOperation:(AFHTTPRequestOperation *)operation {
     NSString *key = [self requestHashKey:operation];
-    [_requestsRecord removeObjectForKey:key];
+    @synchronized(self) {
+        [_requestsRecord removeObjectForKey:key];
+    }
 }
 
 - (BOOL)checkResult:(LCBaseRequest *)request {
@@ -159,7 +176,9 @@
 - (void)addOperation:(LCBaseRequest *)request {
     if (request.requestOperation != nil) {
         NSString *key = [self requestHashKey:request.requestOperation];
-        self.requestsRecord[key] = request;
+        @synchronized(self) {
+            self.requestsRecord[key] = request;
+        }
     }
 }
 
@@ -182,8 +201,31 @@
     return [request.child apiMethodName];
 }
 
-
-
+- (BOOL)processRequestTime:(LCBaseRequest *)request{
+    if ([request.child respondsToSelector:@selector(requestTime)]) {
+        NSString *timeString = [request.child requestTime];
+        NSString *hashString = [[request.child apiMethodName] stringByAppendingFormat:@"%ld", (long)[request.child requestMethod]];
+        NSString *hashKey = [self requestHashKey:hashString];
+        NSDate *limitDate = [NSDate dateWithString:timeString formatString:@"HH:mm"];
+        NSDate *localDate = [NSDate date];
+        id lastDate = [[[TMCache sharedCache] diskCache] objectForKey:hashKey];
+        if (lastDate) {
+            NSDate *newData = [NSDate dateWithYear:[lastDate year] month:[lastDate month] day:[lastDate day] hour:limitDate.hour minute:limitDate.minute second:limitDate.second];
+            NSInteger days = [localDate daysLaterThan:newData];
+            if (days) {
+                [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
+            }
+            else{
+                [request toggleAccessoriesDidStopCallBack];
+                return YES;
+            }
+        }
+        else{
+            [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
+        }
+    }
+    return NO;
+}
 
 - (void)printfRequestInfo:(LCBaseRequest *)request{
     if (self.config.logEnabled){
@@ -194,9 +236,7 @@
         else{
             NSLog(@"%@", request.responseJSONObject);
         }
-        
     }
 }
-
 
 @end

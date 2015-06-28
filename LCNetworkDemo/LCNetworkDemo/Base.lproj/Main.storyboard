@@ -17,21 +17,60 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqq-tX-RYW">
-                                <rect key="frame" x="277" y="285" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <rect key="frame" x="50" y="285" width="30" height="30"/>
+                                <state key="normal" title="api1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="M6R-Zk-Cc2"/>
+                                    <action selector="api1Press:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="WCR-QS-zSd"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXu-fQ-CtO">
+                                <rect key="frame" x="520" y="285" width="30" height="30"/>
+                                <state key="normal" title="api2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="api2Press:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ar9-AQ-UzK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Mw-rAq">
+                                <rect key="frame" x="44" y="342" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E58-ZL-ouz">
+                                <rect key="frame" x="508" y="341" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Vqq-tX-RYW" firstAttribute="centerX" secondItem="R5e-Mw-rAq" secondAttribute="centerX" id="4xU-hB-NG6"/>
+                            <constraint firstAttribute="trailing" secondItem="xXu-fQ-CtO" secondAttribute="trailing" constant="50" id="D81-32-AIh"/>
+                            <constraint firstAttribute="centerY" secondItem="Vqq-tX-RYW" secondAttribute="centerY" id="DFm-IL-VN9"/>
+                            <constraint firstAttribute="trailing" secondItem="Vqq-tX-RYW" secondAttribute="trailing" constant="50" id="FwK-dT-6Lv"/>
+                            <constraint firstItem="R5e-Mw-rAq" firstAttribute="top" secondItem="Vqq-tX-RYW" secondAttribute="bottom" constant="20" id="MIp-yK-ngg"/>
                             <constraint firstAttribute="centerY" secondItem="Vqq-tX-RYW" secondAttribute="centerY" id="N2l-Jh-XlK"/>
-                            <constraint firstAttribute="centerX" secondItem="Vqq-tX-RYW" secondAttribute="centerX" id="x04-yl-Tem"/>
+                            <constraint firstItem="E58-ZL-ouz" firstAttribute="top" secondItem="xXu-fQ-CtO" secondAttribute="bottom" constant="20" id="TgW-cJ-1Xa"/>
+                            <constraint firstAttribute="centerY" secondItem="xXu-fQ-CtO" secondAttribute="centerY" id="XAH-1N-t2v"/>
+                            <constraint firstItem="xXu-fQ-CtO" firstAttribute="centerX" secondItem="E58-ZL-ouz" secondAttribute="centerX" id="ZdL-mB-OWY"/>
+                            <constraint firstItem="Vqq-tX-RYW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="mZT-pu-ozt"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FwK-dT-6Lv"/>
+                                <exclude reference="N2l-Jh-XlK"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="weather1" destination="R5e-Mw-rAq" id="XcA-Jz-vcq"/>
+                        <outlet property="weather2" destination="E58-ZL-ouz" id="J97-SU-1Nb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
