@@ -25,9 +25,6 @@ pod 'LCNetwork'
 
 ##使用方法
 
-
-
-
 ##Requirements
 * iOS 6 or higher
 * ARC
