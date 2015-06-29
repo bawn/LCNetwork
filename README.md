@@ -23,7 +23,62 @@ Cocoapods:
 pod 'LCNetwork'
 ```
 
-##使用方法
+##使用
+###统一配置
+```
+LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
+config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
+config.viceBaseUrl = @"http://api.zdoz.net/";// 设置副服务器地址
+config.logEnabled = YES;// 是否打印log信息
+```
+###参数和response的加工
+`LCProcessProtocol`协议中包含了两个方法:
+参数加工，适用于需要统一配置参数，比如参数加密或者加入某个统一的参数
+```
+- (NSDictionary *) processArgumentWithRequest:(LCBaseRequest *)request;
+```
+和
+response加工，比如服务器返回的数据的格式都是 data = {};，统一把data中的数据取出来使用
+```
+- (id) processResponseWithRequest:(id)response;
+```
+此时只需要创建一个遵守`LCProcessProtocol`协议的类，比如`LCProcessFilter`
+```
+LCProcessFilter *filter = [[LCProcessFilter alloc] init];
+config.processRule = filter;
+```
+
+###创建接口调用类
+是的，每个接口调用都需要一个类去执行，这类必须是`LCBaseRequest`的子类，而且必须遵守`LCAPIRequest`协议
+```
+@interface Api1 : LCBaseRequest<LCAPIRequest>
+```
+需要实现的方法和遵守的属性：
+```
+// 参数属性
+@synthesize requestArgument;
+
+// 接口地址
+- (NSString *)apiMethodName{
+    return @"getweather.aspx";
+}
+
+// 请求方式
+- (LCRequestMethod)requestMethod{
+    return LCRequestMethodGet;
+}
+```
+###调用
+```
+Api1 *api1 = [[Api1 alloc] init];
+api1.requestArgument = @{@"cityName" : @"杭州"};
+[api1 startWithCompletionBlockWithSuccess:^(Api1 *api1) {
+  ...
+} failure:^(id request) {
+  ...
+    }];
+```
+
 
 ##Requirements
 * iOS 6 or higher
