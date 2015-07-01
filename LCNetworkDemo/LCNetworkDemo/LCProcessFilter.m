@@ -6,17 +6,13 @@
 #import "LCProcessFilter.h"
 #import "LCBaseRequest.h"
 
-static NSString * const ErrorDomain   = @"com.beikbank";
-
 @implementation LCProcessFilter
 
 - (NSDictionary *)processArgumentWithRequest:(LCBaseRequest <LCAPIRequest> *)request{
-    
     return request.requestArgument;
 }
 
 - (id) processResponseWithRequest:(id)response{
-    
     return response;
 }
 

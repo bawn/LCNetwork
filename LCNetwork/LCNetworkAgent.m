@@ -122,7 +122,8 @@
             [request toggleAccessoriesWillStopCallBack];
             [self printfRequestInfo:request];
             // 强制更新缓存
-            if ([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache]) {
+            if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])
+                || [request.child respondsToSelector:@selector(requestTime)]) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
             if (request.delegate != nil) {

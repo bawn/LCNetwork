@@ -33,14 +33,14 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 
 // 是否是副Url
 @property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl;
-// 缓存时间
-- (NSInteger) cacheTimeInSeconds;
-// 是否强制更新缓存
+// 是否缓存数据
 - (BOOL) withoutCache;
 // 超时时间
 - (NSTimeInterval) requestTimeoutInterval;
 // 更新时间
 - (NSString *) requestTime;
+// response处理
+- (id)responseProcess;
 @end
 
 /*--------------------------------------------*/

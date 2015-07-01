@@ -28,18 +28,25 @@
     if (api1.cacheJson) {
         self.weather1.text = api1.cacheJson[@"Weather"];
     }
+    
+    Api2 *api2 = [[Api2 alloc] init];
+    
+    if (api2.cacheJson) {
+        self.weather2.text = api2.cacheJson[@"Weather"];
+    }
 }
 
 - (IBAction)api1Press:(id)sender{
-     Api1 *api1 = [[Api1 alloc] init];
-    
+    Api1 *api1 = [[Api1 alloc] init];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     
     [api1 addAccessory:accessory];
     api1.requestArgument = @{@"cityName" : @"杭州"};
     [api1 startWithCompletionBlockWithSuccess:^(Api1 *api1) {
         self.weather1.text = api1.responseJSONObject[@"Weather"];
-    } failure:NULL];
+    } failure:^(id request) {
+        
+    }];
     
 //    [api start];
 //    api.delegate = self;
@@ -49,7 +56,6 @@
 - (IBAction)api2Press:(id)sender{
     Api2 *api2 = [[Api2 alloc] init];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
-    
     [api2 addAccessory:accessory];
     api2.requestArgument = @{
                              @"lat" : @"34.345",
