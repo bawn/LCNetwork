@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Api1.h"
 #import "Api2.h"
+#import "Api3.h"
 #import "LCRequestAccessory.h"
 
 @interface ViewController ()<LCRequestDelegate>
@@ -37,7 +38,7 @@
 }
 
 - (IBAction)api1Press:(id)sender{
-    Api1 *api1 = [[Api1 alloc] init];
+    Api3 *api1 = [[Api3 alloc] init];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     
     [api1 addAccessory:accessory];

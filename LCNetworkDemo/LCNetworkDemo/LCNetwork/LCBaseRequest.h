@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFURLRequestSerialization.h"
 @class AFHTTPRequestOperation;
+
+typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -39,6 +42,11 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 - (NSTimeInterval) requestTimeoutInterval;
 // 更新时间
 - (NSString *) requestTime;
+
+// 用于上传数据的block
+- (AFConstructingBlock)constructingBodyBlock;
+
+
 // response处理
 - (id)responseProcess;
 @end
@@ -62,6 +70,8 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 - (void)requestDidStop:(id)request;
 
 @end
+
+
 
 
 @interface LCBaseRequest : NSObject

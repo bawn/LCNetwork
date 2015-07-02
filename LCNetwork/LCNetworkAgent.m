@@ -76,11 +76,25 @@
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
-        request.requestOperation = [self.manager POST:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self handleRequestResult:operation];
-        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
-        }];
+        
+        if ([request.child respondsToSelector:@selector(constructingBodyBlock)] && [request.child constructingBodyBlock]) {
+            request.requestOperation = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self handleRequestResult:operation];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [self handleRequestResult:operation];
+            }];
+        }
+        else{
+            request.requestOperation = [self.manager POST:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self handleRequestResult:operation];
+            }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [self handleRequestResult:operation];
+            }];
+        }
+    }
+    else if ([request.child requestMethod] == LCRequestMethodPost){
+       
+        
     }
     else if ([request.child requestMethod] == LCRequestMethodHead){
         request.requestOperation = [self.manager HEAD:url parameters:argument success:^(AFHTTPRequestOperation *operation) {
