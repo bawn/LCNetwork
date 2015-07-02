@@ -38,7 +38,7 @@
 }
 
 - (IBAction)api1Press:(id)sender{
-    Api3 *api1 = [[Api3 alloc] init];
+    Api1 *api1 = [[Api1 alloc] init];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     
     [api1 addAccessory:accessory];
