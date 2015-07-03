@@ -236,7 +236,11 @@
             }
         }
         else{
-            [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
+            NSDate *newData = [NSDate dateWithYear:[localDate year] month:[localDate month] day:[localDate day] hour:limitDate.hour minute:limitDate.minute second:limitDate.second];
+            double seconds = [localDate secondsLaterThan:newData];
+            if (seconds > 0) {
+                [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
+            }
         }
     }
     return NO;
