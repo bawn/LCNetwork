@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A61030C1B4E5A3E0089384C /* LCBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A61030B1B4E5A3E0089384C /* LCBatchRequest.m */; };
+		7A61030F1B4E5BF50089384C /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A61030E1B4E5BF50089384C /* LCBatchRequestAgent.m */; };
 		7A68D8A71B45280E004B77B9 /* Api3.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A61B45280E004B77B9 /* Api3.m */; };
 		7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2701B3D2DE800D53F00 /* LCRequestAccessory.m */; };
 		7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A80C2731B3D2F3900D53F00 /* LCProcessFilter.m */; };
@@ -37,6 +39,10 @@
 
 /* Begin PBXFileReference section */
 		2AD5340E0CBD7C34F7F6D0A6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7A61030A1B4E5A3E0089384C /* LCBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequest.h; sourceTree = "<group>"; };
+		7A61030B1B4E5A3E0089384C /* LCBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequest.m; sourceTree = "<group>"; };
+		7A61030D1B4E5BF50089384C /* LCBatchRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequestAgent.h; sourceTree = "<group>"; };
+		7A61030E1B4E5BF50089384C /* LCBatchRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequestAgent.m; sourceTree = "<group>"; };
 		7A68D8A51B45280E004B77B9 /* Api3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api3.h; sourceTree = "<group>"; };
 		7A68D8A61B45280E004B77B9 /* Api3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Api3.m; sourceTree = "<group>"; };
 		7A80C26F1B3D2DE800D53F00 /* LCRequestAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCRequestAccessory.h; sourceTree = "<group>"; };
@@ -174,6 +180,10 @@
 			children = (
 				7A83F2C81B3C016400DA3282 /* LCBaseRequest.h */,
 				7A83F2C91B3C016400DA3282 /* LCBaseRequest.m */,
+				7A61030A1B4E5A3E0089384C /* LCBatchRequest.h */,
+				7A61030B1B4E5A3E0089384C /* LCBatchRequest.m */,
+				7A61030D1B4E5BF50089384C /* LCBatchRequestAgent.h */,
+				7A61030E1B4E5BF50089384C /* LCBatchRequestAgent.m */,
 				7A83F2CA1B3C016400DA3282 /* LCNetworkAgent.h */,
 				7A83F2CB1B3C016400DA3282 /* LCNetworkAgent.m */,
 				7A83F2CC1B3C016400DA3282 /* LCNetworkConfig.h */,
@@ -335,6 +345,8 @@
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
 				7A83F2D01B3C016400DA3282 /* LCNetworkConfig.m in Sources */,
 				7A83F2CF1B3C016400DA3282 /* LCNetworkAgent.m in Sources */,
+				7A61030C1B4E5A3E0089384C /* LCBatchRequest.m in Sources */,
+				7A61030F1B4E5BF50089384C /* LCBatchRequestAgent.m in Sources */,
 				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
 				7A83F2A41B3C00D500DA3282 /* main.m in Sources */,
 			);

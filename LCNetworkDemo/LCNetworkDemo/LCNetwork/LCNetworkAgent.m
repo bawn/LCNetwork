@@ -57,10 +57,6 @@
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
-    // 是否自定义请求时间
-    if ([self processRequestTime:request]) {
-        return;
-    }
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSDictionary *argument = [request.child requestArgument];
     // 检查是否有统一的参数加工
@@ -91,10 +87,6 @@
                 [self handleRequestResult:operation];
             }];
         }
-    }
-    else if ([request.child requestMethod] == LCRequestMethodPost){
-       
-        
     }
     else if ([request.child requestMethod] == LCRequestMethodHead){
         request.requestOperation = [self.manager HEAD:url parameters:argument success:^(AFHTTPRequestOperation *operation) {
@@ -136,8 +128,7 @@
             [request toggleAccessoriesWillStopCallBack];
             [self printfRequestInfo:request];
             // 强制更新缓存
-            if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])
-                || [request.child respondsToSelector:@selector(requestTime)]) {
+            if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
             if (request.delegate != nil) {
@@ -151,13 +142,6 @@
         else{
             [request toggleAccessoriesWillStopCallBack];
             [self printfRequestInfo:request];
-            if ([request.child respondsToSelector:@selector(requestTime)]) {
-                
-                NSString *hashString = [[request.child apiMethodName] stringByAppendingFormat:@"%ld", (long)[request.child requestMethod]];
-                NSString *hashKey = [self requestHashKey:hashString];
-                [[TMCache sharedCache].diskCache removeObjectForKey:hashKey];
-                
-            }
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
             }
@@ -171,6 +155,14 @@
     [self removeOperation:operation];
     [request clearCompletionBlock];
 }
+
+
+- (void)cancelRequest:(LCBaseRequest *)request {
+    [request.requestOperation cancel];
+    [self removeOperation:request.requestOperation];
+    [request clearCompletionBlock];
+}
+
 
 - (void)removeOperation:(AFHTTPRequestOperation *)operation {
     NSString *key = [self requestHashKey:operation];
@@ -216,35 +208,6 @@
     return [request.child apiMethodName];
 }
 
-- (BOOL)processRequestTime:(LCBaseRequest *)request{
-    if ([request.child respondsToSelector:@selector(requestTime)]) {
-        NSString *timeString = [request.child requestTime];
-        NSString *hashString = [[request.child apiMethodName] stringByAppendingFormat:@"%ld", (long)[request.child requestMethod]];
-        NSString *hashKey = [self requestHashKey:hashString];
-        NSDate *limitDate = [NSDate dateWithString:timeString formatString:@"HH:mm"];
-        NSDate *localDate = [NSDate date];
-        id lastDate = [[[TMCache sharedCache] diskCache] objectForKey:hashKey];
-        if (lastDate) {
-            NSDate *newData = [NSDate dateWithYear:[lastDate year] month:[lastDate month] day:[lastDate day] hour:limitDate.hour minute:limitDate.minute second:limitDate.second];
-            NSInteger days = [localDate daysLaterThan:newData];
-            if (days) {
-                [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
-            }
-            else{
-                [request toggleAccessoriesDidStopCallBack];
-                return YES;
-            }
-        }
-        else{
-            NSDate *newData = [NSDate dateWithYear:[localDate year] month:[localDate month] day:[localDate day] hour:limitDate.hour minute:limitDate.minute second:limitDate.second];
-            double seconds = [localDate secondsLaterThan:newData];
-            if (seconds > 0) {
-                [[[TMCache sharedCache] diskCache] setObject:localDate forKey:hashKey];
-            }
-        }
-    }
-    return NO;
-}
 
 - (void)printfRequestInfo:(LCBaseRequest *)request{
     if (self.config.logEnabled){

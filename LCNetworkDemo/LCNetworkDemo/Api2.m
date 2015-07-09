@@ -28,8 +28,8 @@
 }
 
 // 请求时间
-- (NSString *)requestTime{
-    return @"15:00";
-}
+//- (NSString *)requestTime{
+//    return @"15:00";
+//}
 
 @end

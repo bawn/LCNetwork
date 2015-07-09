@@ -40,8 +40,6 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 - (BOOL) withoutCache;
 // 超时时间
 - (NSTimeInterval) requestTimeoutInterval;
-// 更新时间
-- (NSString *) requestTime;
 
 // 用于上传数据的block
 - (AFConstructingBlock)constructingBodyBlock;
@@ -72,8 +70,6 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 @end
 
 
-
-
 @interface LCBaseRequest : NSObject
 
 @property (nonatomic, strong) AFHTTPRequestOperation *requestOperation;
@@ -87,6 +83,8 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 
 
 - (void)start;
+- (void)stop;
+
 
 // block回调
 - (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success

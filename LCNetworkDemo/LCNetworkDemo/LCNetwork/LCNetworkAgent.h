@@ -14,5 +14,6 @@
 
 + (LCNetworkAgent *)sharedInstance;
 - (void)addRequest:(LCBaseRequest *)request;
+- (void)cancelRequest:(LCBaseRequest *)request;
 
 @end

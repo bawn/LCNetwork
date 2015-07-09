@@ -81,6 +81,13 @@
 }
 
 
+- (void)stop {
+    [self toggleAccessoriesWillStopCallBack];
+    self.delegate = nil;
+    [[LCNetworkAgent sharedInstance] cancelRequest:self];
+    [self toggleAccessoriesDidStopCallBack];
+}
+
 
 - (BOOL)statusCodeValidator {
     NSInteger statusCode = [self responseStatusCode];
@@ -135,6 +142,4 @@
 }
 
 @end
-
-
 
