@@ -11,7 +11,6 @@
 #import "LCBaseRequest.h"
 #import "AFNetworking.h"
 #import "TMCache.h"
-#import <NSDate+DateTools.h>
 
 @interface LCNetworkAgent ()
 
@@ -47,7 +46,7 @@
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
     // 配置URL
     NSString *url = [self buildRequestUrl:request];
-    // 是否使用https
+    // 是否使用 https
     if ([url hasPrefix:@"https"]) {
         AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
         [securityPolicy setAllowInvalidCertificates:YES];
