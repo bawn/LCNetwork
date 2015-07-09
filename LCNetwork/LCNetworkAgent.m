@@ -11,7 +11,6 @@
 #import "LCBaseRequest.h"
 #import "AFNetworking.h"
 #import "TMCache.h"
-#import <NSDate+DateTools.h>
 
 @interface LCNetworkAgent ()
 
