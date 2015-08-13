@@ -8,13 +8,12 @@
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式
 
 ##功能
-1. 支持`block`和`delegate`的回调方式
-2. 支持设置主、副两个服务器地址
-3. 支持`response`缓存，基于`TMCache`
-4. 支持统一的参数加工
-5. 支持统一的`response`加工
-6. API类使用`@protocol`约束，不用担心漏写方法
-7. ~~支持按时间进行请求~~
+1. API类使用`@protocol`约束，不用担心漏写方法
+2. 支持`block`和`delegate`的回调方式
+3. 支持设置主、副两个服务器地址
+4. 支持`response`缓存，基于`TMCache`
+5. 支持统一的参数加工
+6. 支持统一的`response`加工
 
 ##Installation
 
@@ -49,7 +48,7 @@ config.processRule = filter;
 ```
 
 ###创建接口调用类
-是的，每个接口调用都需要一个类去执行，这类必须是`LCBaseRequest`的子类，而且必须遵守`LCAPIRequest`协议
+是的，每个接口调用都需要一个类去执行，这个类必须是`LCBaseRequest`的子类，而且必须遵守`LCAPIRequest`协议
 ```
 @interface Api1 : LCBaseRequest<LCAPIRequest>
 ```
