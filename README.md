@@ -77,7 +77,8 @@ api1.requestArgument = @{@"cityName" : @"杭州"};
   ...
     }];
 ```
-
+##更多信息
+参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
 
 ##Requirements
 * iOS 6 or higher
