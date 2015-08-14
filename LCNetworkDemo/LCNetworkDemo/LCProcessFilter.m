@@ -8,8 +8,8 @@
 
 @implementation LCProcessFilter
 
-- (NSDictionary *)processArgumentWithRequest:(LCBaseRequest <LCAPIRequest> *)request{
-    return request.requestArgument;
+- (NSDictionary *)processArgumentWithRequest:(NSDictionary *)argument{
+    return argument;
 }
 
 - (id) processResponseWithRequest:(id)response{

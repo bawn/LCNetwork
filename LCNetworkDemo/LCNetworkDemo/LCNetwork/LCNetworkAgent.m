@@ -60,7 +60,7 @@
     NSDictionary *argument = [request.child requestArgument];
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
-        argument = [self.config.processRule processArgumentWithRequest:request.child];
+        argument = [self.config.processRule processArgumentWithRequest:[request.child requestArgument]];
     }
    
     if ([request.child requestMethod] == LCRequestMethodGet) {

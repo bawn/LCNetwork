@@ -44,7 +44,6 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 // 用于上传数据的block
 - (AFConstructingBlock)constructingBodyBlock;
 
-
 // response处理
 - (id)responseProcess;
 @end
