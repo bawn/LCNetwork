@@ -14,7 +14,7 @@
 
 @optional
 // 加工参数
-- (NSDictionary *) processArgumentWithRequest:(LCBaseRequest *)request;
+- (NSDictionary *) processArgumentWithRequest:(NSDictionary *)argument;
 // 加工response
 - (id) processResponseWithRequest:(id)response;
 

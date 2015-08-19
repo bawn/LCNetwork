@@ -46,7 +46,7 @@
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
     // 配置URL
     NSString *url = [self buildRequestUrl:request];
-    // 是否使用https
+    // 是否使用 https
     if ([url hasPrefix:@"https"]) {
         AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
         [securityPolicy setAllowInvalidCertificates:YES];
@@ -60,7 +60,7 @@
     NSDictionary *argument = [request.child requestArgument];
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
-        argument = [self.config.processRule processArgumentWithRequest:request.child];
+        argument = [self.config.processRule processArgumentWithRequest:[request.child requestArgument]];
     }
    
     if ([request.child requestMethod] == LCRequestMethodGet) {
