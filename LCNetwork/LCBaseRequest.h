@@ -44,6 +44,9 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 // 用于上传数据的block
 - (AFConstructingBlock)constructingBodyBlock;
 
+// json数据类型验证
+- (NSDictionary *)jsonValidator;
+
 // response处理
 - (id)responseProcess;
 @end
@@ -103,6 +106,7 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 - (void)toggleAccessoriesWillStartCallBack;
 - (void)toggleAccessoriesWillStopCallBack;
 - (void)toggleAccessoriesDidStopCallBack;
+
 
 @end
 

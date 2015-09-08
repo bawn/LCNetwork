@@ -10,6 +10,7 @@
 #import "LCNetworkConfig.h"
 #import "LCBaseRequest.h"
 #import "AFNetworking.h"
+#import "LCNetworkPrivate.h"
 #import "TMCache.h"
 
 @interface LCNetworkAgent ()
@@ -129,6 +130,9 @@
             // 强制更新缓存
             if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
+            }
+            if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator] && [[request.child jsonValidator] isKindOfClass:[NSDictionary class]]) {
+                [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
             }
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];

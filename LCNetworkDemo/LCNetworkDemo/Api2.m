@@ -27,4 +27,14 @@
     return YES;
 }
 
+- (NSDictionary *)jsonValidator{
+    return @{
+             @"City" : [NSString class],
+             @"Img" : [NSString class],
+             @"Ptime" : [NSString class],
+             @"Temp1" : [NSString class],
+             @"Temp2" : [NSString class],
+             @"Weather" : [NSString class]
+             };
+}
 @end

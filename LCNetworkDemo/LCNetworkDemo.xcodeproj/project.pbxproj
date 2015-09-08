@@ -25,6 +25,7 @@
 		7A83F2D01B3C016400DA3282 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2CD1B3C016400DA3282 /* LCNetworkConfig.m */; };
 		7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD464681B3FE3AC000E12C4 /* Api2.m */; };
 		B90659BA567364EEB1F9B4BB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66E0484201DE342B883E84B /* libPods.a */; };
+		DF6C88A61B96DF5A00374BEA /* LCNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6C88A51B96DF5A00374BEA /* LCNetworkPrivate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		7AD464671B3FE3AC000E12C4 /* Api2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api2.h; sourceTree = "<group>"; };
 		7AD464681B3FE3AC000E12C4 /* Api2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Api2.m; sourceTree = "<group>"; };
 		D66E0484201DE342B883E84B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF6C88A41B96DF5A00374BEA /* LCNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkPrivate.h; sourceTree = "<group>"; };
+		DF6C88A51B96DF5A00374BEA /* LCNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkPrivate.m; sourceTree = "<group>"; };
 		E92C914ECFE8EC22DB8051DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,6 +191,8 @@
 				7A83F2CB1B3C016400DA3282 /* LCNetworkAgent.m */,
 				7A83F2CC1B3C016400DA3282 /* LCNetworkConfig.h */,
 				7A83F2CD1B3C016400DA3282 /* LCNetworkConfig.m */,
+				DF6C88A41B96DF5A00374BEA /* LCNetworkPrivate.h */,
+				DF6C88A51B96DF5A00374BEA /* LCNetworkPrivate.m */,
 			);
 			path = LCNetwork;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				7A83F2CE1B3C016400DA3282 /* LCBaseRequest.m in Sources */,
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
+				DF6C88A61B96DF5A00374BEA /* LCNetworkPrivate.m in Sources */,
 				7A83F2D01B3C016400DA3282 /* LCNetworkConfig.m in Sources */,
 				7A83F2CF1B3C016400DA3282 /* LCNetworkAgent.m in Sources */,
 				7A61030C1B4E5A3E0089384C /* LCBatchRequest.m in Sources */,
