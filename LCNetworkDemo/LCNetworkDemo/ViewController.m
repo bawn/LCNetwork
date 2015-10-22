@@ -54,10 +54,10 @@
     
     [request startWithCompletionBlockWithSuccess:^(LCBatchRequest *batchRequest) {
         Api1 *api1 = batchRequest.requestArray.firstObject;
-        NSLog(@"%@", api1.responseJSONObject);
+//        NSLog(@"%@", api1.responseJSONObject);
         self.weather1.text = api1.responseJSONObject[@"Weather"];
         Api2 *api2 = batchRequest.requestArray[1];
-        NSLog(@"%@", api2.responseJSONObject);
+//        NSLog(@"%@", api2.responseJSONObject);
         self.weather2.text = api2.responseJSONObject[@"Weather"];
     } failure:^(LCBatchRequest *batchRequest) {
         
@@ -81,6 +81,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - LCRequestDelegate Method
 
 - (void)requestFinished:(LCBaseRequest *)request{
     

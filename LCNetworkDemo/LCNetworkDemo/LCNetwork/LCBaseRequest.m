@@ -37,7 +37,10 @@
         }
         _config = [LCNetworkConfig sharedInstance];
         if (_config.logEnabled) {
+#ifdef DEBUG
             [[AFNetworkActivityLogger sharedLogger] startLogging];
+            [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+#endif
         }
       
     }
