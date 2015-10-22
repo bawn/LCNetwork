@@ -126,7 +126,7 @@
         BOOL success = [self checkResult:request];
         if (success) {
             [request toggleAccessoriesWillStopCallBack];
-            [self printfRequestInfo:request];
+//            [self printfRequestInfo:request];
             // 强制更新缓存
             if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
@@ -144,7 +144,7 @@
         }
         else{
             [request toggleAccessoriesWillStopCallBack];
-            [self printfRequestInfo:request];
+//            [self printfRequestInfo:request];
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
             }
@@ -212,16 +212,16 @@
 }
 
 
-- (void)printfRequestInfo:(LCBaseRequest *)request{
-    if (self.config.logEnabled){
-        NSLog(@"URL:---------%@", request.requestOperation.request.URL);
-        if (request.requestOperation.error) {
-            NSLog(@"%@", request.requestOperation.error);
-        }
-        else{
-            NSLog(@"%@", request.responseJSONObject);
-        }
-    }
-}
+//- (void)printfRequestInfo:(LCBaseRequest *)request{
+//    if (self.config.logEnabled){
+//        NSLog(@"URL:---------%@", request.requestOperation.request.URL);
+//        if (request.requestOperation.error) {
+//            NSLog(@"%@", request.requestOperation.error);
+//        }
+//        else{
+//            NSLog(@"%@", request.responseJSONObject);
+//        }
+//    }
+//}
 
 @end

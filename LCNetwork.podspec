@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '6.0'
   s.requires_arc     = true
   s.source_files     = 'LCNetwork/*.{h,m}'
-  s.dependency       "AFNetworking", "~> 2.5.4"
+  s.dependency       "AFNetworking", "~> 2.6.0"
   s.dependency       "TMCache", "~> 2.1.0"
+  s.dependency       "AFNetworkActivityLogger"
 end

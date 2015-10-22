@@ -11,6 +11,7 @@
 #import "LCNetworkConfig.h"
 #import "TMCache.h"
 #import "AFNetworking.h"
+#import "AFNetworkActivityLogger.h"
 
 @interface LCBaseRequest ()
 
@@ -35,6 +36,10 @@
             NSAssert(NO, @"子类必须要实现APIRequest这个protocol");
         }
         _config = [LCNetworkConfig sharedInstance];
+        if (_config.logEnabled) {
+            [[AFNetworkActivityLogger sharedLogger] startLogging];
+        }
+      
     }
     return self;
 }
