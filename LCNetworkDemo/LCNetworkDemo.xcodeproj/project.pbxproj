@@ -218,6 +218,7 @@
 				7A83F29B1B3C00D500DA3282 /* Frameworks */,
 				7A83F29C1B3C00D500DA3282 /* Resources */,
 				D2E7C8FED00259C235F67F70 /* Copy Pods Resources */,
+				75DBFD106EB3F9A23D801FA3 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,6 +258,7 @@
 				TargetAttributes = {
 					7A83F29D1B3C00D500DA3282 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 8246L2QR6A;
 					};
 					7A83F2B61B3C00D500DA3282 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -317,6 +319,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		75DBFD106EB3F9A23D801FA3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D2E7C8FED00259C235F67F70 /* Copy Pods Resources */ = {
@@ -481,6 +498,7 @@
 			baseConfigurationReference = 2AD5340E0CBD7C34F7F6D0A6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LCNetworkDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,6 +510,7 @@
 			baseConfigurationReference = E92C914ECFE8EC22DB8051DD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LCNetworkDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
