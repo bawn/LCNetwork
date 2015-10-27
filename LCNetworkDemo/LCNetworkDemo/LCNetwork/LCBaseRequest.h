@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 // 超时时间
 - (NSTimeInterval) requestTimeoutInterval;
 
-// 用于上传数据的block
+// 用于Body数据的block
 - (AFConstructingBlock)constructingBodyBlock;
 
 // json数据类型验证
