@@ -150,10 +150,40 @@ __Api2.m__
     }
     return self;
 }
+```
+直接在初始化方法中使用 `self.requestArgument = @{@"lat" : lat, lng" : lng}` 其实不妥，原因请参考 [唐巧](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) 和 [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575)，如果想完全规避这样的问题，请参考demo中的实现
 
+
+###统一处理`argument` 和 `response`
+
+这里需要用到另外一个协议 ` <LCProcessProtocol>`，比如我们的每个请求需要添加一个关于版本的参数：
+
+__LCProcessFilter.h__
+```
+#import "LCNetworkConfig.h"
+
+@interface LCProcessFilter : NSObject <LCProcessProtocol>
+
+@end
+```
+__LCProcessFilter.m__
 
 ```
-直接在初始化方法中使用 `self.requestArgument = @{@"lat" : lat, lng" : lng}` 其实不妥，原因请请参考 [唐巧](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) 和 [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575)，如果想完全规避这样的问题，请参考demo中的实现
+#import "LCBaseRequest.h"
+
+@implementation LCProcessFilter
+
+- (NSDictionary *) processArgumentWithRequest:(NSDictionary *)argument{
+     NSMutableDictionary *newParameters = [[NSMutableDictionary alloc] initWithDictionary:argument];
+    [newParameters setObject:@"1.0.0" forKey:@"version"];
+    return newParameters;
+}
+```
+最后，赋值给 `LCNetworkConfig` 的 `processRule`
+```
+LCProcessFilter *filter = [[LCProcessFilter alloc] init];
+config.processRule = filter;
+```
 
  
 ##更多信息
@@ -165,27 +195,4 @@ __Api2.m__
 
 
 ##License
-```
-The MIT License (MIT)
-
-Copyright (c) 2015 Bawn
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-```
+[MIT](http://mit-license.org/)
