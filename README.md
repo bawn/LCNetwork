@@ -18,6 +18,20 @@
 7. 支持多个请求同时发送，并统一设置它们的回调
 8. 支持以类似于插件的形式显示HUD
 
+`ViewController`层的调用例子如下
+
+```
+Api2 *api2 = [[Api2 alloc] init];
+api2.requestArgument = @{
+                         @"lat" : @"34.345",
+                         @"lng" : @"113.678"
+                         };
+[api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
+    self.weather2.text = api2.responseJSONObject[@"Weather"];
+} failure:NULL];
+
+```
+
 
 ##集成
 
@@ -29,38 +43,35 @@ pod 'LCNetwork'
 ##使用
 ###统一配置
 
-`LCNetworkConfig`类用于配置服务器地址和是否显示请求log
+__`LCNetworkConfig` 提供的两个功能：__
+
+1. 设置服务器地址
+2. 设置是否打印请求的log信息
+
 ```
 LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
 config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
 config.viceBaseUrl = @"https://api.zdoz.net/";// 设置副服务器地址
-config.logEnabled = YES;// 是否打印log信息
-```
-
-###参数和response的加工
-`LCProcessProtocol`协议中包含了两个方法:
-参数加工，适用于需要统一配置参数，比如参数加密或者加入某个统一的参数
-```
-- (NSDictionary *) processArgumentWithRequest:(LCBaseRequest *)request;
-```
-和
-response加工，比如服务器返回的数据的格式都是 data = {};，统一把data中的数据取出来使用
-```
-- (id) processResponseWithRequest:(id)response;
-```
-此时只需要创建一个遵守`LCProcessProtocol`协议的类，比如`LCProcessFilter`
-```
-LCProcessFilter *filter = [[LCProcessFilter alloc] init];
-config.processRule = filter;
+config.logEnabled = YES;// 是否打印请求的log信息
 ```
 
 ###创建接口调用类
-是的，每个接口调用都需要一个类去执行，这个类必须是`LCBaseRequest`的子类，而且必须遵守`LCAPIRequest`协议
+每个请求都需要一个对应的类去执行，这样的好处是接口所需要的信息都集成到了这个API类的内部，不在暴露在Controller层。创建一个API类需要继承`LCBaseRequest`类，并且遵守`LCAPIRequest`协议，下面是最基本的API类的创建。
+
+__Api1.h__
+
 ```
+#import <LCNetwork/LCBaseRequest.h>
+
 @interface Api1 : LCBaseRequest<LCAPIRequest>
+
+@end
 ```
-需要实现的方法和遵守的属性：
+__Api1.m__
 ```
+#import "Api1.h"
+
+@implementation Api1
 // 参数属性
 @synthesize requestArgument;
 
@@ -73,6 +84,13 @@ config.processRule = filter;
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodGet;
 }
+
+// 是否缓存数据
+- (BOOL)withoutCache{
+    return YES;
+}
+
+@end
 ```
 ###调用
 ```
