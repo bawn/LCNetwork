@@ -112,18 +112,50 @@ __Api1.m__
 
 ```
 
+###参数设置
+
+请求的参数可以在外部设置，例如：
+```
+Api2 *api2 = [[Api2 alloc] init];
+api2.requestArgument = @{
+                          @"lat" : @"34.345",
+                          @"lng" : @"113.678"
+                        };
+```
+如果不想把参数的 key 值暴露在外部，也可以在 API 类中自定义初始化方法，例如:
+
+__Api2.h__
+```
+@interface Api2 : LCBaseRequest<LCAPIRequest>
+
+- (instancetype)initWith:(NSString *)lat lng:(NSString *)lng;
+
+@end
+```
+
+__Api2.m__
+
+```
+#import "Api2.h"
+
+@implementation Api2
+
+- (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
+    self = [super init];
+    if (self) {
+                self.requestArgument = @{
+                                 @"lat" : lat,
+                                 @"lng" : lng
+                                 };
+    }
+    return self;
+}
 
 
-###调用
 ```
-Api1 *api1 = [[Api1 alloc] init];
-api1.requestArgument = @{@"cityName" : @"杭州"};
-[api1 startWithCompletionBlockWithSuccess:^(Api1 *api1) {
-  ...
-} failure:^(id request) {
-  ...
-    }];
-```
+直接在初始化方法中使用 `self.requestArgument = @{@"lat" : lat, lng" : lng}` 其实不妥，原因请请参考 [唐巧](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) 和 [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575)，如果想完全规避这样的问题，请参考demo中的实现
+
+ 
 ##更多信息
 参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
 
