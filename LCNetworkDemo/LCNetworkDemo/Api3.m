@@ -9,7 +9,6 @@
 #import "Api3.h"
 
 @implementation Api3
-@synthesize requestArgument;
 
 // 接口地址
 - (NSString *)apiMethodName{

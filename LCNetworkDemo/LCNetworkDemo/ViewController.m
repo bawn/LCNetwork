@@ -54,10 +54,8 @@
     
     [request startWithCompletionBlockWithSuccess:^(LCBatchRequest *batchRequest) {
         Api1 *api1 = batchRequest.requestArray.firstObject;
-//        NSLog(@"%@", api1.responseJSONObject);
         self.weather1.text = api1.responseJSONObject[@"Weather"];
         Api2 *api2 = batchRequest.requestArray[1];
-//        NSLog(@"%@", api2.responseJSONObject);
         self.weather2.text = api2.responseJSONObject[@"Weather"];
     } failure:^(LCBatchRequest *batchRequest) {
         
@@ -65,16 +63,14 @@
 }
 
 - (IBAction)api2Press:(id)sender{
-    Api2 *api2 = [[Api2 alloc] init];
+    Api2 *api2 = [[Api2 alloc] initWith:@"34.345" lng:@"113.678"];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     [api2 addAccessory:accessory];
-    api2.requestArgument = @{
-                             @"lat" : @"34.345",
-                             @"lng" : @"113.678"
-                             };
     [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
         self.weather2.text = api2.responseJSONObject[@"Weather"];
-    } failure:NULL];
+    } failure:^(id request) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

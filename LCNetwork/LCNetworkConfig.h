@@ -13,7 +13,7 @@
 @protocol LCProcessProtocol <NSObject>
 
 @optional
-// 加工参数
+// 加工argument
 - (NSDictionary *) processArgumentWithRequest:(NSDictionary *)argument;
 // 加工response
 - (id) processResponseWithRequest:(id)response;

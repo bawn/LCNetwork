@@ -25,23 +25,29 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 @protocol LCAPIRequest <NSObject>
 
 @required
-// 接口参数
-@property (nonatomic, strong) NSDictionary *requestArgument;
 // 接口地址
 - (NSString *)apiMethodName;
 // 请求方式
-- (LCRequestMethod) requestMethod;
+- (LCRequestMethod)requestMethod;
 
 @optional
 
-// 是否是副Url
-@property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl;
-// 是否缓存数据
-- (BOOL) withoutCache;
-// 超时时间
-- (NSTimeInterval) requestTimeoutInterval;
+// 是否使用副Url(旧版)
+@property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)useViceUrl");
 
-// 用于上传数据的block
+// 是否使用副Url
+- (BOOL)useViceUrl;
+
+// 是否缓存数据 response 数据
+- (BOOL)cacheResponse;
+
+// 是否缓存数据 response 数据(旧版)
+- (BOOL)withoutCache DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)cacheResponse");
+
+// 超时时间
+- (NSTimeInterval)requestTimeoutInterval;
+
+// 用于Body数据的block
 - (AFConstructingBlock)constructingBodyBlock;
 
 // json数据类型验证
@@ -75,6 +81,7 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 @interface LCBaseRequest : NSObject
 
 @property (nonatomic, strong) AFHTTPRequestOperation *requestOperation;
+@property (nonatomic, strong) NSDictionary *requestArgument;
 @property (nonatomic, weak) id<LCRequestDelegate> delegate;
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
 @property (nonatomic, strong, readonly) id responseJSONObject;

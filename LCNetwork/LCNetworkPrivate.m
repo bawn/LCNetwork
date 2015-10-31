@@ -41,7 +41,7 @@
             }
         }
     }else {
-        NSAssert(NO, @"JSON类型错误");
+        NSAssert(NO, @"response数据错误");
     }
 }
 

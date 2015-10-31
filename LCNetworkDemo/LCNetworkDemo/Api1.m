@@ -9,8 +9,6 @@
 #import "Api1.h"
 
 @implementation Api1
-// 参数属性
-@synthesize requestArgument;
 
 // 接口地址
 - (NSString *)apiMethodName{
@@ -23,9 +21,7 @@
 }
 
 // 是否缓存数据
-- (BOOL)withoutCache{
-    return YES;
-}
+
 
 
 @end

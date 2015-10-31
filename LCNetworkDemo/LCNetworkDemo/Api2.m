@@ -8,12 +8,45 @@
 
 #import "Api2.h"
 
+@interface Api2 ()
+
+@property (nonatomic, strong) NSString *lat;
+@property (nonatomic, strong) NSString *lng;
+
+
+@end
+
 @implementation Api2
 
-@synthesize requestArgument;
+
+- (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
+    self = [super init];
+    if (self) {
+        _lat = lat;
+        _lng = lng;
+//        self.requestArgument = @{
+//                                 @"lat" : lat,
+//                                 @"lng" : lng
+//                                 };
+    }
+    return self;
+}
+
+
+- (NSDictionary *)requestArgument{
+    return @{
+             @"lat" : _lat,
+             @"lng" : _lng
+             };
+}
+
+- (BOOL)withoutCache{
+    return NO;
+}
 
 // 接口地址
 - (NSString *)apiMethodName{
+    
     return @"getweather2.aspx";
 }
 
@@ -22,10 +55,6 @@
     return LCRequestMethodGet;
 }
 
-// 是否缓存数据
-- (BOOL)withoutCache{
-    return YES;
-}
 
 - (NSDictionary *)jsonValidator{
     return @{

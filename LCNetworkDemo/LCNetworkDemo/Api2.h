@@ -10,4 +10,6 @@
 
 @interface Api2 : LCBaseRequest<LCAPIRequest>
 
+- (instancetype)initWith:(NSString *)lat lng:(NSString *)lng;
+
 @end

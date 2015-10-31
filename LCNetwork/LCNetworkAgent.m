@@ -58,10 +58,10 @@
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-    NSDictionary *argument = [request.child requestArgument];
+    NSDictionary *argument = request.requestArgument;
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
-        argument = [self.config.processRule processArgumentWithRequest:[request.child requestArgument]];
+        argument = [self.config.processRule processArgumentWithRequest:request.requestArgument];
     }
    
     if ([request.child requestMethod] == LCRequestMethodGet) {
@@ -126,8 +126,18 @@
         BOOL success = [self checkResult:request];
         if (success) {
             [request toggleAccessoriesWillStopCallBack];
+            
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             // 强制更新缓存
             if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
+                [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
+            }
+            #pragma clang diagnostic pop
+
+            
+            // 强制更新缓存
+            if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
             if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator] && [[request.child jsonValidator] isKindOfClass:[NSDictionary class]]) {
@@ -197,7 +207,14 @@
 
 - (NSString *)buildRequestUrl:(LCBaseRequest *)request {
     NSString *baseUrl;
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if ( [request.child respondsToSelector:@selector(isViceUrl)] && [request.child isViceUrl]) {
+        baseUrl = self.config.viceBaseUrl;
+    }
+    #pragma clang diagnostic pop
+
+    if ([request.child respondsToSelector:@selector(useViceUrl)] && [request.child useViceUrl]){
         baseUrl = self.config.viceBaseUrl;
     }
     else{
