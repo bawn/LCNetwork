@@ -5,17 +5,21 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCNetwork.svg?style=flat)
 
 
-基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式
+基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
+采用离散型的API调用方式。
 
 ##功能
-1. API类使用`@protocol`约束，不用担心漏写方法
-2. 支持`block`和`delegate`的回调方式
-3. 支持设置主、副两个服务器地址
-4. 支持`response`缓存，基于`TMCache`
-5. 支持统一的参数加工
-6. 支持统一的`response`加工
+1. 支持`block`和`delegate`的回调方式
+2. 支持设置主、副两个服务器地址
+3. 支持`response`缓存，基于`TMCache`
+4. 支持统一的`argument`加工
+5. 支持统一的`response`加工
+6. 支持检查返回 JSON 内容的合法性
+7. 支持多个请求同时发送，并统一设置它们的回调
+8. 支持以类似于插件的形式显示HUD
 
-##Installation
+
+##集成
 
 Cocoapods:
 ```
@@ -24,12 +28,15 @@ pod 'LCNetwork'
 
 ##使用
 ###统一配置
+
+`LCNetworkConfig`类用于配置服务器地址和是否显示请求log
 ```
 LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
 config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
-config.viceBaseUrl = @"http://api.zdoz.net/";// 设置副服务器地址
+config.viceBaseUrl = @"https://api.zdoz.net/";// 设置副服务器地址
 config.logEnabled = YES;// 是否打印log信息
 ```
+
 ###参数和response的加工
 `LCProcessProtocol`协议中包含了两个方法:
 参数加工，适用于需要统一配置参数，比如参数加密或者加入某个统一的参数
