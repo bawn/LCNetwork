@@ -18,7 +18,7 @@
 7. 支持多个请求同时发送，并统一设置它们的回调
 8. 支持以类似于插件的形式显示HUD
 
-`ViewController`层的调用例子如下
+__最终在 `ViewController` 中调用一个接口请求的例子如下__
 
 ```
 Api2 *api2 = [[Api2 alloc] init];
@@ -43,7 +43,7 @@ pod 'LCNetwork'
 ##使用
 ###统一配置
 
-__`LCNetworkConfig` 提供的两个功能：__
+__`LCNetworkConfig` 类提供的两个功能：__
 
 1. 设置服务器地址
 2. 设置是否打印请求的log信息
@@ -56,7 +56,9 @@ config.logEnabled = YES;// 是否打印请求的log信息
 ```
 
 ###创建接口调用类
-每个请求都需要一个对应的类去执行，这样的好处是接口所需要的信息都集成到了这个API类的内部，不在暴露在Controller层。创建一个API类需要继承`LCBaseRequest`类，并且遵守`LCAPIRequest`协议，下面是最基本的API类的创建。
+每个请求都需要一个对应的类去执行，这样的好处是接口所需要的信息都集成到了这个API类的内部，不在暴露在Controller层。
+
+创建一个API类需要继承`LCBaseRequest`类，并且遵守`LCAPIRequest`协议，下面是最基本的API类的创建。
 
 __Api1.h__
 
@@ -72,8 +74,6 @@ __Api1.m__
 #import "Api1.h"
 
 @implementation Api1
-// 参数属性
-@synthesize requestArgument;
 
 // 接口地址
 - (NSString *)apiMethodName{
@@ -85,13 +85,35 @@ __Api1.m__
     return LCRequestMethodGet;
 }
 
-// 是否缓存数据
-- (BOOL)withoutCache{
-    return YES;
-}
-
 @end
 ```
+`- (NSString *)apiMethodName` 和 `- (LCRequestMethod)requestMethod` 是 @required 方法，所以必须实现，这在一定程度上降低了因漏写方法而crash的概率。
+
+另外 @optional 方法提供了如下的功能
+
+```
+// 是否使用副Url
+- (BOOL)useViceUrl;
+
+// 是否缓存数据 response 数据
+- (BOOL)cacheResponse;
+
+// 超时时间
+- (NSTimeInterval)requestTimeoutInterval;
+
+// 用于Body数据的block
+- (AFConstructingBlock)constructingBodyBlock;
+
+// json数据类型验证
+- (NSDictionary *)jsonValidator;
+
+// response处理
+- (id)responseProcess;
+
+```
+
+
+
 ###调用
 ```
 Api1 *api1 = [[Api1 alloc] init];
