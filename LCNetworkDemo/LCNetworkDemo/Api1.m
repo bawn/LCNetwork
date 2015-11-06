@@ -21,7 +21,9 @@
 }
 
 // 是否缓存数据
-
+- (BOOL)cacheResponse{
+    return YES;
+}
 
 
 @end

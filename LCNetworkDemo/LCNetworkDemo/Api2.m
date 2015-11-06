@@ -22,23 +22,23 @@
 - (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
     self = [super init];
     if (self) {
-        _lat = lat;
-        _lng = lng;
-//        self.requestArgument = @{
-//                                 @"lat" : lat,
-//                                 @"lng" : lng
-//                                 };
+//        _lat = lat;
+//        _lng = lng;
+        self.requestArgument = @{
+                                 @"lat" : lat,
+                                 @"lng" : lng
+                                 };
     }
     return self;
 }
 
 
-- (NSDictionary *)requestArgument{
-    return @{
-             @"lat" : _lat,
-             @"lng" : _lng
-             };
-}
+//- (NSDictionary *)requestArgument{
+//    return @{
+//             @"lat" : _lat,
+//             @"lng" : _lng
+//             };
+//}
 
 - (BOOL)withoutCache{
     return NO;
