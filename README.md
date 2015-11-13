@@ -6,9 +6,10 @@
 
 
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
-采用离散型的API调用方式。
+接口类采用 @protocol 约束，让调用者可以更清晰的知道那些方法需要被实现，那些功能可以被添加。
 
 ##功能
+
 1. 支持`block`和`delegate`的回调方式
 2. 支持设置主、副两个服务器地址
 3. 支持`response`缓存，基于`TMCache`
