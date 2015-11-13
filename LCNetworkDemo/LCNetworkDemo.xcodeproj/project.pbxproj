@@ -20,12 +20,12 @@
 		7A83F2BE1B3C00D500DA3282 /* LCNetworkDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2BD1B3C00D500DA3282 /* LCNetworkDemoTests.m */; };
 		7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD464681B3FE3AC000E12C4 /* Api2.m */; };
 		B90659BA567364EEB1F9B4BB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66E0484201DE342B883E84B /* libPods.a */; };
-		DF5A72CD1BE4E2FF0012F432 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72C21BE4E2FF0012F432 /* LCBaseRequest.m */; };
-		DF5A72CE1BE4E2FF0012F432 /* LCBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72C41BE4E2FF0012F432 /* LCBatchRequest.m */; };
-		DF5A72CF1BE4E2FF0012F432 /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72C61BE4E2FF0012F432 /* LCBatchRequestAgent.m */; };
-		DF5A72D01BE4E2FF0012F432 /* LCNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72C81BE4E2FF0012F432 /* LCNetworkAgent.m */; };
-		DF5A72D11BE4E2FF0012F432 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72CA1BE4E2FF0012F432 /* LCNetworkConfig.m */; };
-		DF5A72D21BE4E2FF0012F432 /* LCNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5A72CC1BE4E2FF0012F432 /* LCNetworkPrivate.m */; };
+		DFF89BFE1BF5C498000B1BE3 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */; };
+		DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */; };
+		DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */; };
+		DFF89C011BF5C498000B1BE3 /* LCNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */; };
+		DFF89C021BF5C498000B1BE3 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */; };
+		DFF89C031BF5C498000B1BE3 /* LCNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,18 +64,19 @@
 		7AD464671B3FE3AC000E12C4 /* Api2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Api2.h; sourceTree = "<group>"; };
 		7AD464681B3FE3AC000E12C4 /* Api2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Api2.m; sourceTree = "<group>"; };
 		D66E0484201DE342B883E84B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF5A72C11BE4E2FF0012F432 /* LCBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBaseRequest.h; sourceTree = "<group>"; };
-		DF5A72C21BE4E2FF0012F432 /* LCBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBaseRequest.m; sourceTree = "<group>"; };
-		DF5A72C31BE4E2FF0012F432 /* LCBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequest.h; sourceTree = "<group>"; };
-		DF5A72C41BE4E2FF0012F432 /* LCBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequest.m; sourceTree = "<group>"; };
-		DF5A72C51BE4E2FF0012F432 /* LCBatchRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequestAgent.h; sourceTree = "<group>"; };
-		DF5A72C61BE4E2FF0012F432 /* LCBatchRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequestAgent.m; sourceTree = "<group>"; };
-		DF5A72C71BE4E2FF0012F432 /* LCNetworkAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkAgent.h; sourceTree = "<group>"; };
-		DF5A72C81BE4E2FF0012F432 /* LCNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkAgent.m; sourceTree = "<group>"; };
-		DF5A72C91BE4E2FF0012F432 /* LCNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkConfig.h; sourceTree = "<group>"; };
-		DF5A72CA1BE4E2FF0012F432 /* LCNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkConfig.m; sourceTree = "<group>"; };
-		DF5A72CB1BE4E2FF0012F432 /* LCNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkPrivate.h; sourceTree = "<group>"; };
-		DF5A72CC1BE4E2FF0012F432 /* LCNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkPrivate.m; sourceTree = "<group>"; };
+		DFF89BF21BF5C498000B1BE3 /* LCBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBaseRequest.h; sourceTree = "<group>"; };
+		DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBaseRequest.m; sourceTree = "<group>"; };
+		DFF89BF41BF5C498000B1BE3 /* LCBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequest.h; sourceTree = "<group>"; };
+		DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequest.m; sourceTree = "<group>"; };
+		DFF89BF61BF5C498000B1BE3 /* LCBatchRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequestAgent.h; sourceTree = "<group>"; };
+		DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBatchRequestAgent.m; sourceTree = "<group>"; };
+		DFF89BF81BF5C498000B1BE3 /* LCNetworkAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkAgent.h; sourceTree = "<group>"; };
+		DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkAgent.m; sourceTree = "<group>"; };
+		DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkConfig.h; sourceTree = "<group>"; };
+		DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkConfig.m; sourceTree = "<group>"; };
+		DFF89BFC1BF5C498000B1BE3 /* LCNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkPrivate.h; sourceTree = "<group>"; };
+		DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkPrivate.m; sourceTree = "<group>"; };
+		DFF89C041BF5C4AA000B1BE3 /* LCNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCNetwork.h; sourceTree = "<group>"; };
 		E92C914ECFE8EC22DB8051DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,7 +130,7 @@
 		7A83F2A01B3C00D500DA3282 /* LCNetworkDemo */ = {
 			isa = PBXGroup;
 			children = (
-				DF5A72C01BE4E2FF0012F432 /* LCNetwork */,
+				DFF89BF11BF5C498000B1BE3 /* LCNetwork */,
 				7A83F2A51B3C00D500DA3282 /* AppDelegate.h */,
 				7A83F2A61B3C00D500DA3282 /* AppDelegate.m */,
 				7A83F2A81B3C00D500DA3282 /* ViewController.h */,
@@ -187,21 +188,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		DF5A72C01BE4E2FF0012F432 /* LCNetwork */ = {
+		DFF89BF11BF5C498000B1BE3 /* LCNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				DF5A72C11BE4E2FF0012F432 /* LCBaseRequest.h */,
-				DF5A72C21BE4E2FF0012F432 /* LCBaseRequest.m */,
-				DF5A72C31BE4E2FF0012F432 /* LCBatchRequest.h */,
-				DF5A72C41BE4E2FF0012F432 /* LCBatchRequest.m */,
-				DF5A72C51BE4E2FF0012F432 /* LCBatchRequestAgent.h */,
-				DF5A72C61BE4E2FF0012F432 /* LCBatchRequestAgent.m */,
-				DF5A72C71BE4E2FF0012F432 /* LCNetworkAgent.h */,
-				DF5A72C81BE4E2FF0012F432 /* LCNetworkAgent.m */,
-				DF5A72C91BE4E2FF0012F432 /* LCNetworkConfig.h */,
-				DF5A72CA1BE4E2FF0012F432 /* LCNetworkConfig.m */,
-				DF5A72CB1BE4E2FF0012F432 /* LCNetworkPrivate.h */,
-				DF5A72CC1BE4E2FF0012F432 /* LCNetworkPrivate.m */,
+				DFF89C041BF5C4AA000B1BE3 /* LCNetwork.h */,
+				DFF89BF21BF5C498000B1BE3 /* LCBaseRequest.h */,
+				DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */,
+				DFF89BF41BF5C498000B1BE3 /* LCBatchRequest.h */,
+				DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */,
+				DFF89BF61BF5C498000B1BE3 /* LCBatchRequestAgent.h */,
+				DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */,
+				DFF89BF81BF5C498000B1BE3 /* LCNetworkAgent.h */,
+				DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */,
+				DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */,
+				DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */,
+				DFF89BFC1BF5C498000B1BE3 /* LCNetworkPrivate.h */,
+				DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */,
 			);
 			name = LCNetwork;
 			path = ../../LCNetwork;
@@ -362,17 +364,17 @@
 				7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */,
 				7A80C2771B3D2FC300D53F00 /* Api1.m in Sources */,
 				7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */,
-				DF5A72D01BE4E2FF0012F432 /* LCNetworkAgent.m in Sources */,
+				DFF89C011BF5C498000B1BE3 /* LCNetworkAgent.m in Sources */,
 				7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */,
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
-				DF5A72D21BE4E2FF0012F432 /* LCNetworkPrivate.m in Sources */,
+				DFF89C031BF5C498000B1BE3 /* LCNetworkPrivate.m in Sources */,
 				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
-				DF5A72CE1BE4E2FF0012F432 /* LCBatchRequest.m in Sources */,
-				DF5A72CF1BE4E2FF0012F432 /* LCBatchRequestAgent.m in Sources */,
-				DF5A72D11BE4E2FF0012F432 /* LCNetworkConfig.m in Sources */,
+				DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */,
+				DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */,
+				DFF89C021BF5C498000B1BE3 /* LCNetworkConfig.m in Sources */,
 				7A83F2A41B3C00D500DA3282 /* main.m in Sources */,
-				DF5A72CD1BE4E2FF0012F432 /* LCBaseRequest.m in Sources */,
+				DFF89BFE1BF5C498000B1BE3 /* LCBaseRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
