@@ -1,9 +1,9 @@
 //
 //  LCNetwork.h
-//  LCNetworkDemo
+//  LCNetwork
 //
 //  Created by bawn on 11/13/15.
-//  Copyright © 2015 beike. All rights reserved.
+//  Copyright © 2015 bawn. All rights reserved.
 //
 
 #ifndef LCNetwork_h

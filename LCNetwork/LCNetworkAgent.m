@@ -1,9 +1,9 @@
 //
 //  LCNetworkAgent.m
-//  ShellMoney
+//  LCNetwork
 //
-//  Created by beike on 6/4/15.
-//  Copyright (c) 2015 beik. All rights reserved.
+//  Created by bawn on 6/4/15.
+//  Copyright (c) 2015 bawn. All rights reserved.
 //
 
 #import "LCNetworkAgent.h"
@@ -63,7 +63,7 @@
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
         argument = [self.config.processRule processArgumentWithRequest:request.requestArgument];
     }
-   
+    
     if ([request.child requestMethod] == LCRequestMethodGet) {
         request.requestOperation = [self.manager GET:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [self handleRequestResult:operation];
@@ -127,21 +127,29 @@
         if (success) {
             [request toggleAccessoriesWillStopCallBack];
             
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             // 强制更新缓存
             if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
-            #pragma clang diagnostic pop
-
+#pragma clang diagnostic pop
+            
             
             // 强制更新缓存
             if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
-            if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator] && [[request.child jsonValidator] isKindOfClass:[NSDictionary class]]) {
-                [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
+            // 验证json数据
+            if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator]) {
+                if ([request.child respondsToSelector:@selector(responseProcess)] && [request.child responseProcess]) {
+                    id newResponseJSONObject = [request.child responseProcess];
+                    NSString *key = [request.responseJSONObject allKeysForObject:newResponseJSONObject].firstObject;
+                    [LCNetworkPrivate checkJson:newResponseJSONObject key:key withValidator:[request.child jsonValidator]];
+                }
+                else{
+                    [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
+                }
             }
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
@@ -207,13 +215,13 @@
 
 - (NSString *)buildRequestUrl:(LCBaseRequest *)request {
     NSString *baseUrl;
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if ( [request.child respondsToSelector:@selector(isViceUrl)] && [request.child isViceUrl]) {
         baseUrl = self.config.viceBaseUrl;
     }
-    #pragma clang diagnostic pop
-
+#pragma clang diagnostic pop
+    
     if ([request.child respondsToSelector:@selector(useViceUrl)] && [request.child useViceUrl]){
         baseUrl = self.config.viceBaseUrl;
     }
