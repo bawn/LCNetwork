@@ -8,6 +8,8 @@
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
 接口类采用 @protocol 约束，让调用者可以更清晰的知道那些方法需要被实现，那些功能可以被添加。
 
+若遇到 Demo 闪退问题，请删除 APP 重新运行，另外感谢[zdoz](http://api.zdoz.net/)提供免费的测试接口。
+
 ##功能
 
 1. 支持`block`和`delegate`的回调方式
