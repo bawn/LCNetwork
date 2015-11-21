@@ -12,7 +12,7 @@
 
 // 接口地址
 - (NSString *)apiMethodName{
-    return @"getweather.aspx";
+    return @"geo2loc_2.aspx";
 }
 
 // 请求方式
@@ -24,6 +24,7 @@
 - (BOOL)cacheResponse{
     return YES;
 }
+
 
 
 @end

@@ -47,7 +47,7 @@
 // 接口地址
 - (NSString *)apiMethodName{
     
-    return @"getweather2.aspx";
+    return @"geo2loc_2.aspx";
 }
 
 // 请求方式
@@ -55,15 +55,19 @@
     return LCRequestMethodGet;
 }
 
+- (id)responseProcess:(id)responseObject{
+    return responseObject[@"city"];
+}
 
-- (NSDictionary *)jsonValidator{
-    return @{
-             @"City" : [NSString class],
-             @"Img" : [NSString class],
-             @"Ptime" : [NSString class],
-             @"Temp1" : [NSString class],
-             @"Temp2" : [NSString class],
-             @"Weather" : [NSString class]
-             };
+
+- (id)jsonValidator{
+//    return @{
+//             @"city" : [NSString class],
+//             @"country" : [NSString class],
+//             @"district" : [NSString class],
+//             @"province" : [NSString class]
+//             };
+    
+    return [NSString class];
 }
 @end

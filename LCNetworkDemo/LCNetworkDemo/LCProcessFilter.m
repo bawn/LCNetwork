@@ -16,4 +16,14 @@
     return response;
 }
 
+//- (id) processResponseWithRequest:(id)response{
+//    if ([response[@"result"] isEqualToString:@"error"]) {
+//        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: response[@"message"]};
+//        return [NSError errorWithDomain:ErrorDomain code:0 userInfo:userInfo];
+//    }
+//    else{
+//        return response[@"data"];
+//    }
+//}
+
 @end

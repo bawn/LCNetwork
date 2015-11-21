@@ -15,8 +15,8 @@
 
 @interface ViewController ()<LCRequestDelegate>
 
-@property (nonatomic, weak) IBOutlet UILabel *weather1;
-@property (nonatomic, weak) IBOutlet UILabel *weather2;
+@property (nonatomic, weak) IBOutlet UILabel *city1;
+@property (nonatomic, weak) IBOutlet UILabel *city2;
 
 
 @end
@@ -29,19 +29,22 @@
     Api1 *api1 = [[Api1 alloc] init];
     
     if (api1.cacheJson) {
-        self.weather1.text = api1.cacheJson[@"Weather"];
+        self.city1.text = api1.cacheJson[@"city"];
     }
     
     Api2 *api2 = [[Api2 alloc] init];
     
     if (api2.cacheJson) {
-        self.weather2.text = api2.cacheJson[@"Weather"];
+        self.city2.text = api2.cacheJson;
     }
 }
 
 - (IBAction)api1Press:(id)sender{
     Api1 *api1 = [[Api1 alloc] init];
-    api1.requestArgument = @{@"cityName" : @"杭州"};
+    api1.requestArgument = @{
+                             @"lat" : @"34.12",
+                             @"lng" : @"115.21212"
+                             };
     
     Api2 *api2 = [[Api2 alloc] init];
     api2.requestArgument = @{
@@ -54,20 +57,25 @@
     
     [request startWithCompletionBlockWithSuccess:^(LCBatchRequest *batchRequest) {
         Api1 *api1 = batchRequest.requestArray.firstObject;
-        self.weather1.text = api1.responseJSONObject[@"Weather"];
+        self.city1.text = api1.responseJSONObject[@"city"];
         Api2 *api2 = batchRequest.requestArray[1];
-        self.weather2.text = api2.responseJSONObject[@"Weather"];
+        self.city2.text = api2.responseJSONObject;// 不需要获取 city 的值，是因为实现了 - (id)responseProcess:(id)responseObject 方法
     } failure:^(LCBatchRequest *batchRequest) {
         
     }];
 }
 
 - (IBAction)api2Press:(id)sender{
-    Api2 *api2 = [[Api2 alloc] initWith:@"34.345" lng:@"113.678"];
+    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     [api2 addAccessory:accessory];
     [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
-        self.weather2.text = api2.responseJSONObject[@"Weather"];
+        if ([api2.responseJSONObject isKindOfClass:[NSError class]]) {
+            // 显示错误信息
+        }
+        else{
+            self.city2.text = api2.responseJSONObject;
+        }
     } failure:^(id request) {
         
     }];
