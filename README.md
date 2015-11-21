@@ -109,7 +109,7 @@ __Api1.m__
 - (NSDictionary *)jsonValidator;
 
 // response处理
-- (id)responseProcess;
+- (id)responseProcess:(id)responseObject;
 
 ```
 
@@ -180,13 +180,89 @@ __LCProcessFilter.m__
     return newParameters;
 }
 ```
+
+或者是处理类似于下面的 json 数据，服务端返回的数据结构都会带`result` 和 `ok` 的 key
+```
+{
+  "result": {
+      "_id": "564a931dbbb03c7002a2c0f3",
+      "name": "clover",
+      "count": 0
+    },
+
+  "ok": true,
+  "message" : "成功"
+}
+```
+那么可以这样处理
+
+```
+- (id) processResponseWithRequest:(id)response{
+    if ([response[@"ok"] boolValue]) {
+        return response[@"result"];
+    }
+    else{
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: response[@"message"]};
+        return [NSError errorWithDomain:ErrorDomain code:0 userInfo:userInfo];
+    }
+}
+
+```
+也就是说当使用 `api1.responseJSONObject` 获取数据时，返回的直接是 `result` 对应的值，或者是错误信息。
+
 最后，赋值给 `LCNetworkConfig` 的 `processRule`
 ```
 LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
 ```
 
- 
+### response 再加工
+
+当类似于
+```
+{
+  "result": {
+      "_id": "564a931dbbb03c7002a2c0f3",
+      "name": "clover",
+      "count": 10
+    },
+
+  "ok": true,
+  "message" : "成功"
+}
+```
+这样的数据，如果已经对 response 做了统一的加工，比如成功后统一返回的数据是 result 中的数据，那么返回的也是一个 `NSDictionary`，可能无法满足需求，这时候再把数据交给 `LCBaseRequest` 子类处理再合适不过了。比如需要直接获取`count`值，那么只需要实现 `- (id)responseProcess:(id)responseObject;` 协议方法，具体如下
+
+```
+- (id)responseProcess:(id)responseObject{
+    return responseObject[@"count"];
+}
+```
+__注意，不应该调用`self.responseJSONObject`作为处理数据，请使用`responseObject`来处理__，当实现这个协议方法后，使用 `api1.responseJSONObject` 获取数据时，返回将是 `count` 的值。这里其实有问题，count 返回的值是 10，那么这个 10 是`NSNumber` 还是 `NSString`（不带双引号的数字，不一定就是NSNumber），这时候就会用到 json 格式校验了。
+
+### json 数据校验
+
+还是上面的 json 数据例子，比如需要校验 count 返回的数据类型，那么就需要实现 `- (id)jsonValidator;` 协议方法，具体如下
+
+```
+- (id)jsonValidator{
+    return @{@"count" : [NSNumber class]};
+}
+```
+__注意，json 数据校验，针对的是最终返回的数据，也就是说如果只做了统一的参数加工，使用上面的方法才是正确的，因为最终的返回数据是
+```
+ "_id": "564a931dbbb03c7002a2c0f3",
+  "name": "clover",
+  "count": 10
+```
+所以如果做了 response 再加工，那么最终返回的数据是 "count": 10，所以协议方法需要改成
+```
+- (id)jsonValidator{
+    return [NSNumber class];
+}
+```
+
+
 ##更多信息
 参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
 
