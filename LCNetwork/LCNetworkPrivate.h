@@ -10,8 +10,6 @@
 
 @interface LCNetworkPrivate : NSObject
 
-+ (void)checkJson:(id)json key:(NSString *)key withValidator:(id)validatorJson;
-
 + (void)checkJson:(id)json withValidator:(id)validatorJson;
 
 @end

@@ -53,8 +53,18 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 // json数据类型验证
 - (id)jsonValidator;
 
-// response处理
-- (id)responseProcess;
+// response 处理(旧版)
+- (id)responseProcess DEPRECATED_MSG_ATTRIBUTE("Use - (id)responseProcess:");
+
+/**
+ *  处理responseJSONObject，当外部访问 self.responseJSONObject 的时候就会返回这个方法处理后的数据
+ *
+ *  @param responseObject 输入的 responseObject ，在方法内切勿使用 self.responseJSONObject
+ *
+ *  @return 处理后的responseJSONObject
+ */
+- (id)responseProcess:(id)responseObject;
+
 @end
 
 /*--------------------------------------------*/

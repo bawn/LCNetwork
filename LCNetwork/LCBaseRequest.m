@@ -60,17 +60,20 @@
 }
 
 - (id)responseJSONObject{
-    if (_responseJSONObject) {
-        return _responseJSONObject;
-    }
+   
     // 检查是否有统一的response加工
     if (self.config.processRule &&
         [self.config.processRule respondsToSelector:@selector(processResponseWithRequest:)]) {
-        return [self.config.processRule processResponseWithRequest:self.requestOperation.responseObject];
+        _responseJSONObject = [self.config.processRule processResponseWithRequest:self.requestOperation.responseObject];
     }
     else{
-        return self.requestOperation.responseObject;
+        _responseJSONObject = self.requestOperation.responseObject;
     }
+    
+    if ([self.child respondsToSelector:@selector(responseProcess:)]){
+        _responseJSONObject = [self.child responseProcess:_responseJSONObject];
+    }
+    return _responseJSONObject;
 }
 
 

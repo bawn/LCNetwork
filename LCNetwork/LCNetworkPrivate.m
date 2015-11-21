@@ -10,7 +10,7 @@
 
 @implementation LCNetworkPrivate
 
-+ (void)checkJson:(id)json key:(NSString *)key withValidator:(id)validatorJson{
++ (void)checkJson:(id)json withValidator:(id)validatorJson {
     if ([json isKindOfClass:[NSDictionary class]] &&
         [validatorJson isKindOfClass:[NSDictionary class]]) {
         NSDictionary * dict = json;
@@ -22,7 +22,7 @@
             id format = validator[key];
             if ([value isKindOfClass:[NSDictionary class]]
                 || [value isKindOfClass:[NSArray class]]) {
-                [self checkJson:value key:key withValidator:format];
+                [self checkJson:value withValidator:format];
             } else {
                 if ([value isKindOfClass:format] == NO &&
                     [value isKindOfClass:[NSNull class]] == NO) {
@@ -37,7 +37,7 @@
             NSArray * array = json;
             NSDictionary * validator = validatorJson[0];
             for (id item in array) {
-                [self checkJson:item key:key withValidator:validator];
+                [self checkJson:item withValidator:validator];
             }
         }
     }
@@ -45,32 +45,11 @@
         return;
     }
     else {
-        NSAssert2(NO, @"JSON类型错误>>>>> %@:%@", key, [self classFromObjct:json]);
+        NSAssert2(NO, @"JSON类型错误>>>>> %@:%@", json, validatorJson);
     }
+
 }
 
-
-+ (void)checkJson:(id)json withValidator:(id)validatorJson {
-    [self checkJson:json key:nil withValidator:validatorJson];
-}
-
-+ (Class)classFromObjct:(id)object{
-    if ([object isKindOfClass:[NSDictionary class]]) {
-        return [NSDictionary class];
-    }
-    else if ([object isKindOfClass:[NSArray class]]) {
-        return [NSArray class];
-    }
-    else if ([object isKindOfClass:[NSString class]]) {
-        return [NSString class];
-    }
-    else if ([object isKindOfClass:[NSNumber class]]) {
-        return [NSNumber class];
-    }
-    else{
-        return nil;
-    }
-}
 
 
 @end

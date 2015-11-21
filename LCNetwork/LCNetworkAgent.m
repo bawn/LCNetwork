@@ -140,16 +140,10 @@
             if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
                 [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
             }
-            // 验证json数据
+            // 验证 json 数据
             if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator]) {
-                if ([request.child respondsToSelector:@selector(responseProcess)] && [request.child responseProcess]) {
-                    id newResponseJSONObject = [request.child responseProcess];
-                    NSString *key = [request.responseJSONObject allKeysForObject:newResponseJSONObject].firstObject;
-                    [LCNetworkPrivate checkJson:newResponseJSONObject key:key withValidator:[request.child jsonValidator]];
-                }
-                else{
-                    [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
-                }
+                [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
+                
             }
             if (request.delegate != nil) {
                 [request.delegate requestFinished:request];
