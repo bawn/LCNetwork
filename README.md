@@ -6,7 +6,7 @@
 
 
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
-接口类采用 @protocol 约束，让调用者可以更清晰的知道那些方法需要被实现，那些功能可以被添加。
+接口类采用 @protocol 约束，接口类的创建和使用更清晰。
 
 若遇到 Demo 闪退问题，请删除 APP 重新运行，另外感谢[zdoz](http://api.zdoz.net/)提供免费的测试接口。
 
@@ -14,7 +14,7 @@
 
 1. 支持`block`和`delegate`的回调方式
 2. 支持设置主、副两个服务器地址
-3. 支持`response`缓存，基于`TMCache`
+3. 支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)
 4. 支持统一的`argument`加工
 5. 支持统一的`response`加工
 6. 支持检查返回 JSON 内容的合法性
@@ -287,6 +287,13 @@ __注意，json 数据校验，针对的是最终返回的数据__，也就是�
 
 ##更多信息
 参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
+
+
+## TODO
+
+- [ ] 统一的 response 可以被单个接口忽略
+- [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护
+- [ ] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ##Requirements
 * iOS 6 or higher
