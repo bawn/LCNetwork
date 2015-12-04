@@ -218,6 +218,22 @@ LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
 ```
 
+### multipart/form-data 
+
+通常我们会用到上传图片或者其他文件就需要用到 `multipart/form-data`，同样的只需要实现`- (AFConstructingBlock)constructingBodyBlock;`协议方法即可，比如
+```
+- (AFConstructingBlock)constructingBodyBlock {
+    return ^(id<AFMultipartFormData> formData) {
+        NSData *data = UIImageJPEGRepresentation([UIImage imageNamed:@"currentPageDot"], 0.9);
+        NSString *name = @"image";
+        NSString *formKey = @"image";
+        NSString *type = @"image/jpeg";
+        [formData appendPartWithFileData:data name:formKey fileName:name mimeType:type];
+    };
+}
+```
+
+
 ### response 再加工
 
 当类似于
@@ -263,6 +279,10 @@ __注意，json 数据校验，针对的是最终返回的数据__，也就是�
     return [NSNumber class];
 }
 ```
+### 关于HUD
+
+如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
+
 
 
 ##更多信息
