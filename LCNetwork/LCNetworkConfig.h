@@ -26,6 +26,5 @@
 
 @property (nonatomic, strong) NSString *mainBaseUrl;// 主url
 @property (nonatomic, strong) NSString *viceBaseUrl;// 副url
-@property (nonatomic, assign) BOOL logEnabled; // 是否启用打印
 @property (nonatomic, strong) id <LCProcessProtocol> processRule;
 @end

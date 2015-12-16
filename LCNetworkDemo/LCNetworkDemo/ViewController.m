@@ -12,6 +12,7 @@
 #import "Api3.h"
 #import "LCRequestAccessory.h"
 #import "LCBatchRequest.h"
+#import "HQMultiImageUploadApi.h"
 
 @interface ViewController ()<LCRequestDelegate>
 
@@ -29,13 +30,13 @@
     Api1 *api1 = [[Api1 alloc] init];
     
     if (api1.cacheJson) {
-        self.city1.text = api1.cacheJson[@"city"];
+//        self.city1.text = api1.cacheJson[@"city"];
     }
     
     Api2 *api2 = [[Api2 alloc] init];
     
     if (api2.cacheJson) {
-        self.city2.text = api2.cacheJson;
+//        self.city2.text = api2.cacheJson;
     }
 }
 
@@ -66,19 +67,27 @@
 }
 
 - (IBAction)api2Press:(id)sender{
-    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
-    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
-    [api2 addAccessory:accessory];
-    [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
-        if ([api2.responseJSONObject isKindOfClass:[NSError class]]) {
-            // 显示错误信息
-        }
-        else{
-            self.city2.text = api2.responseJSONObject;
-        }
-    } failure:^(id request) {
+//    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
+//    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
+//    [api2 addAccessory:accessory];
+//    [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
+//        if ([api2.responseJSONObject isKindOfClass:[NSError class]]) {
+//            // 显示错误信息
+//        }
+//        else{
+//            self.city2.text = api2.responseJSONObject;
+//        }
+//    } failure:^(id request) {
+//        
+//    }];
+    
+    HQMultiImageUploadApi *multiImageUploadApi = [[HQMultiImageUploadApi alloc] init];
+    multiImageUploadApi.images = @[[UIImage imageNamed:@"test"], [UIImage imageNamed:@"test1"]];
+    [multiImageUploadApi startWithBlockProgress:^(NSProgress *progress) {
+        NSLog(@"%f", progress.fractionCompleted);
+    } success:^(id request) {
         
-    }];
+    } failure:NULL];
 }
 
 - (void)didReceiveMemoryWarning {

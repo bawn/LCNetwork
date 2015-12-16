@@ -59,15 +59,9 @@
     return responseObject[@"city"];
 }
 
-
-- (id)jsonValidator{
-//    return @{
-//             @"city" : [NSString class],
-//             @"country" : [NSString class],
-//             @"district" : [NSString class],
-//             @"province" : [NSString class]
-//             };
-    
-    return [NSString class];
+- (void)dealloc{
+    NSLog(@"%s", __func__);
 }
+
+
 @end

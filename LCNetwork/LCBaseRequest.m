@@ -11,12 +11,10 @@
 #import "LCNetworkConfig.h"
 #import "TMCache.h"
 #import "AFNetworking.h"
-#import "AFNetworkActivityLogger.h"
 
 @interface LCBaseRequest ()
 
 @property (nonatomic, strong) id cacheJson;
-@property (nonatomic, strong) id responseJSONObject;
 @property (nonatomic, weak) id<LCAPIRequest> child;
 @property (nonatomic, strong) NSMutableArray *requestAccessories;
 @property (nonatomic, strong) LCNetworkConfig *config;
@@ -36,12 +34,6 @@
             NSAssert(NO, @"子类必须要实现APIRequest这个protocol");
         }
         _config = [LCNetworkConfig sharedInstance];
-        if (_config.logEnabled) {
-            #ifdef DEBUG
-            [[AFNetworkActivityLogger sharedLogger] startLogging];
-            [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-            #endif
-        }
       
     }
     return self;
@@ -59,29 +51,49 @@
     [self start];
 }
 
+- (void)startWithBlockSuccess:(void (^)(id))success
+                      failure:(void (^)(id))failure{
+    self.successCompletionBlock = success;
+    self.failureCompletionBlock = failure;
+    [self start];
+}
+
+- (void)startWithBlockProgress:(void (^)(NSProgress *))progress
+                  success:(void (^)(id))success
+                  failure:(void (^)(id))failure{
+    self.progressBlock = progress;
+    self.successCompletionBlock = success;
+    self.failureCompletionBlock = failure;
+    [self start];
+}
+
+
 - (id)responseJSONObject{
-   
-    // 检查是否有统一的response加工
-    if (self.config.processRule &&
-        [self.config.processRule respondsToSelector:@selector(processResponseWithRequest:)]) {
-        _responseJSONObject = [self.config.processRule processResponseWithRequest:self.requestOperation.responseObject];
-    }
-    else{
-        _responseJSONObject = self.requestOperation.responseObject;
+    id responseJSONObject = nil;
+    
+    BOOL process = NO;
+    // 统一加工response
+    if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processResponseWithRequest:)]) {
+        if (([self.child respondsToSelector:@selector(ignoreUnifiedResponseProcess)] && ![self.child ignoreUnifiedResponseProcess]) ||
+            ![self.child respondsToSelector:@selector(ignoreUnifiedResponseProcess)]) {
+            responseJSONObject = [self.config.processRule processResponseWithRequest:_responseJSONObject];
+            process = YES;
+        }
     }
     
     if ([self.child respondsToSelector:@selector(responseProcess:)]){
-        _responseJSONObject = [self.child responseProcess:_responseJSONObject];
+        responseJSONObject = [self.child responseProcess:_responseJSONObject];
+        process = YES;
     }
-    return _responseJSONObject;
+    return process ? responseJSONObject : _responseJSONObject;
 }
 
 
 - (NSInteger)responseStatusCode{
-    return self.requestOperation.response.statusCode;
+    return [(NSHTTPURLResponse *)self.sessionDataTask.response statusCode];
 }
 
-- (id) cacheJson{
+- (id)cacheJson{
     if (_cacheJson) {
         return _cacheJson;
     }
@@ -100,18 +112,10 @@
 }
 
 
-- (BOOL)statusCodeValidator {
-    NSInteger statusCode = [self responseStatusCode];
-    if (statusCode >= 200 && statusCode <=299) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 - (void)clearCompletionBlock {
     self.successCompletionBlock = nil;
     self.failureCompletionBlock = nil;
+    self.progressBlock = nil;
 }
 
 #pragma mark - Request Accessoies

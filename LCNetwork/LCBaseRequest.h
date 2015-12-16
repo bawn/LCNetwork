@@ -21,10 +21,16 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodPatch
 };
 
+typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
+    LCRequestSerializerTypeHTTP = 0,
+    LCRequestSerializerTypeJSON,
+};
+
 /*--------------------------------------------*/
 @protocol LCAPIRequest <NSObject>
 
 @required
+
 // 接口地址
 - (NSString *)apiMethodName;
 // 请求方式
@@ -33,28 +39,38 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 @optional
 
 // 是否使用副Url(旧版)
-@property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)useViceUrl");
+@property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl DEPRECATED_MSG_ATTRIBUTE("使用 - (BOOL)useViceUrl");
 
 // 是否使用副Url
 - (BOOL)useViceUrl;
 
-// 是否缓存数据 response 数据
+/**
+ *  是否缓存数据 response 数据
+ *
+ *  @return 是否缓存数据 response 数据
+ */
 - (BOOL)cacheResponse;
 
 // 是否缓存数据 response 数据(旧版)
-- (BOOL)withoutCache DEPRECATED_MSG_ATTRIBUTE("Use - (BOOL)cacheResponse");
+- (BOOL)withoutCache DEPRECATED_MSG_ATTRIBUTE("使用 - (BOOL)cacheResponse");
 
-// 超时时间
+/**
+ *  自定义超时时间
+ *
+ *  @return 超时时间
+ */
 - (NSTimeInterval)requestTimeoutInterval;
 
-// 用于Body数据的block
+/**
+ *  multipart 数据
+ *
+ *  @return 用于 multipart 的数据block
+ */
 - (AFConstructingBlock)constructingBodyBlock;
 
-// json数据类型验证
-- (id)jsonValidator;
 
 // response 处理(旧版)
-- (id)responseProcess DEPRECATED_MSG_ATTRIBUTE("Use - (id)responseProcess:");
+- (id)responseProcess DEPRECATED_MSG_ATTRIBUTE("使用 - (id)responseProcess:");
 
 /**
  *  处理responseJSONObject，当外部访问 self.responseJSONObject 的时候就会返回这个方法处理后的数据
@@ -65,14 +81,38 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
  */
 - (id)responseProcess:(id)responseObject;
 
+/**
+ *  是否忽略统一的参数加工
+ *
+ *  @return 返回 YES，那么 self.responseJSONObject 将返回原始的数据
+ */
+- (BOOL)ignoreUnifiedResponseProcess;
+
+/**
+ *  返回完全自定义的接口地址
+ *
+ *  @return 完全自定义的接口地址
+ */
+- (NSString *)customApiMethodName;
+
+/**
+ *  服务端数据接收类型，比如 LCRequestSerializerTypeJSON 用于 post json 数据
+ *
+ *  @return 服务端数据接收类型
+ */
+- (LCRequestSerializerType)requestSerializerType;
+
 @end
 
 /*--------------------------------------------*/
 @class LCBaseRequest;
 @protocol LCRequestDelegate <NSObject>
 
+@optional
+
 - (void)requestFinished:(LCBaseRequest *)request;
 - (void)requestFailed:(LCBaseRequest *)request;
+- (void)requestProgress:(NSProgress *)progress;
 
 @end
 /*--------------------------------------------*/
@@ -90,27 +130,55 @@ typedef NS_ENUM(NSInteger , LCRequestMethod) {
 
 @interface LCBaseRequest : NSObject
 
-@property (nonatomic, strong) AFHTTPRequestOperation *requestOperation;
-@property (nonatomic, strong) NSDictionary *requestArgument;
+@property (nonatomic, strong) NSURLSessionDataTask *sessionDataTask;
+@property (nonatomic, strong) id requestArgument;
 @property (nonatomic, weak) id<LCRequestDelegate> delegate;
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
-@property (nonatomic, strong, readonly) id responseJSONObject;
+@property (nonatomic, strong) id responseJSONObject;
 @property (nonatomic, strong, readonly) id cacheJson;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *);
-
+@property (nonatomic, copy) void (^progressBlock)(NSProgress * progress);
 
 - (void)start;
 - (void)stop;
 
 
-// block回调
+/**
+ *  block回调方式，已废弃，请使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure
+ *
+ *  @param success 成功回调
+ *  @param failure 失败回调
+ */
 - (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success
-                                    failure:(void (^)(id request))failure;
+                                    failure:(void (^)(id request))failure
+                                    DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
+
+/**
+ *  block回调方式
+ *
+ *  @param success 成功回调
+ *  @param failure 失败回调
+ */
+- (void)startWithBlockSuccess:(void (^)(id request))success
+                      failure:(void (^)(id request))failure;
+
+
+/**
+ *  block回调方式
+ *
+ *  @param progress 进度回调
+ *  @param success  成功回调
+ *  @param failure  失败回调
+ */
+- (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
+                       success:(void (^)(id request))success
+                       failure:(void (^)(id request))failure;
+
 
 - (void)clearCompletionBlock;
-- (BOOL)statusCodeValidator;
+//- (BOOL)statusCodeValidator;
 
 
 - (void)addAccessory:(id<LCRequestAccessory>)accessory;

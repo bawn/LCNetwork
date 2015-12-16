@@ -15,7 +15,7 @@
 
 @interface LCNetworkAgent ()
 
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) NSMutableDictionary *requestsRecord;
 @property (nonatomic, strong) LCNetworkConfig *config;
 
@@ -37,7 +37,7 @@
     self = [super init];
     if (self) {
         _config = [LCNetworkConfig sharedInstance];
-        _manager = [AFHTTPRequestOperationManager manager];
+        _manager = [AFHTTPSessionManager manager];
         _manager.operationQueue.maxConcurrentOperationCount = 4;
         _requestsRecord = [NSMutableDictionary dictionary];
     }
@@ -64,138 +64,176 @@
         argument = [self.config.processRule processArgumentWithRequest:request.requestArgument];
     }
     
+    if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
+        if ([request.child respondsToSelector:@selector(requestSerializerType)] == LCRequestSerializerTypeHTTP) {
+            self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        }
+        else{
+            _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        }
+    }
+    
     if ([request.child requestMethod] == LCRequestMethodGet) {
-        request.requestOperation = [self.manager GET:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self handleRequestResult:operation];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
+        request.sessionDataTask = [self.manager GET:url parameters:argument progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+            request.responseJSONObject = responseObject;
+            [self handleRequestSuccess:task];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [self handleRequestFailure:task];
         }];
+
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
-        
+        // multipart `POST` request
         if ([request.child respondsToSelector:@selector(constructingBodyBlock)] && [request.child constructingBodyBlock]) {
-            request.requestOperation = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [self handleRequestResult:operation];
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [self handleRequestResult:operation];
+            
+            request.sessionDataTask = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] progress:^(NSProgress * _Nonnull uploadProgress) {
+                if (request.progressBlock) {
+                    request.progressBlock(uploadProgress);
+                }
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                request.responseJSONObject = responseObject;
+                [self handleRequestSuccess:task];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                [self handleRequestFailure:task];
             }];
         }
         else{
-            request.requestOperation = [self.manager POST:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [self handleRequestResult:operation];
-            }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [self handleRequestResult:operation];
+            request.sessionDataTask = [self.manager POST:url parameters:argument progress:^(NSProgress * _Nonnull uploadProgress) {
+                if (request.progressBlock) {
+                    request.progressBlock(uploadProgress);
+                }
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                request.responseJSONObject = responseObject;
+                [self handleRequestSuccess:task];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                [self handleRequestFailure:task];
             }];
         }
     }
     else if ([request.child requestMethod] == LCRequestMethodHead){
-        request.requestOperation = [self.manager HEAD:url parameters:argument success:^(AFHTTPRequestOperation *operation) {
-            [self handleRequestResult:operation];
-        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
+        request.sessionDataTask = [self.manager HEAD:url parameters:argument success:^(NSURLSessionDataTask * _Nonnull task) {
+            [self handleRequestSuccess:task];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [self handleRequestFailure:task];
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPut){
-        request.requestOperation = [_manager PUT:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self handleRequestResult:operation];
-        }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
+       
+        request.sessionDataTask = [self.manager PUT:url parameters:argument success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            request.responseJSONObject = responseObject;
+            [self handleRequestSuccess:task];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [self handleRequestFailure:task];
         }];
+
     }
     else if ([request.child requestMethod] == LCRequestMethodDelete){
-        request.requestOperation = [_manager DELETE:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self handleRequestResult:operation];
-        }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
+        request.sessionDataTask = [self.manager DELETE:url parameters:argument success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            request.responseJSONObject = responseObject;
+            [self handleRequestSuccess:task];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [self handleRequestFailure:task];
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPatch) {
-        request.requestOperation = [_manager PATCH:url parameters:argument success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self handleRequestResult:operation];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self handleRequestResult:operation];
+        request.sessionDataTask = [self.manager PATCH:url parameters:argument success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            request.responseJSONObject = responseObject;
+            [self handleRequestSuccess:task];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [self handleRequestFailure:task];
         }];
     }
     [self addOperation:request];
 }
 
-- (void)handleRequestResult:(AFHTTPRequestOperation *)operation {
-    NSString *key = [self requestHashKey:operation];
+- (void)handleRequestProgress:(NSProgress *)progress request:(LCBaseRequest *)request{
+    if (request.delegate && [request respondsToSelector:@selector(requestProgress:)]) {
+        [request.delegate requestProgress:progress];
+    }
+    if (request.progressBlock) {
+        request.progressBlock(progress);
+    }
+}
+
+- (void)handleRequestSuccess:(NSURLSessionDataTask *)sessionDataTask{
+    NSString *key = [self requestHashKey:sessionDataTask];
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
-        BOOL success = [self checkResult:request];
-        if (success) {
-            [request toggleAccessoriesWillStopCallBack];
-            
+
+        
+        [request toggleAccessoriesWillStopCallBack];
+        
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            // 强制更新缓存
-            if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
-                [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
-            }
-#pragma clang diagnostic pop
-            
-            
-            // 强制更新缓存
-            if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
-                [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
-            }
-            // 验证 json 数据
-            if ([request.child respondsToSelector:@selector(jsonValidator)] && [request.child jsonValidator]) {
-                [LCNetworkPrivate checkJson:request.responseJSONObject withValidator:[request.child jsonValidator]];
-                
-            }
-            if (request.delegate != nil) {
-                [request.delegate requestFinished:request];
-            }
-            if (request.successCompletionBlock) {
-                request.successCompletionBlock(request);
-            }
-            [request toggleAccessoriesDidStopCallBack];
+        // 更新缓存
+        if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
+            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
         }
-        else{
-            [request toggleAccessoriesWillStopCallBack];
-            if (request.delegate != nil) {
-                [request.delegate requestFinished:request];
-            }
-            if (request.failureCompletionBlock) {
-                request.failureCompletionBlock(request);
-            }
-            [request toggleAccessoriesDidStopCallBack];
+#pragma clang diagnostic pop
+        
+        // 更新缓存
+        if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
+            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
         }
         
+        if (request.delegate != nil) {
+            [request.delegate requestFinished:request];
+        }
+        if (request.successCompletionBlock) {
+            request.successCompletionBlock(request);
+        }
+        [request toggleAccessoriesDidStopCallBack];
+   
     }
-    [self removeOperation:operation];
+    
+    [self removeOperation:sessionDataTask];
     [request clearCompletionBlock];
 }
+
+- (void)handleRequestFailure:(NSURLSessionDataTask *)sessionDataTask{
+    NSString *key = [self requestHashKey:sessionDataTask];
+    LCBaseRequest *request = _requestsRecord[key];
+    if (request) {
+        [request toggleAccessoriesWillStopCallBack];
+        if (request.delegate != nil) {
+            [request.delegate requestFinished:request];
+        }
+        if (request.failureCompletionBlock) {
+            request.failureCompletionBlock(request);
+        }
+        [request toggleAccessoriesDidStopCallBack];
+    }
+    
+    [self removeOperation:sessionDataTask];
+    [request clearCompletionBlock];
+
+}
+
+
 
 
 - (void)cancelRequest:(LCBaseRequest *)request {
-    [request.requestOperation cancel];
-    [self removeOperation:request.requestOperation];
+    [request.sessionDataTask cancel];
+    [self removeOperation:request.sessionDataTask];
     [request clearCompletionBlock];
 }
 
 
-- (void)removeOperation:(AFHTTPRequestOperation *)operation {
+- (void)removeOperation:(NSURLSessionDataTask *)operation {
     NSString *key = [self requestHashKey:operation];
     @synchronized(self) {
         [_requestsRecord removeObjectForKey:key];
     }
 }
 
-- (BOOL)checkResult:(LCBaseRequest *)request {
-    BOOL result = [request statusCodeValidator];
-    if (!result) {
-        return result;
-    }
-    return result;
-}
-
 
 - (void)addOperation:(LCBaseRequest *)request {
-    if (request.requestOperation != nil) {
-        NSString *key = [self requestHashKey:request.requestOperation];
+    if (request.sessionDataTask != nil) {
+        NSString *key = [self requestHashKey:request.sessionDataTask];
         @synchronized(self) {
             self.requestsRecord[key] = request;
         }
@@ -208,7 +246,7 @@
 }
 
 - (NSString *)buildRequestUrl:(LCBaseRequest *)request {
-    NSString *baseUrl;
+    NSString *baseUrl = nil;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if ( [request.child respondsToSelector:@selector(isViceUrl)] && [request.child isViceUrl]) {
@@ -216,16 +254,21 @@
     }
 #pragma clang diagnostic pop
     
-    if ([request.child respondsToSelector:@selector(useViceUrl)] && [request.child useViceUrl]){
-        baseUrl = self.config.viceBaseUrl;
+    if ([request.child respondsToSelector:@selector(customApiMethodName)]) {
+        return [request.child customApiMethodName];
     }
     else{
-        baseUrl = self.config.mainBaseUrl;
+        if ([request.child respondsToSelector:@selector(useViceUrl)] && [request.child useViceUrl]){
+            baseUrl = self.config.viceBaseUrl;
+        }
+        else{
+            baseUrl = self.config.mainBaseUrl;
+        }
+        if (baseUrl) {
+            return [baseUrl stringByAppendingString:[request.child apiMethodName]];
+        }
+        return [request.child apiMethodName];
     }
-    if (baseUrl) {
-        return [baseUrl stringByAppendingString:[request.child apiMethodName]];
-    }
-    return [request.child apiMethodName];
 }
 
 

@@ -38,9 +38,27 @@
 
 - (void)stop;
 
-// block回调
-- (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *batchRequest))success
-                                    failure:(void (^)(LCBatchRequest *batchRequest))failure;
+
+/**
+ *  block回调方式，已废弃，请使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure
+ *
+ *  @param success 成功回调
+ *  @param failure 失败回调
+ */
+- (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success
+                                    failure:(void (^)(id request))failure
+DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
+
+/**
+ *  block回调方式
+ *
+ *  @param success 成功回调
+ *  @param failure 失败回调
+ */
+- (void)startWithBlockSuccess:(void (^)(id request))success
+                      failure:(void (^)(id request))failure;
+
+
 
 - (void)clearCompletionBlock;
 
