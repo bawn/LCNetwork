@@ -3,6 +3,7 @@
 ![License MIT](https://img.shields.io/dub/l/vibe-d.svg)
 ![Pod version](http://img.shields.io/cocoapods/v/LCNetwork.svg?style=flat)
 ![Platform info](http://img.shields.io/cocoapods/p/LCNetwork.svg?style=flat)
+[![Support](https://img.shields.io/badge/support-iOS7+-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 
 
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
