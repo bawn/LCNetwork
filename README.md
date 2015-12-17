@@ -6,7 +6,7 @@
 
 
 基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
-接口类采用 @protocol 约束，接口类的创建和使用更清晰。
+接口类采用 @protocol 约束，接口类的创建和使用更清晰。已适配 AFNetworking 3.x
 
 若遇到 Demo 闪退问题，请删除 APP 重新运行，另外感谢[zdoz](http://api.zdoz.net/)提供免费的测试接口。
 
@@ -17,9 +17,9 @@
 3. 支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)
 4. 支持统一的`argument`加工
 5. 支持统一的`response`加工
-6. ~~支持检查返回 JSON 内容的合法性~~
-7. 支持多个请求同时发送，并统一设置它们的回调
-8. 支持以类似于插件的形式显示HUD
+6. 支持多个请求同时发送，并统一设置它们的回调
+7. 支持以类似于插件的形式显示HUD
+8. 支持获取请求的实时进度
 
 __最终在 `ViewController` 中调用一个接口请求的例子如下__
 
@@ -46,16 +46,11 @@ pod 'LCNetwork'
 ##使用
 ###统一配置
 
-__`LCNetworkConfig` 类提供的两个功能：__
-
-1. 设置服务器地址
-2. 设置是否打印请求的log信息
 
 ```
 LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
 config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
 config.viceBaseUrl = @"https://api.zdoz.net/";// 设置副服务器地址
-config.logEnabled = YES;// 是否打印请求的log信息
 ```
 
 ###创建接口调用类
@@ -101,20 +96,24 @@ __Api1.m__
 // 是否缓存数据 response 数据
 - (BOOL)cacheResponse;
 
-// 超时时间
+// 自定义超时时间
 - (NSTimeInterval)requestTimeoutInterval;
 
-// 用于Body数据的block
+// 用于 multipart 的数据block
 - (AFConstructingBlock)constructingBodyBlock;
-
-// json数据类型验证
-- (NSDictionary *)jsonValidator;
 
 // response处理
 - (id)responseProcess:(id)responseObject;
 
-```
+// 是否忽略统一的参数加工
+- (BOOL)ignoreUnifiedResponseProcess;
 
+// 返回完全自定义的接口地址
+- (NSString *)customApiMethodName;
+
+// 服务端数据接收类型，比如 LCRequestSerializerTypeJSON 用于 post json 数据
+- (LCRequestSerializerType)requestSerializerType;
+```
 ###参数设置
 
 请求的参数可以在外部设置，例如：
@@ -218,6 +217,14 @@ LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
 ```
 
+当然，如果你某个接口的 response 你不想做统一的处理，可以在请求子类中实现
+```
+- (BOOL)ignoreUnifiedResponseProcess{
+    return YES;
+}
+```
+这样返回的 response 就是原始数据
+
 ### multipart/form-data 
 
 通常我们会用到上传图片或者其他文件就需要用到 `multipart/form-data`，同样的只需要实现`- (AFConstructingBlock)constructingBodyBlock;`协议方法即可，比如
@@ -276,7 +283,7 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 - [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ##Requirements
-* iOS 6 or higher
+* iOS 7 or higher
 * ARC
 
 
