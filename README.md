@@ -223,7 +223,7 @@ config.processRule = filter;
     return YES;
 }
 ```
-这样返回的 response 就是原始数据
+这样返回的 responseJSONObject 就是原始数据
 
 ### multipart/form-data 
 
@@ -239,7 +239,22 @@ config.processRule = filter;
     };
 }
 ```
-
+对于多图上传可能还会需要知道进度情况，LCNetwork 在 1.1.0 版本之后提供了监听进度的方法，只需要调用
+```
+ (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
+                       success:(void (^)(id request))success
+                       failure:(void (^)(id request))failure;
+```
+或者 `- (void)requestProgress:(NSProgress *)progress` 的协议方法，下面是一个具体例子：
+```
+MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
+    multiImageUploadApi.images = @[[UIImage imageNamed:@"test"], [UIImage imageNamed:@"test1"]];
+    [multiImageUploadApi startWithBlockProgress:^(NSProgress *progress) {
+        NSLog(@"%f", progress.fractionCompleted);
+    } success:^(id request) {
+        
+    } failure:NULL];
+```
 
 ### response 再加工
 
