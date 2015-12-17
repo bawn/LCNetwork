@@ -17,7 +17,7 @@
 3. 支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)
 4. 支持统一的`argument`加工
 5. 支持统一的`response`加工
-6. 支持检查返回 JSON 内容的合法性
+6. ~~支持检查返回 JSON 内容的合法性~~
 7. 支持多个请求同时发送，并统一设置它们的回调
 8. 支持以类似于插件的形式显示HUD
 
@@ -256,29 +256,9 @@ config.processRule = filter;
     return responseObject[@"count"];
 }
 ```
-__注意，不应该调用`self.responseJSONObject`作为处理数据，请使用`responseObject`来处理__，当实现这个协议方法后，使用 `api1.responseJSONObject` 获取数据时，返回将是 `count` 的值。这里其实有问题，count 返回的值是 10，那么这个 10 是`NSNumber` 还是 `NSString`（不带双引号的数字，不一定就是NSNumber），这时候就会用到 json 格式校验了。
+__注意，不应该调用`self.responseJSONObject`作为处理数据，请使用`responseObject`来处理__，当实现这个协议方法后，使用 `api1.responseJSONObject` 获取数据时，返回将是 `count` 的值。
 
-### json 数据校验
 
-还是上面的 json 数据例子，比如需要校验 count 返回的数据类型，那么就需要实现 `- (id)jsonValidator;` 协议方法，具体如下
-
-```
-- (id)jsonValidator{
-    return @{@"count" : [NSNumber class]};
-}
-```
-__注意，json 数据校验，针对的是最终返回的数据__，也就是说如果只做了统一的参数加工，使用上面的方法才是正确的，因为最终的返回数据是
-```
- "_id": "564a931dbbb03c7002a2c0f3",
-  "name": "clover",
-  "count": 10
-```
-所以如果做了 response 再加工，那么最终返回的数据是 "count": 10，所以协议方法需要改成
-```
-- (id)jsonValidator{
-    return [NSNumber class];
-}
-```
 ### 关于HUD
 
 如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
@@ -291,9 +271,9 @@ __注意，json 数据校验，针对的是最终返回的数据__，也就是�
 
 ## TODO
 
-- [ ] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
+- [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
 - [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护
-- [ ] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
+- [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ##Requirements
 * iOS 6 or higher
