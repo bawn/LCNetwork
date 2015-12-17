@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "LCNetworkPrivate.h"
 #import "TMCache.h"
+#import "LCBaseRequest+Internal.h"
 
 @interface LCNetworkAgent ()
 
@@ -45,8 +46,8 @@
 }
 
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
-    // 配置URL
-    NSString *url = [self buildRequestUrl:request];
+
+    NSString *url = request.urlString;
     // 是否使用 https
     if ([url hasPrefix:@"https"]) {
         AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
@@ -75,9 +76,8 @@
     
     if ([request.child requestMethod] == LCRequestMethodGet) {
         request.sessionDataTask = [self.manager GET:url parameters:argument progress:^(NSProgress * _Nonnull downloadProgress) {
-            
+            [self handleRequestProgress:downloadProgress request:request];
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
             
@@ -91,9 +91,7 @@
         if ([request.child respondsToSelector:@selector(constructingBodyBlock)] && [request.child constructingBodyBlock]) {
             
             request.sessionDataTask = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] progress:^(NSProgress * _Nonnull uploadProgress) {
-                if (request.progressBlock) {
-                    request.progressBlock(uploadProgress);
-                }
+                [self handleRequestProgress:uploadProgress request:request];
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 request.responseJSONObject = responseObject;
                 [self handleRequestSuccess:task];
@@ -103,9 +101,7 @@
         }
         else{
             request.sessionDataTask = [self.manager POST:url parameters:argument progress:^(NSProgress * _Nonnull uploadProgress) {
-                if (request.progressBlock) {
-                    request.progressBlock(uploadProgress);
-                }
+                [self handleRequestProgress:uploadProgress request:request];
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 request.responseJSONObject = responseObject;
                 [self handleRequestSuccess:task];
@@ -151,7 +147,7 @@
 }
 
 - (void)handleRequestProgress:(NSProgress *)progress request:(LCBaseRequest *)request{
-    if (request.delegate && [request respondsToSelector:@selector(requestProgress:)]) {
+    if (request.delegate && [request.delegate respondsToSelector:@selector(requestProgress:)]) {
         [request.delegate requestProgress:progress];
     }
     if (request.progressBlock) {
@@ -160,24 +156,23 @@
 }
 
 - (void)handleRequestSuccess:(NSURLSessionDataTask *)sessionDataTask{
-    NSString *key = [self requestHashKey:sessionDataTask];
+    NSString *key = [self keyForRequest:sessionDataTask];
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
 
-        
         [request toggleAccessoriesWillStopCallBack];
         
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         // 更新缓存
         if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
-            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
+            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:request.urlString];
         }
 #pragma clang diagnostic pop
         
         // 更新缓存
         if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
-            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:[self requestHashKey:[request.child apiMethodName]]];
+            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:request.urlString];
         }
         
         if (request.delegate != nil) {
@@ -195,7 +190,7 @@
 }
 
 - (void)handleRequestFailure:(NSURLSessionDataTask *)sessionDataTask{
-    NSString *key = [self requestHashKey:sessionDataTask];
+    NSString *key = [self keyForRequest:sessionDataTask];
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
@@ -224,7 +219,7 @@
 
 
 - (void)removeOperation:(NSURLSessionDataTask *)operation {
-    NSString *key = [self requestHashKey:operation];
+    NSString *key = [self keyForRequest:operation];
     @synchronized(self) {
         [_requestsRecord removeObjectForKey:key];
     }
@@ -233,42 +228,16 @@
 
 - (void)addOperation:(LCBaseRequest *)request {
     if (request.sessionDataTask != nil) {
-        NSString *key = [self requestHashKey:request.sessionDataTask];
+        NSString *key = [self keyForRequest:request.sessionDataTask];
         @synchronized(self) {
             self.requestsRecord[key] = request;
         }
     }
 }
 
-- (NSString *)requestHashKey:(id)object {
-    NSString *key = [NSString stringWithFormat:@"%lu", (unsigned long)[object hash]];
+- (NSString *)keyForRequest:(NSURLSessionDataTask *)object {
+    NSString *key = [@(object.taskIdentifier) stringValue];
     return key;
-}
-
-- (NSString *)buildRequestUrl:(LCBaseRequest *)request {
-    NSString *baseUrl = nil;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if ( [request.child respondsToSelector:@selector(isViceUrl)] && [request.child isViceUrl]) {
-        baseUrl = self.config.viceBaseUrl;
-    }
-#pragma clang diagnostic pop
-    
-    if ([request.child respondsToSelector:@selector(customApiMethodName)]) {
-        return [request.child customApiMethodName];
-    }
-    else{
-        if ([request.child respondsToSelector:@selector(useViceUrl)] && [request.child useViceUrl]){
-            baseUrl = self.config.viceBaseUrl;
-        }
-        else{
-            baseUrl = self.config.mainBaseUrl;
-        }
-        if (baseUrl) {
-            return [baseUrl stringByAppendingString:[request.child apiMethodName]];
-        }
-        return [request.child apiMethodName];
-    }
 }
 
 

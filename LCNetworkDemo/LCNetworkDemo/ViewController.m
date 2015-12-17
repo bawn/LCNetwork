@@ -13,12 +13,13 @@
 #import "LCRequestAccessory.h"
 #import "LCBatchRequest.h"
 #import "HQMultiImageUploadApi.h"
+#import <MBProgressHUD.h>
 
-@interface ViewController ()<LCRequestDelegate>
+@interface ViewController ()<LCRequestDelegate, MBProgressHUDDelegate>
 
 @property (nonatomic, weak) IBOutlet UILabel *city1;
 @property (nonatomic, weak) IBOutlet UILabel *city2;
-
+@property (nonatomic, strong) MBProgressHUD *HUD;
 
 @end
 
@@ -30,13 +31,13 @@
     Api1 *api1 = [[Api1 alloc] init];
     
     if (api1.cacheJson) {
-//        self.city1.text = api1.cacheJson[@"city"];
+        self.city1.text = api1.cacheJson[@"Weather"];
     }
     
     Api2 *api2 = [[Api2 alloc] init];
     
     if (api2.cacheJson) {
-//        self.city2.text = api2.cacheJson;
+        self.city2.text = api2.cacheJson;
     }
 }
 
@@ -56,39 +57,57 @@
     LCBatchRequest *request = [[LCBatchRequest alloc] initWithRequestArray:@[api1, api2]];
     [request addAccessory:accessory];
     
-    [request startWithCompletionBlockWithSuccess:^(LCBatchRequest *batchRequest) {
+    [request startWithBlockSuccess:^(LCBatchRequest *batchRequest) {
         Api1 *api1 = batchRequest.requestArray.firstObject;
-        self.city1.text = api1.responseJSONObject[@"city"];
+        self.city1.text = api1.responseJSONObject;// 不需要获取 Weather 的值，是因为实现了 - (id)responseProcess:(id)responseObject 方法
         Api2 *api2 = batchRequest.requestArray[1];
-        self.city2.text = api2.responseJSONObject;// 不需要获取 city 的值，是因为实现了 - (id)responseProcess:(id)responseObject 方法
+        self.city2.text = api2.responseJSONObject;
     } failure:^(LCBatchRequest *batchRequest) {
         
     }];
+    
+    
+    // api1返回的结构是：
+    /*
+     {
+     "City": "商丘",
+     "Weather": "晴",
+     "Temp1": "6℃",
+     "Temp2": "-8℃",
+     "Ptime": "14:20",
+     "Img": "http://api.zdoz.net/api/weatherIcon/晴日.png"
+     }
+     */
+
 }
 
 - (IBAction)api2Press:(id)sender{
-//    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
-//    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
-//    [api2 addAccessory:accessory];
-//    [api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
-//        if ([api2.responseJSONObject isKindOfClass:[NSError class]]) {
-//            // 显示错误信息
-//        }
-//        else{
-//            self.city2.text = api2.responseJSONObject;
-//        }
-//    } failure:^(id request) {
-//        
-//    }];
-    
-    HQMultiImageUploadApi *multiImageUploadApi = [[HQMultiImageUploadApi alloc] init];
-    multiImageUploadApi.images = @[[UIImage imageNamed:@"test"], [UIImage imageNamed:@"test1"]];
-    [multiImageUploadApi startWithBlockProgress:^(NSProgress *progress) {
-        NSLog(@"%f", progress.fractionCompleted);
-    } success:^(id request) {
+    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
+    LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
+    [api2 addAccessory:accessory];
+    [api2 startWithBlockSuccess:^(Api2 *api2) {
+        self.city2.text = api2.responseJSONObject;// 不需要获取 city 的值，是因为设置了统一的 response 处理，查看 LCProcessFilter
+    } failure:^(id request) {
         
-    } failure:NULL];
+    }];
+    
+    // api2返回的结构是：
+    /*
+    {
+        "city": "杭州市",
+        "country": "中国",
+        "direction": "",
+        "distance": "",
+        "district": "江干区",
+        "province": "浙江省",
+        "street": "亭苑街",
+        "street_number": "",
+        "country_code": 0
+    }
+     */
+    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -103,6 +122,10 @@
 
 - (void)requestFailed:(LCBaseRequest *)request{
     
+}
+
+- (void)requestProgress:(NSProgress *)progress{
+    NSLog(@"%f", progress.fractionCompleted);
 }
 
 @end

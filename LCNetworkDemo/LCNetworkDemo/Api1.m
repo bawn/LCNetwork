@@ -12,7 +12,7 @@
 
 // 接口地址
 - (NSString *)apiMethodName{
-    return @"geo2loc_2.aspx";
+    return @"getweather2.aspx";
 }
 
 // 请求方式
@@ -25,6 +25,13 @@
     return YES;
 }
 
+- (id)responseProcess:(id)responseObject{
+    return responseObject[@"Weather"];
+}
+
+- (BOOL)ignoreUnifiedResponseProcess{
+    return YES;
+}
 
 
 @end

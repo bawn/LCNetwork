@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "AFURLRequestSerialization.h"
-@class AFHTTPRequestOperation;
 
 typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
 
@@ -31,9 +30,17 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 @required
 
-// 接口地址
+/**
+ *  接口地址
+ *
+ *  @return 接口地址
+ */
 - (NSString *)apiMethodName;
-// 请求方式
+/**
+ *  请求方式，包括Get、Post、Head、Put、Delete、Patch，具体查看 LCRequestMethod
+ *
+ *  @return 请求方式
+ */
 - (LCRequestMethod)requestMethod;
 
 @optional
@@ -41,7 +48,11 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 // 是否使用副Url(旧版)
 @property (nonatomic, assign, getter = isViceUrl) BOOL viceUrl DEPRECATED_MSG_ATTRIBUTE("使用 - (BOOL)useViceUrl");
 
-// 是否使用副Url
+/**
+ *  可以使用两个根地址，比如可能会用到 CDN 地址、https之类的
+ *
+ *  @return 是否使用副Url
+ */
 - (BOOL)useViceUrl;
 
 /**
@@ -136,12 +147,20 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
 @property (nonatomic, strong) id responseJSONObject;
 @property (nonatomic, strong, readonly) id cacheJson;
+@property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *);
 @property (nonatomic, copy) void (^progressBlock)(NSProgress * progress);
 
+/**
+ *  开始网络请求，使用 detegate 方式使用这个方法
+ */
 - (void)start;
+
+/**
+ *  停止网路请求
+ */
 - (void)stop;
 
 
@@ -176,11 +195,11 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
                        success:(void (^)(id request))success
                        failure:(void (^)(id request))failure;
 
-
-- (void)clearCompletionBlock;
-//- (BOOL)statusCodeValidator;
-
-
+/**
+ *  一般用于显示和隐藏 HUD
+ *
+ *  @param accessory 插件
+ */
 - (void)addAccessory:(id<LCRequestAccessory>)accessory;
 
 @end

@@ -40,8 +40,10 @@
 //             };
 //}
 
-- (BOOL)withoutCache{
-    return NO;
+
+
+- (BOOL)cacheResponse{
+    return YES;
 }
 
 // 接口地址
@@ -55,13 +57,12 @@
     return LCRequestMethodGet;
 }
 
-- (id)responseProcess:(id)responseObject{
-    return responseObject[@"city"];
-}
+//- (id)responseProcess:(id)responseObject{
+//    return responseObject[@"city"];
+//}
 
-- (void)dealloc{
-    NSLog(@"%s", __func__);
-}
-
+//- (BOOL)ignoreUnifiedResponseProcess{
+//    return YES;
+//}
 
 @end

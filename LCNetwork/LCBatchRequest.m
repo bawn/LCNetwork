@@ -35,7 +35,7 @@
 }
 
 
-- (void)start {
+- (void)start{
     if (_finishedCount > 0) {
         NSLog(@"Error! Batch request has already started.");
         return;
@@ -49,7 +49,7 @@
 }
 
 
-- (void)stop {
+- (void)stop{
     [self toggleAccessoriesWillStopCallBack];
     _delegate = nil;
     [self clearRequest];

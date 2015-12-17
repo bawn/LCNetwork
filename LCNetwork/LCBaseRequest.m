@@ -88,23 +88,47 @@
     return process ? responseJSONObject : _responseJSONObject;
 }
 
+//
+//- (NSInteger)responseStatusCode{
+//    return [(NSHTTPURLResponse *)self.sessionDataTask.response statusCode];
+//}
 
-- (NSInteger)responseStatusCode{
-    return [(NSHTTPURLResponse *)self.sessionDataTask.response statusCode];
+- (NSString *)urlString{
+    if ([self.child respondsToSelector:@selector(customApiMethodName)]) {
+        return [self.child customApiMethodName];
+    }
+    else{
+        NSString *baseUrl = nil;
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        if ( [self.child respondsToSelector:@selector(isViceUrl)] && [self.child isViceUrl]) {
+            baseUrl = self.config.viceBaseUrl;
+        }
+        #pragma clang diagnostic pop
+
+        if ([self.child respondsToSelector:@selector(useViceUrl)] && [self.child useViceUrl]){
+            baseUrl = self.config.viceBaseUrl;
+        }
+        else{
+            baseUrl = self.config.mainBaseUrl;
+        }
+        if (baseUrl) {
+            return [baseUrl stringByAppendingString:[self.child apiMethodName]];
+        }
+        return [self.child apiMethodName];
+    }
 }
-
 - (id)cacheJson{
     if (_cacheJson) {
         return _cacheJson;
     }
     else{
-        NSString *hashKey = [NSString stringWithFormat:@"%lu", (unsigned long)[self.child apiMethodName].hash];
-        return [[TMCache sharedCache].diskCache objectForKey:hashKey];
+        return [[TMCache sharedCache].diskCache objectForKey:self.urlString];
     }
 }
 
 
-- (void)stop {
+- (void)stop{
     [self toggleAccessoriesWillStopCallBack];
     self.delegate = nil;
     [[LCNetworkAgent sharedInstance] cancelRequest:self];
