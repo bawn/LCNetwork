@@ -29,6 +29,7 @@
     return responseObject[@"Weather"];
 }
 
+// 忽略统一的 Response 加工
 - (BOOL)ignoreUnifiedResponseProcess{
     return YES;
 }

@@ -26,7 +26,6 @@
 		DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */; };
 		DFF89C011BF5C498000B1BE3 /* LCNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */; };
 		DFF89C021BF5C498000B1BE3 /* LCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */; };
-		DFF89C031BF5C498000B1BE3 /* LCNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +77,6 @@
 		DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkAgent.m; sourceTree = "<group>"; };
 		DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkConfig.h; sourceTree = "<group>"; };
 		DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkConfig.m; sourceTree = "<group>"; };
-		DFF89BFC1BF5C498000B1BE3 /* LCNetworkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCNetworkPrivate.h; sourceTree = "<group>"; };
-		DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCNetworkPrivate.m; sourceTree = "<group>"; };
 		DFF89C041BF5C4AA000B1BE3 /* LCNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCNetwork.h; sourceTree = "<group>"; };
 		E92C914ECFE8EC22DB8051DD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,8 +206,6 @@
 				DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */,
 				DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */,
 				DFF89BFB1BF5C498000B1BE3 /* LCNetworkConfig.m */,
-				DFF89BFC1BF5C498000B1BE3 /* LCNetworkPrivate.h */,
-				DFF89BFD1BF5C498000B1BE3 /* LCNetworkPrivate.m */,
 			);
 			name = LCNetwork;
 			path = ../../LCNetwork;
@@ -375,7 +370,6 @@
 				7A83F2AA1B3C00D500DA3282 /* ViewController.m in Sources */,
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
-				DFF89C031BF5C498000B1BE3 /* LCNetworkPrivate.m in Sources */,
 				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
 				DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */,
 				DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */,

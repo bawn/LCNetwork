@@ -31,7 +31,7 @@
     Api1 *api1 = [[Api1 alloc] init];
     
     if (api1.cacheJson) {
-        self.city1.text = api1.cacheJson[@"Weather"];
+        self.city1.text = api1.cacheJson;
     }
     
     Api2 *api2 = [[Api2 alloc] init];

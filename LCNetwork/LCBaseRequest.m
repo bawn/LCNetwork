@@ -70,28 +70,24 @@
 
 - (id)responseJSONObject{
     id responseJSONObject = nil;
-    
-    BOOL process = NO;
     // 统一加工response
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processResponseWithRequest:)]) {
         if (([self.child respondsToSelector:@selector(ignoreUnifiedResponseProcess)] && ![self.child ignoreUnifiedResponseProcess]) ||
             ![self.child respondsToSelector:@selector(ignoreUnifiedResponseProcess)]) {
             responseJSONObject = [self.config.processRule processResponseWithRequest:_responseJSONObject];
-            process = YES;
+            if ([self.child respondsToSelector:@selector(responseProcess:)]){
+                responseJSONObject = [self.child responseProcess:responseJSONObject];
+            }
+            return responseJSONObject;
         }
     }
     
     if ([self.child respondsToSelector:@selector(responseProcess:)]){
         responseJSONObject = [self.child responseProcess:_responseJSONObject];
-        process = YES;
+        return responseJSONObject;
     }
-    return process ? responseJSONObject : _responseJSONObject;
+    return _responseJSONObject;
 }
-
-//
-//- (NSInteger)responseStatusCode{
-//    return [(NSHTTPURLResponse *)self.sessionDataTask.response statusCode];
-//}
 
 - (NSString *)urlString{
     if ([self.child respondsToSelector:@selector(customApiMethodName)]) {

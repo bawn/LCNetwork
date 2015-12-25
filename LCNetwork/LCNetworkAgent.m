@@ -10,7 +10,6 @@
 #import "LCNetworkConfig.h"
 #import "LCBaseRequest.h"
 #import "AFNetworking.h"
-#import "LCNetworkPrivate.h"
 #import "TMCache.h"
 #import "LCBaseRequest+Internal.h"
 
