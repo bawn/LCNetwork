@@ -79,11 +79,9 @@
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self handleRequestFailure:task];
         }];
-
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
         // multipart `POST` request
