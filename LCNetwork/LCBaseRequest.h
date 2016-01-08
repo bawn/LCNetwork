@@ -143,6 +143,10 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 @property (nonatomic, strong) NSURLSessionDataTask *sessionDataTask;
 @property (nonatomic, strong) id requestArgument;
+/**
+ *  用于 POST 情况下，拼接参数请求，而不是放在body里面
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> *queryArgument;
 @property (nonatomic, weak) id<LCRequestDelegate> delegate;
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
 @property (nonatomic, strong) id responseJSONObject;

@@ -10,5 +10,6 @@
 #define LCNetwork_h
 
 #import "LCBaseRequest.h"
+#import "LCBatchRequest.h"
 
 #endif /* LCNetwork_h */

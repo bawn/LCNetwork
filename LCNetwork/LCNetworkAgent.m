@@ -65,11 +65,11 @@
     }
     
     if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
-        if ([request.child respondsToSelector:@selector(requestSerializerType)] == LCRequestSerializerTypeHTTP) {
+        if ([request.child requestSerializerType] == LCRequestSerializerTypeHTTP) {
             self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         }
         else{
-            _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
         }
     }
     

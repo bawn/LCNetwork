@@ -109,7 +109,11 @@
             baseUrl = self.config.mainBaseUrl;
         }
         if (baseUrl) {
-            return [baseUrl stringByAppendingString:[self.child apiMethodName]];
+            NSString *urlString = [baseUrl stringByAppendingString:[self.child apiMethodName]];
+            if (self.queryArgument && [self.queryArgument isKindOfClass:[NSDictionary class]]) {
+                return [urlString stringByAppendingString:[self urlStringForQuery]];
+            }
+            return urlString;
         }
         return [self.child apiMethodName];
     }
@@ -137,6 +141,18 @@
     self.failureCompletionBlock = nil;
     self.progressBlock = nil;
 }
+
+
+- (NSString *)urlStringForQuery{
+    NSMutableString *urlString = [[NSMutableString alloc] init];
+    [urlString appendString:@"?"];
+    [self.queryArgument enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [urlString appendFormat:@"%@=%@&", key, obj];
+    }];
+    [urlString deleteCharactersInRange:NSMakeRange(urlString.length - 1, 1)];
+    return [urlString copy];
+}
+
 
 #pragma mark - Request Accessoies
 
