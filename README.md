@@ -286,6 +286,13 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 
 如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
 
+### 其他
+
+* 某些 POST 请求如果希望参数不要放在 body（或者说是payload）里面，就需要用 queryArgument 属性附带参数，比如
+```
+unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
+```
+那么`token=token1`就会拼接到 URL 的后面
 
 
 ##更多信息
