@@ -44,23 +44,23 @@
     [[LCNetworkAgent sharedInstance] addRequest:self];
 }
 
-- (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success
-                                    failure:(void (^)(id request))failure{
+- (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
+                                    failure:(LCRequestCompletionBlock)failure{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
     [self start];
 }
 
-- (void)startWithBlockSuccess:(void (^)(id))success
-                      failure:(void (^)(id))failure{
+- (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
+                      failure:(LCRequestCompletionBlock)failure{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
     [self start];
 }
 
 - (void)startWithBlockProgress:(void (^)(NSProgress *))progress
-                  success:(void (^)(id))success
-                  failure:(void (^)(id))failure{
+                  success:(LCRequestCompletionBlock)success
+                  failure:(LCRequestCompletionBlock)failure{
     self.progressBlock = progress;
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
@@ -86,6 +86,10 @@
         responseJSONObject = [self.child responseProcess:_responseJSONObject];
         return responseJSONObject;
     }
+    return _responseJSONObject;
+}
+
+- (id)rawJSONObject{
     return _responseJSONObject;
 }
 

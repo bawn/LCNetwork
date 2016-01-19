@@ -45,8 +45,8 @@
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success
-                                    failure:(void (^)(id request))failure
+- (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
+                                    failure:(void (^)(LCBatchRequest *request))failure
 DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
 
 /**
@@ -55,8 +55,8 @@ DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id requ
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithBlockSuccess:(void (^)(id request))success
-                      failure:(void (^)(id request))failure;
+- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
+                      failure:(void (^)(LCBatchRequest *request))failure;
 
 
 

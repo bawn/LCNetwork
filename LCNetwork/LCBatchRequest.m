@@ -57,14 +57,14 @@
     [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
 }
 
-- (void)startWithCompletionBlockWithSuccess:(void (^)(id batchRequest))success
-                                    failure:(void (^)(id batchRequest))failure {
+- (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
+                                    failure:(void (^)(LCBatchRequest *request))failure {
     [self setCompletionBlockWithSuccess:success failure:failure];
     [self start];
 }
 
-- (void)startWithBlockSuccess:(void (^)(id request))success
-                      failure:(void (^)(id request))failure{
+- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
+                      failure:(void (^)(LCBatchRequest *request))failure{
     [self setCompletionBlockWithSuccess:success failure:failure];
     [self start];
 }

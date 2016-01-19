@@ -7,6 +7,7 @@
 //
 
 #import "LCNetworkConfig.h"
+#import "AFSecurityPolicy.h"
 
 @interface LCNetworkConfig ()
 
@@ -28,7 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
+        _securityPolicy = [AFSecurityPolicy defaultPolicy];
     }
     return self;
 }

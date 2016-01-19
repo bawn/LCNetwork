@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "AFURLRequestSerialization.h"
 
+@class LCBaseRequest;
+
 typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
+typedef void (^LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -113,6 +116,15 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  */
 - (LCRequestSerializerType)requestSerializerType;
 
+
+/**
+ *  当数据返回 null 时是否删除这个字段的值，也就是为 nil，默认YES，具体查看http://honglu.me/2015/04/11/json%E4%B8%AD%E5%A4%B4%E7%96%BC%E7%9A%84null/
+ *
+ *  @return YES/NO
+ */
+- (BOOL)removesKeysWithNullValues;
+
+
 @end
 
 /*--------------------------------------------*/
@@ -149,7 +161,14 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> *queryArgument;
 @property (nonatomic, weak) id<LCRequestDelegate> delegate;
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
+/**
+ *  当通过get方式访问 responseJSONObject 时就会得到加工后的数据
+ */
 @property (nonatomic, strong) id responseJSONObject;
+/**
+ *  原始数据
+ */
+@property (nonatomic, strong) id rawJSONObject;
 @property (nonatomic, strong, readonly) id cacheJson;
 @property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
@@ -174,8 +193,8 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithCompletionBlockWithSuccess:(void (^)(id request))success
-                                    failure:(void (^)(id request))failure
+- (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
+                                    failure:(LCRequestCompletionBlock)failure
                                     DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
 
 /**
@@ -184,8 +203,8 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithBlockSuccess:(void (^)(id request))success
-                      failure:(void (^)(id request))failure;
+- (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
+                      failure:(LCRequestCompletionBlock)failure;
 
 
 /**
@@ -196,8 +215,8 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  *  @param failure  失败回调
  */
 - (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
-                       success:(void (^)(id request))success
-                       failure:(void (^)(id request))failure;
+                       success:(LCRequestCompletionBlock)success
+                       failure:(LCRequestCompletionBlock)failure;
 
 /**
  *  一般用于显示和隐藏 HUD

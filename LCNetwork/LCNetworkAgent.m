@@ -40,6 +40,7 @@
         _manager = [AFHTTPSessionManager manager];
         _manager.operationQueue.maxConcurrentOperationCount = 4;
         _requestsRecord = [NSMutableDictionary dictionary];
+        _manager.securityPolicy = _config.securityPolicy;
     }
     return self;
 }
@@ -47,17 +48,19 @@
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
 
     NSString *url = request.urlString;
-    // 是否使用 https
-    if ([url hasPrefix:@"https"]) {
-        AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
-        [securityPolicy setAllowInvalidCertificates:YES];
-        self.manager.securityPolicy = securityPolicy;
-    }
     // 是否使用自定义超时时间
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
-    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    serializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain", nil];
+    serializer.removesKeysWithNullValues = YES;
+    if ([request.child respondsToSelector:@selector(removesKeysWithNullValues)]) {
+        serializer.removesKeysWithNullValues = [request.child removesKeysWithNullValues];
+    }
+    self.manager.responseSerializer = serializer;
+
     NSDictionary *argument = request.requestArgument;
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:)]) {
@@ -202,10 +205,7 @@
     
     [self removeOperation:sessionDataTask];
     [request clearCompletionBlock];
-
 }
-
-
 
 
 - (void)cancelRequest:(LCBaseRequest *)request {
@@ -236,6 +236,5 @@
     NSString *key = [@(object.taskIdentifier) stringValue];
     return key;
 }
-
 
 @end

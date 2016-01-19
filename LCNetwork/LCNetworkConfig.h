@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class LCBaseRequest;
+@class AFSecurityPolicy;
 
 @protocol LCProcessProtocol <NSObject>
 
@@ -26,5 +27,7 @@
 
 @property (nonatomic, strong) NSString *mainBaseUrl;// 主url
 @property (nonatomic, strong) NSString *viceBaseUrl;// 副url
+@property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
 @property (nonatomic, strong) id <LCProcessProtocol> processRule;
+
 @end
