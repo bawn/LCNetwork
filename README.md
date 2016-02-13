@@ -39,7 +39,7 @@ api2.requestArgument = @{
 
 ##集成
 
-Cocoapods:
+CocoaPods:
 ```
 pod 'LCNetwork'
 ```
