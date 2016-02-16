@@ -39,7 +39,7 @@ api2.requestArgument = @{
 
 ##集成
 
-Cocoapods:
+CocoaPods:
 ```
 pod 'LCNetwork'
 ```
@@ -288,11 +288,16 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 
 ### 其他
 
-* 某些 POST 请求如果希望参数不要放在 body（或者说是payload）里面，就需要用 queryArgument 属性附带参数，比如
+#### Query
+某些 POST 请求希望参数不放在 body（或者说是payload）里面，需要用`Query`来附带信息，那么就需要用到 queryArgument 属性，比如
 ```
 unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ```
 那么`token=token1`就会拼接到 URL 的后面
+
+####原始数据
+
+1.1.3版本提供了一个返回原始数据的属性`rawJSONObject`，用于需要获得原始数据但response又要加工的情况下
 
 
 ##更多信息
