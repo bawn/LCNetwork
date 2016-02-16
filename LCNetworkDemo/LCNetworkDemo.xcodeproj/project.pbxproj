@@ -21,6 +21,8 @@
 		7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD464681B3FE3AC000E12C4 /* Api2.m */; };
 		B90659BA567364EEB1F9B4BB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66E0484201DE342B883E84B /* libPods.a */; };
 		DF2944DA1C21516800B1C039 /* HQMultiImageUploadApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2944D91C21516800B1C039 /* HQMultiImageUploadApi.m */; };
+		DFD70B411C72ECF2008241C6 /* LCChainRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD70B401C72ECF2008241C6 /* LCChainRequest.m */; };
+		DFD70B441C72EEB6008241C6 /* LCChainRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD70B431C72EEB6008241C6 /* LCChainRequestAgent.m */; };
 		DFF89BFE1BF5C498000B1BE3 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */; };
 		DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */; };
 		DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */; };
@@ -67,6 +69,10 @@
 		DF2944D81C21516800B1C039 /* HQMultiImageUploadApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HQMultiImageUploadApi.h; sourceTree = "<group>"; };
 		DF2944D91C21516800B1C039 /* HQMultiImageUploadApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HQMultiImageUploadApi.m; sourceTree = "<group>"; };
 		DF2B96AB1C225B7E00380735 /* LCBaseRequest+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LCBaseRequest+Internal.h"; sourceTree = "<group>"; };
+		DFD70B3F1C72ECF2008241C6 /* LCChainRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCChainRequest.h; sourceTree = "<group>"; };
+		DFD70B401C72ECF2008241C6 /* LCChainRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCChainRequest.m; sourceTree = "<group>"; };
+		DFD70B421C72EEB6008241C6 /* LCChainRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCChainRequestAgent.h; sourceTree = "<group>"; };
+		DFD70B431C72EEB6008241C6 /* LCChainRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCChainRequestAgent.m; sourceTree = "<group>"; };
 		DFF89BF21BF5C498000B1BE3 /* LCBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBaseRequest.h; sourceTree = "<group>"; };
 		DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCBaseRequest.m; sourceTree = "<group>"; };
 		DFF89BF41BF5C498000B1BE3 /* LCBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBatchRequest.h; sourceTree = "<group>"; };
@@ -200,8 +206,12 @@
 				DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */,
 				DFF89BF41BF5C498000B1BE3 /* LCBatchRequest.h */,
 				DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */,
+				DFD70B3F1C72ECF2008241C6 /* LCChainRequest.h */,
+				DFD70B401C72ECF2008241C6 /* LCChainRequest.m */,
 				DFF89BF61BF5C498000B1BE3 /* LCBatchRequestAgent.h */,
 				DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */,
+				DFD70B421C72EEB6008241C6 /* LCChainRequestAgent.h */,
+				DFD70B431C72EEB6008241C6 /* LCChainRequestAgent.m */,
 				DFF89BF81BF5C498000B1BE3 /* LCNetworkAgent.h */,
 				DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */,
 				DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */,
@@ -363,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFD70B411C72ECF2008241C6 /* LCChainRequest.m in Sources */,
 				7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */,
 				7A80C2771B3D2FC300D53F00 /* Api1.m in Sources */,
 				7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */,
@@ -372,6 +383,7 @@
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
 				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
 				DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */,
+				DFD70B441C72EEB6008241C6 /* LCChainRequestAgent.m in Sources */,
 				DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */,
 				DF2944DA1C21516800B1C039 /* HQMultiImageUploadApi.m in Sources */,
 				DFF89C021BF5C498000B1BE3 /* LCNetworkConfig.m in Sources */,

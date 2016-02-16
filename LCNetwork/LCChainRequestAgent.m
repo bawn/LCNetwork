@@ -1,9 +1,9 @@
 //
-//  LCNetworkConfig.m
-//  LCNetwork
+//  LCChainRequestAgent.m
+//  LCNetworkDemo
 //
-//  Created by bawn on 6/4/15.
-//  Copyright (c) 2015 bawn. All rights reserved.
+//  Created by bawn on 2/16/16.
+//  Copyright © 2016 beike. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "LCNetworkConfig.h"
-#import "AFSecurityPolicy.h"
+#import "LCChainRequestAgent.h"
 
-@interface LCNetworkConfig ()
+@interface LCChainRequestAgent ()
 
+@property (nonatomic, strong) NSMutableArray *requestArray;
 
 @end
 
-@implementation LCNetworkConfig
+@implementation LCChainRequestAgent
 
 
-+ (LCNetworkConfig *)sharedInstance {
++ (LCChainRequestAgent *)sharedInstance {
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -46,9 +46,21 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _securityPolicy = [AFSecurityPolicy defaultPolicy];
+        _requestArray = [NSMutableArray array];
     }
     return self;
+}
+
+- (void)addChainRequest:(LCChainRequest *)request {
+    @synchronized(self) {
+        [_requestArray addObject:request];
+    }
+}
+
+- (void)removeChainRequest:(LCChainRequest *)request {
+    @synchronized(self) {
+        [_requestArray removeObject:request];
+    }
 }
 
 

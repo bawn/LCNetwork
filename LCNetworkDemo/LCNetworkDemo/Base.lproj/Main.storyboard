@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,53 +18,67 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqq-tX-RYW">
-                                <rect key="frame" x="50" y="285" width="144" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="228" y="154.5" width="144" height="30"/>
                                 <state key="normal" title="api1 和 api2 同时请求">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="api1Press:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="WCR-QS-zSd"/>
+                                    <action selector="firstAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="s85-4k-V8n"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXu-fQ-CtO">
-                                <rect key="frame" x="490" y="285" width="60" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="270" y="415.5" width="60" height="30"/>
                                 <state key="normal" title="请求api2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="api2Press:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ar9-AQ-UzK"/>
+                                    <action selector="thirdPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gb6-DX-w1Z"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Mw-rAq">
-                                <rect key="frame" x="101" y="335" width="42" height="20.5"/>
-                                <animations/>
+                                <rect key="frame" x="279" y="204.5" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E58-ZL-ouz">
-                                <rect key="frame" x="499" y="335" width="42" height="20.5"/>
-                                <animations/>
+                                <rect key="frame" x="279" y="465.5" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sI1-Kc-cBf">
+                                <rect key="frame" x="222.5" y="285" width="155" height="30"/>
+                                <state key="normal" title="api1 请求完再请求 api2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="secondPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="5Jg-7c-qHA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="huu-eb-OMu">
+                                <rect key="frame" x="279" y="335" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Vqq-tX-RYW" firstAttribute="centerX" secondItem="R5e-Mw-rAq" secondAttribute="centerX" id="4xU-hB-NG6"/>
-                            <constraint firstAttribute="trailing" secondItem="xXu-fQ-CtO" secondAttribute="trailing" constant="50" id="D81-32-AIh"/>
-                            <constraint firstAttribute="centerY" secondItem="Vqq-tX-RYW" secondAttribute="centerY" id="DFm-IL-VN9"/>
+                            <constraint firstItem="R5e-Mw-rAq" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="BSS-ds-fTk"/>
                             <constraint firstAttribute="trailing" secondItem="Vqq-tX-RYW" secondAttribute="trailing" constant="50" id="FwK-dT-6Lv"/>
-                            <constraint firstItem="R5e-Mw-rAq" firstAttribute="top" secondItem="Vqq-tX-RYW" secondAttribute="bottom" constant="20" id="MIp-yK-ngg"/>
                             <constraint firstAttribute="centerY" secondItem="Vqq-tX-RYW" secondAttribute="centerY" id="N2l-Jh-XlK"/>
-                            <constraint firstItem="E58-ZL-ouz" firstAttribute="top" secondItem="xXu-fQ-CtO" secondAttribute="bottom" constant="20" id="TgW-cJ-1Xa"/>
-                            <constraint firstAttribute="centerY" secondItem="xXu-fQ-CtO" secondAttribute="centerY" id="XAH-1N-t2v"/>
-                            <constraint firstItem="xXu-fQ-CtO" firstAttribute="centerX" secondItem="E58-ZL-ouz" secondAttribute="centerX" id="ZdL-mB-OWY"/>
-                            <constraint firstItem="Vqq-tX-RYW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="mZT-pu-ozt"/>
+                            <constraint firstItem="E58-ZL-ouz" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="NBf-3r-sdA"/>
+                            <constraint firstItem="huu-eb-OMu" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="QiN-WX-i6O"/>
+                            <constraint firstItem="R5e-Mw-rAq" firstAttribute="top" secondItem="Vqq-tX-RYW" secondAttribute="bottom" constant="20" id="UgG-WU-niJ"/>
+                            <constraint firstItem="Vqq-tX-RYW" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="V9l-8g-Vqw"/>
+                            <constraint firstItem="xXu-fQ-CtO" firstAttribute="top" secondItem="huu-eb-OMu" secondAttribute="bottom" constant="60" id="d7T-4V-TXM"/>
+                            <constraint firstItem="E58-ZL-ouz" firstAttribute="top" secondItem="xXu-fQ-CtO" secondAttribute="bottom" constant="20" id="d9C-Wc-pT9"/>
+                            <constraint firstItem="xXu-fQ-CtO" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="fYh-KW-vvo"/>
+                            <constraint firstItem="huu-eb-OMu" firstAttribute="top" secondItem="sI1-Kc-cBf" secondAttribute="bottom" constant="20" id="gim-zy-gSq"/>
+                            <constraint firstItem="sI1-Kc-cBf" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="ibV-5t-tJT"/>
+                            <constraint firstItem="sI1-Kc-cBf" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="l31-3G-mnW"/>
+                            <constraint firstItem="sI1-Kc-cBf" firstAttribute="top" secondItem="R5e-Mw-rAq" secondAttribute="bottom" constant="60" id="wgj-rY-dCe"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -75,12 +89,13 @@
                     </view>
                     <connections>
                         <outlet property="city1" destination="R5e-Mw-rAq" id="qLk-6S-jn9"/>
-                        <outlet property="city2" destination="E58-ZL-ouz" id="27Z-g9-k8G"/>
+                        <outlet property="city2" destination="huu-eb-OMu" id="Ytv-8P-AfP"/>
+                        <outlet property="city3" destination="E58-ZL-ouz" id="SBt-Bz-RG9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="564" y="288"/>
+            <point key="canvasLocation" x="-90" y="121"/>
         </scene>
     </scenes>
 </document>

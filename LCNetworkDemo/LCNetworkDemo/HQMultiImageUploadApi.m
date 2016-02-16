@@ -20,6 +20,7 @@
     return @"http://daily.xinpinget.com/image/upload";
 }
 
+
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodPost;
 }

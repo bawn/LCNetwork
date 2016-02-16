@@ -8,11 +8,11 @@
 
 @implementation LCProcessFilter
 
-- (NSDictionary *)processArgumentWithRequest:(NSDictionary *)argument{
+- (NSDictionary *)processArgumentWithRequest:(NSDictionary *)argument query:(NSDictionary *)queryArgument{
     return argument;
 }
 
-- (id) processResponseWithRequest:(id)response{
+- (id)processResponseWithRequest:(id)response{
     return response[@"city"];
 }
 
