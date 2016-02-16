@@ -25,8 +25,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import "LCChainRequest.h"
 
+@class LCChainRequest;
 @interface LCChainRequestAgent : NSObject
 
 + (LCChainRequestAgent *)sharedInstance;

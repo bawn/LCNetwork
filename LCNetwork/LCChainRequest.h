@@ -26,7 +26,6 @@
 
 #import <Foundation/Foundation.h>
 #import "LCBaseRequest.h"
-#import "LCRequestAccessory.h"
 
 @class LCChainRequest;
 
