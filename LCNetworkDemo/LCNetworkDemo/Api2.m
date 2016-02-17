@@ -40,8 +40,6 @@
 //             };
 //}
 
-
-
 - (BOOL)cacheResponse{
     return YES;
 }

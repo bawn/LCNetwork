@@ -77,7 +77,6 @@
         serializer.removesKeysWithNullValues = [request.child removesKeysWithNullValues];
     }
     self.manager.responseSerializer = serializer;
-
     NSDictionary *argument = request.requestArgument;
     // 检查是否有统一的参数加工
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:query:)]) {
@@ -92,6 +91,14 @@
             self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
         }
     }
+    if ([request.child respondsToSelector:@selector(requestHeaderValue)]) {
+        NSDictionary<NSString *, NSString *> *headerValue = [request.child requestHeaderValue];
+        if ([headerValue isKindOfClass:[NSDictionary class]]){
+            [headerValue enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+                [self.manager.requestSerializer setValue:obj forHTTPHeaderField:key];
+            }];
+        }
+    }
     
     if ([request.child requestMethod] == LCRequestMethodGet) {
         request.sessionDataTask = [self.manager GET:url parameters:argument progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -104,7 +111,7 @@
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
-        // multipart `POST` request
+        // multipart POST request
         if ([request.child respondsToSelector:@selector(constructingBodyBlock)] && [request.child constructingBodyBlock]) {
             
             request.sessionDataTask = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] progress:^(NSProgress * _Nonnull uploadProgress) {
