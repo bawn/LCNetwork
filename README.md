@@ -283,6 +283,23 @@ MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
 __注意，不应该调用`self.responseJSONObject`作为处理数据，请使用`responseObject`来处理__，当实现这个协议方法后，使用 `api1.responseJSONObject` 获取数据时，返回将是 `count` 的值。
 
 
+### 添加 header
+
+只需要实现`- (NSDictionary *)requestHeaderValue`方法即可，比如
+
+```
+- (NSDictionary *)requestHeaderValue{
+    return @{@"Accept" : @"application/json"};
+}
+```
+或者添加多个header
+```
+- (NSDictionary *)requestHeaderValue{
+    return @{@"Accept" : @"application/json", @"Accept" : @"application/json; charset=utf-8" : @"Content-Type"};
+}
+```
+
+
 ### 关于HUD
 
 如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
