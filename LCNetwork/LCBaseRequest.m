@@ -111,33 +111,32 @@
 }
 
 - (NSString *)urlString{
-    if ([self.child respondsToSelector:@selector(customApiMethodName)]) {
-        return [self.child customApiMethodName];
+    NSString *baseUrl = nil;
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    if ( [self.child respondsToSelector:@selector(isViceUrl)] && [self.child isViceUrl]) {
+        baseUrl = self.config.viceBaseUrl;
+    }
+    #pragma clang diagnostic pop
+
+    if ([self.child respondsToSelector:@selector(useViceUrl)] && [self.child useViceUrl]){
+        baseUrl = self.config.viceBaseUrl;
     }
     else{
-        NSString *baseUrl = nil;
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        if ( [self.child respondsToSelector:@selector(isViceUrl)] && [self.child isViceUrl]) {
-            baseUrl = self.config.viceBaseUrl;
-        }
-        #pragma clang diagnostic pop
-
-        if ([self.child respondsToSelector:@selector(useViceUrl)] && [self.child useViceUrl]){
-            baseUrl = self.config.viceBaseUrl;
-        }
-        else{
-            baseUrl = self.config.mainBaseUrl;
-        }
-        if (baseUrl) {
-            NSString *urlString = [baseUrl stringByAppendingString:[self.child apiMethodName]];
-            if (self.queryArgument && [self.queryArgument isKindOfClass:[NSDictionary class]]) {
-                return [urlString stringByAppendingString:[self urlStringForQuery]];
-            }
-            return urlString;
-        }
-        return [self.child apiMethodName];
+        baseUrl = self.config.mainBaseUrl;
     }
+    if (baseUrl) {
+        if ( [self.child respondsToSelector:@selector(useCustomApiMethodName)] && [self.child useCustomApiMethodName]) {
+            return [self.child apiMethodName];
+        }
+        NSString *urlString = [baseUrl stringByAppendingString:[self.child apiMethodName]];
+        if (self.queryArgument && [self.queryArgument isKindOfClass:[NSDictionary class]]) {
+            return [urlString stringByAppendingString:[self urlStringForQuery]];
+        }
+        return urlString;
+    }
+    return [self.child apiMethodName];
+    
 }
 - (id)cacheJson{
     if (_cacheJson) {

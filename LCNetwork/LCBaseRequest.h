@@ -122,11 +122,11 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 - (BOOL)ignoreUnifiedResponseProcess;
 
 /**
- *  返回完全自定义的接口地址
+ *  是否使用自定义的接口地址，也就是不会使用 mainBaseUrl 或 viceBaseUrl，这时候在 apiMethodName 就可以是用自定义的接口地址了
  *
- *  @return 完全自定义的接口地址
+ *  @return 是否使用自定义的接口地址
  */
-- (NSString *)customApiMethodName;
+- (BOOL)useCustomApiMethodName;
 
 /**
  *  服务端数据接收类型，比如 LCRequestSerializerTypeJSON 用于 post json 数据
