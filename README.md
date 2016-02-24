@@ -89,33 +89,7 @@ __Api1.m__
 ```
 `- (NSString *)apiMethodName` 和 `- (LCRequestMethod)requestMethod` 是 @required 方法，所以必须实现，这在一定程度上降低了因漏写方法而crash的概率。
 
-另外 @optional 方法提供了如下的功能
 
-```
-// 是否使用副Url
-- (BOOL)useViceUrl;
-
-// 是否缓存数据 response 数据
-- (BOOL)cacheResponse;
-
-// 自定义超时时间
-- (NSTimeInterval)requestTimeoutInterval;
-
-// 用于 multipart 的数据block
-- (AFConstructingBlock)constructingBodyBlock;
-
-// response处理
-- (id)responseProcess:(id)responseObject;
-
-// 是否忽略统一的参数加工
-- (BOOL)ignoreUnifiedResponseProcess;
-
-// 返回完全自定义的接口地址
-- (NSString *)customApiMethodName;
-
-// 服务端数据接收类型，比如 LCRequestSerializerTypeJSON 用于 post json 数据
-- (LCRequestSerializerType)requestSerializerType;
-```
 ###参数设置
 
 请求的参数可以在外部设置，例如：
