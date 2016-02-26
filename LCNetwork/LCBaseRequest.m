@@ -58,7 +58,7 @@
 
 - (void)start{
     [self toggleAccessoriesWillStartCallBack];
-    [[LCNetworkAgent sharedInstance] addRequest:self];
+    [[[LCNetworkAgent alloc] init] addRequest:self];
 }
 
 - (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
