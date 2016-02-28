@@ -65,6 +65,7 @@
     }
 }
 
+
 - (void)stop {
     [self toggleAccessoriesWillStopCallBack];
     [self clearRequest];
@@ -97,6 +98,10 @@
     }
 }
 
+- (void)dealloc{
+    [self clearRequest];
+}
+
 #pragma mark - Network Request Delegate
 
 - (void)requestFinished:(LCBaseRequest *)request {
@@ -107,9 +112,9 @@
         [self toggleAccessoriesWillStopCallBack];
         if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
             [_delegate chainRequestFinished:self];
-            [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
         }
         [self toggleAccessoriesDidStopCallBack];
+        [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
     }
 }
 

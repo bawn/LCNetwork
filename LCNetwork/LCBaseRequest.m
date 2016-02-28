@@ -35,6 +35,7 @@
 @property (nonatomic, weak) id<LCAPIRequest> child;
 @property (nonatomic, strong) NSMutableArray *requestAccessories;
 @property (nonatomic, strong) LCNetworkConfig *config;
+@property (nonatomic, strong) LCNetworkAgent *agent;
 
 @end
 
@@ -51,14 +52,16 @@
             NSAssert(NO, @"子类必须要实现APIRequest这个protocol");
         }
         _config = [LCNetworkConfig sharedInstance];
+        _agent = [[LCNetworkAgent alloc] init];
       
     }
     return self;
 }
 
+
 - (void)start{
     [self toggleAccessoriesWillStartCallBack];
-    [[LCNetworkAgent sharedInstance] addRequest:self];
+    [self.agent addRequest:self];
 }
 
 - (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
@@ -151,7 +154,7 @@
 - (void)stop{
     [self toggleAccessoriesWillStopCallBack];
     self.delegate = nil;
-    [[LCNetworkAgent sharedInstance] cancelRequest:self];
+    [self.agent cancelRequest:self];
     [self toggleAccessoriesDidStopCallBack];
 }
 

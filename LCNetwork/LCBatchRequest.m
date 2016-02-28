@@ -52,6 +52,7 @@
 }
 
 
+
 - (void)start{
     if (_finishedCount > 0) {
         NSLog(@"Error! Batch request has already started.");
@@ -117,6 +118,7 @@
         }
         [self clearCompletionBlock];
         [self toggleAccessoriesDidStopCallBack];
+        [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
     }
 }
 

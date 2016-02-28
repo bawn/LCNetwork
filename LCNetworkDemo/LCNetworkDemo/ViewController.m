@@ -15,14 +15,15 @@
 #import "LCChainRequest.h"
 
 #import "HQMultiImageUploadApi.h"
-#import <MBProgressHUD.h>
 
-@interface ViewController ()<LCRequestDelegate, MBProgressHUDDelegate, LCChainRequestDelegate>
+
+#import "LCNetworkAgent.h"
+
+@interface ViewController ()<LCRequestDelegate, LCChainRequestDelegate>
 
 @property (nonatomic, weak) IBOutlet UILabel *city1;
 @property (nonatomic, weak) IBOutlet UILabel *city2;
 @property (nonatomic, weak) IBOutlet UILabel *city3;
-@property (nonatomic, strong) MBProgressHUD *HUD;
 
 @end
 
@@ -36,6 +37,7 @@
     if (api2.cacheJson) {
         self.city1.text = api2.cacheJson;
     }
+    
 }
 
 - (IBAction)firstAction:(id)sender{

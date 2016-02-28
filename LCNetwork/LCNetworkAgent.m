@@ -41,34 +41,22 @@
 @implementation LCNetworkAgent
 
 
-+ (LCNetworkAgent *)sharedInstance {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
-
 - (id)init {
     self = [super init];
     if (self) {
         _config = [LCNetworkConfig sharedInstance];
-        _manager = [AFHTTPSessionManager manager];
-        _manager.operationQueue.maxConcurrentOperationCount = 4;
         _requestsRecord = [NSMutableDictionary dictionary];
         _manager.securityPolicy = _config.securityPolicy;
+        _manager = [AFHTTPSessionManager manager];
+        _manager.operationQueue.maxConcurrentOperationCount = 4;
     }
     return self;
 }
 
+
 - (void)addRequest:(LCBaseRequest <LCAPIRequest>*)request {
 
     NSString *url = request.urlString;
-    // 是否使用自定义超时时间
-    if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
-        self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
-    }
     
     AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
     serializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain", nil];
@@ -98,6 +86,11 @@
                 [self.manager.requestSerializer setValue:obj forHTTPHeaderField:key];
             }];
         }
+    }
+    
+    // 是否使用自定义超时时间
+    if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
+        self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
     
     if ([request.child requestMethod] == LCRequestMethodGet) {
