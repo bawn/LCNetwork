@@ -87,6 +87,15 @@
             }];
         }
     }
+    else{
+        [self.manager.requestSerializer clearAuthorizationHeader];
+    }
+    
+    // 是否使用自定义超时时间
+    if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
+        self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
+    }
+   
     
     // 是否使用自定义超时时间
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {

@@ -61,7 +61,11 @@
 
 - (void)start{
     [self toggleAccessoriesWillStartCallBack];
+<<<<<<< HEAD
     [self.agent addRequest:self];
+=======
+    [[[LCNetworkAgent alloc] init] addRequest:self];
+>>>>>>> origin/master
 }
 
 - (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success

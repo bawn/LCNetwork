@@ -35,8 +35,11 @@
 }
 
 
+<<<<<<< HEAD
 - (void)dealloc{
     NSLog(@"%s", __func__);
 }
+=======
+>>>>>>> origin/master
 
 @end
