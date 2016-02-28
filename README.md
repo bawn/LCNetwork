@@ -308,7 +308,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 
 ##更新日志
 
-[Release](https://github.com/bawn/LCNetwork/releases)
+####[Releases](https://github.com/bawn/LCNetwork/releases)
 
 ##License
 [MIT](http://mit-license.org/)
