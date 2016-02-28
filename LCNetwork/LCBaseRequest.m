@@ -139,7 +139,6 @@
         return urlString;
     }
     return [self.child apiMethodName];
-    
 }
 - (id)cacheJson{
     if (_cacheJson) {
@@ -150,14 +149,12 @@
     }
 }
 
-
 - (void)stop{
     [self toggleAccessoriesWillStopCallBack];
     self.delegate = nil;
     [self.agent cancelRequest:self];
     [self toggleAccessoriesDidStopCallBack];
 }
-
 
 - (void)clearCompletionBlock {
     self.successCompletionBlock = nil;
