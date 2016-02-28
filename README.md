@@ -306,6 +306,9 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 * iOS 7 or higher
 * ARC
 
+##更新日志
+
+[Release](https://github.com/bawn/LCNetwork/releases)
 
 ##License
 [MIT](http://mit-license.org/)
