@@ -30,6 +30,7 @@
 @interface LCBatchRequest () <LCRequestDelegate>
 
 @property (nonatomic) NSInteger finishedCount;
+@property (nonatomic, strong) NSArray *requestArray;
 
 @end
 
@@ -75,6 +76,15 @@
     [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
 }
 
+- (void)requestDidStop{
+    [self clearCompletionBlock];
+    [self toggleAccessoriesDidStopCallBack];
+    self.finishedCount = 0;
+    self.requestArray = nil;
+    [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
+}
+
+
 - (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
                                     failure:(void (^)(LCBatchRequest *request))failure {
     [self setCompletionBlockWithSuccess:success failure:failure];
@@ -94,7 +104,6 @@
 }
 
 - (void)clearCompletionBlock {
-    // nil out to break the retain cycle.
     self.successCompletionBlock = nil;
     self.failureCompletionBlock = nil;
 }
@@ -116,30 +125,22 @@
         if (_successCompletionBlock) {
             _successCompletionBlock(self);
         }
-        [self clearCompletionBlock];
-        [self toggleAccessoriesDidStopCallBack];
-        [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
+        [self requestDidStop];
     }
 }
 
 - (void)requestFailed:(LCBaseRequest *)request {
     [self toggleAccessoriesWillStopCallBack];
-    // Stop
     for (LCBaseRequest *req in _requestArray) {
         [req stop];
     }
-    // Callback
     if ([_delegate respondsToSelector:@selector(batchRequestFailed:)]) {
         [_delegate batchRequestFailed:self];
     }
     if (_failureCompletionBlock) {
         _failureCompletionBlock(self);
     }
-    // Clear
-    [self clearCompletionBlock];
-    
-    [self toggleAccessoriesDidStopCallBack];
-    [[LCBatchRequestAgent sharedInstance] removeBatchRequest:self];
+    [self requestDidStop];
 }
 
 - (void)clearRequest {
@@ -164,25 +165,31 @@
 @implementation LCBatchRequest (RequestAccessory)
 
 - (void)toggleAccessoriesWillStartCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
-            [accessory requestWillStart:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
+                [accessory requestWillStart:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesWillStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
-            [accessory requestWillStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
+                [accessory requestWillStop:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesDidStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
-            [accessory requestDidStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
+                [accessory requestDidStop:self];
+            }
         }
     }
 }

@@ -189,25 +189,31 @@
 @implementation LCBaseRequest (RequestAccessory)
 
 - (void)toggleAccessoriesWillStartCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
-            [accessory requestWillStart:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
+                [accessory requestWillStart:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesWillStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
-            [accessory requestWillStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
+                [accessory requestWillStop:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesDidStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
-            [accessory requestDidStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
+                [accessory requestDidStop:self];
+            }
         }
     }
 }

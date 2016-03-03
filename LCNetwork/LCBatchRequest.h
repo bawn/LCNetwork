@@ -39,6 +39,10 @@
 
 @interface LCBatchRequest : NSObject
 
+/**
+ *  是否不执行插件，默认是 NO, 也就是说当添加了插件默认是执行，比如有时候需要隐藏HUD
+ */
+@property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, strong, readonly) NSArray *requestArray;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBatchRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *);

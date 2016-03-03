@@ -43,6 +43,10 @@ typedef void (^LCChainCallback)(LCChainRequest *chainRequest, __kindof LCBaseReq
 
 @interface LCChainRequest : NSObject
 
+/**
+ *  是否不执行插件，默认是 NO, 也就是说当添加了插件默认是执行，比如有时候需要隐藏HUD
+ */
+@property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, weak) id<LCChainRequestDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *requestAccessories;
 

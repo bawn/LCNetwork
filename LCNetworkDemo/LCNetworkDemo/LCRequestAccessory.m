@@ -36,11 +36,11 @@
 }
 
 - (void)requestWillStop:(id)request {
-    
+    [self.hud hide:NO];
 }
 
 - (void)requestDidStop:(id)request{
-    [self.hud hide:NO];
+//    [self.hud hide:NO];
 }
 
 @end

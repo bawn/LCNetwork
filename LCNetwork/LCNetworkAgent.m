@@ -96,7 +96,6 @@
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
    
-    
     // 是否使用自定义超时时间
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
@@ -113,9 +112,7 @@
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
-        // multipart POST request
         if ([request.child respondsToSelector:@selector(constructingBodyBlock)] && [request.child constructingBodyBlock]) {
-            
             request.sessionDataTask = [self.manager POST:url parameters:argument constructingBodyWithBlock:[request.child constructingBodyBlock] progress:^(NSProgress * _Nonnull uploadProgress) {
                 [self handleRequestProgress:uploadProgress request:request];
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -220,7 +217,7 @@
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
         if (request.delegate != nil) {
-            [request.delegate requestFinished:request];
+            [request.delegate requestFailed:request];
         }
         if (request.failureCompletionBlock) {
             request.failureCompletionBlock(request);

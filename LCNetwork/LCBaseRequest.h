@@ -194,9 +194,13 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  */
 @property (nonatomic, strong) id responseJSONObject;
 /**
- *  原始数据
+ *  接口返回的原始数据
  */
-@property (nonatomic, strong) id rawJSONObject;
+@property (nonatomic, strong, readonly) id rawJSONObject;
+/**
+ *  是否不执行插件，默认是 NO, 也就是说当添加了插件默认是执行，比如有时候需要隐藏HUD
+ */
+@property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, strong, readonly) id cacheJson;
 @property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;

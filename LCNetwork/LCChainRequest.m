@@ -65,6 +65,9 @@
     }
 }
 
+- (NSArray *)requestArray{
+    return [self.requestArray copy];
+}
 
 - (void)stop {
     [self toggleAccessoriesWillStopCallBack];
@@ -72,6 +75,15 @@
     [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
     [self toggleAccessoriesDidStopCallBack];
 }
+
+- (void)requestDidStop{
+    [self toggleAccessoriesDidStopCallBack];
+    self.nextRequestIndex = 0;
+    [self.requestCallbackArray removeAllObjects];
+    [_requestArray removeAllObjects];
+    [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
+}
+
 
 - (void)addRequest:(LCBaseRequest *)request callback:(LCChainCallback)callback {
     [_requestArray addObject:request];
@@ -82,9 +94,6 @@
     }
 }
 
-- (NSArray *)requestArray {
-    return _requestArray;
-}
 
 - (BOOL)startNextRequest {
     if (_nextRequestIndex < [_requestArray count]) {
@@ -93,7 +102,8 @@
         request.delegate = self;
         [request start];
         return YES;
-    } else {
+    }
+    else {
         return NO;
     }
 }
@@ -108,13 +118,12 @@
     NSUInteger currentRequestIndex = _nextRequestIndex - 1;
     LCChainCallback callback = _requestCallbackArray[currentRequestIndex];
     callback(self, request);
-    if (![self startNextRequest]) {
+    if ([self startNextRequest] == NO) {
         [self toggleAccessoriesWillStopCallBack];
         if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
             [_delegate chainRequestFinished:self];
         }
-        [self toggleAccessoriesDidStopCallBack];
-        [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
+        [self requestDidStop];
     }
 }
 
@@ -122,9 +131,8 @@
     [self toggleAccessoriesWillStopCallBack];
     if ([_delegate respondsToSelector:@selector(chainRequestFailed:failedBaseRequest:)]) {
         [_delegate chainRequestFailed:self failedBaseRequest:request];
-        [[LCChainRequestAgent sharedInstance] removeChainRequest:self];
     }
-    [self toggleAccessoriesDidStopCallBack];
+    [self requestDidStop];
 }
 
 - (void)clearRequest {
@@ -152,25 +160,31 @@
 @implementation LCChainRequest (RequestAccessory)
 
 - (void)toggleAccessoriesWillStartCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
-            [accessory requestWillStart:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStart:)]) {
+                [accessory requestWillStart:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesWillStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
-            [accessory requestWillStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestWillStop:)]) {
+                [accessory requestWillStop:self];
+            }
         }
     }
 }
 
 - (void)toggleAccessoriesDidStopCallBack {
-    for (id<LCRequestAccessory> accessory in self.requestAccessories) {
-        if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
-            [accessory requestDidStop:self];
+    if (self.invalidAccessory == NO) {
+        for (id<LCRequestAccessory> accessory in self.requestAccessories) {
+            if ([accessory respondsToSelector:@selector(requestDidStop:)]) {
+                [accessory requestDidStop:self];
+            }
         }
     }
 }
