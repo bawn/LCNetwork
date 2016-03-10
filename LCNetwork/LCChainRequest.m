@@ -127,7 +127,7 @@
     }
 }
 
-- (void)requestFailed:(LCBaseRequest *)request {
+- (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error{
     [self toggleAccessoriesWillStopCallBack];
     if ([_delegate respondsToSelector:@selector(chainRequestFailed:failedBaseRequest:)]) {
         [_delegate chainRequestFailed:self failedBaseRequest:request];

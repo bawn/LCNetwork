@@ -129,7 +129,7 @@
     }
 }
 
-- (void)requestFailed:(LCBaseRequest *)request {
+- (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error{
     [self toggleAccessoriesWillStopCallBack];
     for (LCBaseRequest *req in _requestArray) {
         [req stop];

@@ -65,14 +65,14 @@
 }
 
 - (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
-                                    failure:(LCRequestCompletionBlock)failure{
+                                    failure:(LCRequestFailureBlock)failure{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
     [self start];
 }
 
 - (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
-                      failure:(LCRequestCompletionBlock)failure{
+                      failure:(LCRequestFailureBlock)failure{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
     [self start];
@@ -80,7 +80,7 @@
 
 - (void)startWithBlockProgress:(void (^)(NSProgress *))progress
                   success:(LCRequestCompletionBlock)success
-                  failure:(LCRequestCompletionBlock)failure{
+                  failure:(LCRequestFailureBlock)failure{
     self.progressBlock = progress;
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;

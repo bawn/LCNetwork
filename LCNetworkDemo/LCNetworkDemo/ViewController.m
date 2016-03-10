@@ -13,9 +13,9 @@
 #import "LCRequestAccessory.h"
 #import "LCBatchRequest.h"
 #import "LCChainRequest.h"
-
+#import <AFNetworking.h>
 #import "HQMultiImageUploadApi.h"
-
+#import <AFURLResponseSerialization.h>
 
 #import "LCNetworkAgent.h"
 
@@ -113,7 +113,7 @@
     [api2 addAccessory:accessory];
     [api2 startWithBlockSuccess:^(Api2 *api2) {
         self.city3.text = api2.responseJSONObject;// 不需要获取 city 的值，是因为设置了统一的 response 处理，查看 LCProcessFilter
-    } failure:^(id request) {
+    } failure:^(__kindof LCBaseRequest *request, NSError *error) {
         
     }];
     
@@ -147,7 +147,7 @@
     
 }
 
-- (void)requestFailed:(LCBaseRequest *)request{
+- (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error{
     
 }
 

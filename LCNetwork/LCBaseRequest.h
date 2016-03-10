@@ -32,6 +32,7 @@
 
 typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
 typedef void (^LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
+typedef void (^LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError *error);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -162,7 +163,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @optional
 
 - (void)requestFinished:(LCBaseRequest *)request;
-- (void)requestFailed:(LCBaseRequest *)request;
+- (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error;
 - (void)requestProgress:(NSProgress *)progress;
 
 @end
@@ -205,7 +206,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);
-@property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *);
+@property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *, NSError *error);
 @property (nonatomic, copy) void (^progressBlock)(NSProgress * progress);
 
 /**
@@ -226,7 +227,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  *  @param failure 失败回调
  */
 - (void)startWithCompletionBlockWithSuccess:(LCRequestCompletionBlock)success
-                                    failure:(LCRequestCompletionBlock)failure
+                                    failure:(LCRequestFailureBlock)failure
                                     DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
 
 /**
@@ -236,7 +237,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  *  @param failure 失败回调
  */
 - (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
-                      failure:(LCRequestCompletionBlock)failure;
+                      failure:(LCRequestFailureBlock)failure;
 
 
 /**
@@ -248,7 +249,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  */
 - (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
                        success:(LCRequestCompletionBlock)success
-                       failure:(LCRequestCompletionBlock)failure;
+                       failure:(LCRequestFailureBlock)failure;
 
 /**
  *  一般用于显示和隐藏 HUD

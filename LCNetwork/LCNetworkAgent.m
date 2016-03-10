@@ -108,7 +108,7 @@
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [self handleRequestFailure:task];
+            [self handleRequestFailure:task error:error];
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPost){
@@ -119,7 +119,7 @@
                 request.responseJSONObject = responseObject;
                 [self handleRequestSuccess:task];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [self handleRequestFailure:task];
+                [self handleRequestFailure:task error:error];
             }];
         }
         else{
@@ -129,7 +129,7 @@
                 request.responseJSONObject = responseObject;
                 [self handleRequestSuccess:task];
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [self handleRequestFailure:task];
+                [self handleRequestFailure:task error:error];
             }];
         }
     }
@@ -137,7 +137,7 @@
         request.sessionDataTask = [self.manager HEAD:url parameters:argument success:^(NSURLSessionDataTask * _Nonnull task) {
             [self handleRequestSuccess:task];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [self handleRequestFailure:task];
+            [self handleRequestFailure:task error:error];
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPut){
@@ -146,7 +146,7 @@
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [self handleRequestFailure:task];
+            [self handleRequestFailure:task error:error];
         }];
 
     }
@@ -155,7 +155,7 @@
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [self handleRequestFailure:task];
+            [self handleRequestFailure:task error:error];
         }];
     }
     else if ([request.child requestMethod] == LCRequestMethodPatch) {
@@ -163,7 +163,7 @@
             request.responseJSONObject = responseObject;
             [self handleRequestSuccess:task];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [self handleRequestFailure:task];
+            [self handleRequestFailure:task error:error];
         }];
     }
     [self addOperation:request];
@@ -211,16 +211,16 @@
     [request clearCompletionBlock];
 }
 
-- (void)handleRequestFailure:(NSURLSessionDataTask *)sessionDataTask{
+- (void)handleRequestFailure:(NSURLSessionDataTask *)sessionDataTask error:(NSError *)error{
     NSString *key = [self keyForRequest:sessionDataTask];
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
         if (request.delegate != nil) {
-            [request.delegate requestFailed:request];
+            [request.delegate requestFailed:request error:error];
         }
         if (request.failureCompletionBlock) {
-            request.failureCompletionBlock(request);
+            request.failureCompletionBlock(request, error);
         }
         [request toggleAccessoriesDidStopCallBack];
     }
