@@ -31,7 +31,7 @@ api2.requestArgument = @{
                          @"lat" : @"34.345",
                          @"lng" : @"113.678"
                          };
-[api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
+[api2 startWithCompletionBlockWithSuccess:^(__kindof LCBaseRequest *request) {
     self.weather2.text = api2.responseJSONObject[@"Weather"];
 } failure:NULL];
 
