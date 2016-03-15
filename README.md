@@ -292,10 +292,6 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 1.1.3版本提供了一个返回原始数据的属性`rawJSONObject`，用于需要获得原始数据但response又要加工的情况下
 
 
-##更多信息
-参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
-
-
 ## TODO
 
 - [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
