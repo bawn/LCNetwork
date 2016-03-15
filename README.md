@@ -278,6 +278,27 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 
 如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
 
+1.1.9 版本新增了，是否执行插件的功能，用于隐藏和显示HUD。比如第一次进入页面时调用以下代码请求数据并显示HUD
+```
+    self.userLikeApi = [[HQUserLikesApi alloc] init];
+    HQRequestAccessory *requestAccessory = [[HQRequestAccessory alloc] initWithShowVC:self];
+    [self.userLikeApi addAccessory:requestAccessory];
+    @weakify(self);
+    [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
+       //
+    } failure:NULL];
+```
+如果但是如果这时候有上拉加载更多数据功能时，一般情况下都不需要显示HUD，所以
+```
+- (void)loadMoreData{
+    self.userLikeApi.invalidAccessory = YES;
+    [self.userLikeApi startWithBlockSuccess:^(HQUserLikesApi *request) {
+    // 
+    } failure:NULL];
+}
+```
+设置`invalidAccessory`属性为YES即可
+
 ### 其他
 
 #### Query
