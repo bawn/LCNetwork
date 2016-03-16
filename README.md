@@ -327,7 +327,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 
 ####[Releases](https://github.com/bawn/LCNetwork/releases)
 
-###FAQ
+## FAQ
 1. 当请求失败时，如何获取错误信息中的json数据
 ```
 [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
