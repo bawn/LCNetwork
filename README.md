@@ -328,7 +328,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ####[Releases](https://github.com/bawn/LCNetwork/releases)
 
 ## FAQ
-1. 当请求失败时，如何获取错误信息中的json数据
+__当请求失败时，如何获取错误信息中的json数据__
 ```
 [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
       //
@@ -337,9 +337,19 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 NSLog(@"%@",errResponse);
     }];
 ```
-2. `- (BOOL)httpCacheControl`方法的作用
-这个功能取决于请求是否带有 Cache-Control 信息，比如：`Cache-Control →max-age=180, must-revalidate`
+__`- (BOOL)httpCacheControl`方法的作用__
 
+这个功能取决于请求的 Headers 中是否带有 Cache-Control 信息，比如：
+```
+Cache-Control →max-age=180, must-revalidate
+Connection →keep-alive
+Content-Length →1276
+Content-Type →application/json; charset=utf-8
+Date →Wed, 22 Jun 2016 09:03:31 GMT
+Server →nginx/1.0.15
+X-Powered-By →Express
+```
+这里的意思是请求将会缓存180秒，所以如果`- (BOOL)httpCacheControl`返回YES，那么在接下来的两分钟内的请求都会直接去缓存的数据，这个缓存由`AFNetworking`维护
 
 ##License
 [MIT](http://mit-license.org/)
