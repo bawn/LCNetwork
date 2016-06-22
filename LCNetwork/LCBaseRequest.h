@@ -161,7 +161,6 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 - (BOOL)httpCacheControl;
 
 
-
 @end
 
 

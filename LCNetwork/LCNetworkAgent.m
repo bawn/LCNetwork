@@ -100,7 +100,7 @@
     }
     
     // 是否需要 Cache-Control
-    if ([request.child respondsToSelector:@selector(httpCacheControl)] && [request httpCacheControl]) {
+    if ([request.child respondsToSelector:@selector(httpCacheControl)] && [request.child httpCacheControl]) {
         [self.manager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
     }
     else{

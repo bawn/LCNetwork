@@ -201,7 +201,7 @@ config.processRule = filter;
 ```
 这样返回的 responseJSONObject 就是原始数据
 
-### multipart/form-data 
+### multipart/form-data
 
 通常我们会用到上传图片或者其他文件就需要用到 `multipart/form-data`，同样的只需要实现`- (AFConstructingBlock)constructingBodyBlock;`协议方法即可，比如
 ```
@@ -228,7 +228,7 @@ MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
     [multiImageUploadApi startWithBlockProgress:^(NSProgress *progress) {
         NSLog(@"%f", progress.fractionCompleted);
     } success:^(id request) {
-        
+
     } failure:NULL];
 ```
 
@@ -293,7 +293,7 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 - (void)loadMoreData{
     self.userLikeApi.invalidAccessory = YES;
     [self.userLikeApi startWithBlockSuccess:^(HQUserLikesApi *request) {
-    // 
+    //
     } failure:NULL];
 }
 ```
@@ -331,12 +331,14 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 1. 当请求失败时，如何获取错误信息中的json数据
 ```
 [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
-      // 
+      //
     } failure:^(__kindof LCBaseRequest *request, NSError *error) {
         NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
 NSLog(@"%@",errResponse);
     }];
 ```
+2. `- (BOOL)httpCacheControl`方法的作用
+这个功能取决于请求是否带有 Cache-Control 信息，比如：`Cache-Control →max-age=180, must-revalidate`
 
 
 ##License
