@@ -25,7 +25,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <AFURLRequestSerialization.h>
+#import "AFNetworking.h"
 
 
 @class LCBaseRequest;

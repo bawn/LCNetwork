@@ -27,7 +27,6 @@
 #import "LCNetworkAgent.h"
 #import "LCNetworkConfig.h"
 #import "TMCache.h"
-#import "AFNetworking.h"
 
 @interface LCBaseRequest ()
 
