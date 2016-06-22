@@ -2,6 +2,10 @@ inhibit_all_warnings!
 platform:ios,'7.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'AFNetworking', '~> 3.0.2'
-pod 'TMCache'
-pod 'MBProgressHUD'
+target 'LCNetworkDemo' do
+    
+    pod 'AFNetworking'
+    pod 'TMCache'
+    pod 'MBProgressHUD'
+    
+end
