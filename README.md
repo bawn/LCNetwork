@@ -31,7 +31,7 @@ api2.requestArgument = @{
                          @"lat" : @"34.345",
                          @"lng" : @"113.678"
                          };
-[api2 startWithCompletionBlockWithSuccess:^(Api2 *api2) {
+[api2 startWithCompletionBlockWithSuccess:^(__kindof LCBaseRequest *request) {
     self.weather2.text = api2.responseJSONObject[@"Weather"];
 } failure:NULL];
 
@@ -278,6 +278,27 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 
 如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
 
+1.1.9 版本新增了，是否执行插件的功能，用于隐藏和显示HUD。比如第一次进入页面时调用以下代码请求数据并显示HUD
+```
+    self.userLikeApi = [[HQUserLikesApi alloc] init];
+    HQRequestAccessory *requestAccessory = [[HQRequestAccessory alloc] initWithShowVC:self];
+    [self.userLikeApi addAccessory:requestAccessory];
+    @weakify(self);
+    [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
+       //
+    } failure:NULL];
+```
+如果但是如果这时候有上拉加载更多数据功能时，一般情况下都不需要显示HUD，所以
+```
+- (void)loadMoreData{
+    self.userLikeApi.invalidAccessory = YES;
+    [self.userLikeApi startWithBlockSuccess:^(HQUserLikesApi *request) {
+    // 
+    } failure:NULL];
+}
+```
+设置`invalidAccessory`属性为YES即可
+
 ### 其他
 
 #### Query
@@ -290,10 +311,6 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ####原始数据
 
 1.1.3版本提供了一个返回原始数据的属性`rawJSONObject`，用于需要获得原始数据但response又要加工的情况下
-
-
-##更多信息
-参考自带的 Demo 或是我的[博客](http://bawn.github.io/ios/afnetworking/2015/08/10/LCNetwork.html)
 
 
 ## TODO
@@ -309,6 +326,18 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ##更新日志
 
 ####[Releases](https://github.com/bawn/LCNetwork/releases)
+
+## FAQ
+1. 当请求失败时，如何获取错误信息中的json数据
+```
+[self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
+      // 
+    } failure:^(__kindof LCBaseRequest *request, NSError *error) {
+        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+NSLog(@"%@",errResponse);
+    }];
+```
+
 
 ##License
 [MIT](http://mit-license.org/)
