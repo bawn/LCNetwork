@@ -95,10 +95,16 @@
     if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
         self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
     }
-   
-    // 是否使用自定义超时时间
-    if ([request.child respondsToSelector:@selector(requestTimeoutInterval)]) {
-        self.manager.requestSerializer.timeoutInterval = [request.child requestTimeoutInterval];
+    else{
+        self.manager.requestSerializer.timeoutInterval = 60.0;
+    }
+    
+    // 是否需要 Cache-Control
+    if ([request.child respondsToSelector:@selector(httpCacheControl)] && [request httpCacheControl]) {
+        [self.manager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+    }
+    else{
+        [self.manager.requestSerializer setCachePolicy:NSURLRequestUseProtocolCachePolicy];
     }
     
     if ([request.child requestMethod] == LCRequestMethodGet) {

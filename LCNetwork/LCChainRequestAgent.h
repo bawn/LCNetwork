@@ -1,9 +1,9 @@
 //
 //  LCChainRequestAgent.h
-//  LCNetworkDemo
+//  LCNetwork
 //
 //  Created by bawn on 2/16/16.
-//  Copyright © 2016 beike. All rights reserved.
+//  Copyright © 2015 bawn. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
