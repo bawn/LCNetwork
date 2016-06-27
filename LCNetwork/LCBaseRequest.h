@@ -154,11 +154,11 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 
 /**
- *  是否需要执行http缓存，注意这里不是手动缓存response内容，而是由http请求中Cache-Control决定，详情见FAQ：https://github.com/bawn/LCNetwork#faq
+ *  缓存策略
  *
- *  @return YES/NO
+ *  @return NSURLRequestCachePolicy
  */
-- (BOOL)httpCacheControl;
+- (NSURLRequestCachePolicy)cachePolicy;
 
 
 @end

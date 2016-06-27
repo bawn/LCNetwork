@@ -60,7 +60,7 @@
     
     AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
     serializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain", nil];
-    serializer.removesKeysWithNullValues = YES;
+    
     if ([request.child respondsToSelector:@selector(removesKeysWithNullValues)]) {
         serializer.removesKeysWithNullValues = [request.child removesKeysWithNullValues];
     }
@@ -70,7 +70,6 @@
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:query:)]) {
         argument = [self.config.processRule processArgumentWithRequest:request.requestArgument query:request.queryArgument];
     }
-    
     if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
         if ([request.child requestSerializerType] == LCRequestSerializerTypeHTTP) {
             self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -99,9 +98,8 @@
         self.manager.requestSerializer.timeoutInterval = 60.0;
     }
     
-    // 是否需要 Cache-Control
-    if ([request.child respondsToSelector:@selector(httpCacheControl)] && [request.child httpCacheControl]) {
-        [self.manager.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+    if ([request.child respondsToSelector:@selector(cachePolicy)]) {
+        [self.manager.requestSerializer setCachePolicy:[request.child cachePolicy]];
     }
     else{
         [self.manager.requestSerializer setCachePolicy:NSURLRequestUseProtocolCachePolicy];
