@@ -47,7 +47,7 @@
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBatchRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *);
 @property (nonatomic, weak) id<LCBatchRequestDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray *requestAccessories;
+
 
 - (id)initWithRequestArray:(NSArray<LCBaseRequest *> *)requestArray;
 

@@ -29,6 +29,7 @@
 
 @interface LCBatchRequest () <LCRequestDelegate>
 
+@property (nonatomic, strong) NSMutableArray *requestAccessories;
 @property (nonatomic) NSInteger finishedCount;
 @property (nonatomic, strong) NSArray *requestArray;
 

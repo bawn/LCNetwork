@@ -21,6 +21,8 @@
 		7A83F2BE1B3C00D500DA3282 /* LCNetworkDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A83F2BD1B3C00D500DA3282 /* LCNetworkDemoTests.m */; };
 		7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD464681B3FE3AC000E12C4 /* Api2.m */; };
 		DF2944DA1C21516800B1C039 /* HQMultiImageUploadApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2944D91C21516800B1C039 /* HQMultiImageUploadApi.m */; };
+		DF40A0C51D2A365C00A4245F /* LCQueueRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DF40A0C41D2A365C00A4245F /* LCQueueRequestAgent.m */; };
+		DF40A0C81D2A37AE00A4245F /* LCQueueRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF40A0C71D2A37AE00A4245F /* LCQueueRequest.m */; };
 		DFD70B411C72ECF2008241C6 /* LCChainRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD70B401C72ECF2008241C6 /* LCChainRequest.m */; };
 		DFD70B441C72EEB6008241C6 /* LCChainRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD70B431C72EEB6008241C6 /* LCChainRequestAgent.m */; };
 		DFF89BFE1BF5C498000B1BE3 /* LCBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF89BF31BF5C498000B1BE3 /* LCBaseRequest.m */; };
@@ -70,6 +72,10 @@
 		DF2944D81C21516800B1C039 /* HQMultiImageUploadApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HQMultiImageUploadApi.h; sourceTree = "<group>"; };
 		DF2944D91C21516800B1C039 /* HQMultiImageUploadApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HQMultiImageUploadApi.m; sourceTree = "<group>"; };
 		DF2B96AB1C225B7E00380735 /* LCBaseRequest+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LCBaseRequest+Internal.h"; sourceTree = "<group>"; };
+		DF40A0C31D2A365C00A4245F /* LCQueueRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCQueueRequestAgent.h; sourceTree = "<group>"; };
+		DF40A0C41D2A365C00A4245F /* LCQueueRequestAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCQueueRequestAgent.m; sourceTree = "<group>"; };
+		DF40A0C61D2A37AE00A4245F /* LCQueueRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCQueueRequest.h; sourceTree = "<group>"; };
+		DF40A0C71D2A37AE00A4245F /* LCQueueRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCQueueRequest.m; sourceTree = "<group>"; };
 		DFD70B3F1C72ECF2008241C6 /* LCChainRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCChainRequest.h; sourceTree = "<group>"; };
 		DFD70B401C72ECF2008241C6 /* LCChainRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCChainRequest.m; sourceTree = "<group>"; };
 		DFD70B421C72EEB6008241C6 /* LCChainRequestAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCChainRequestAgent.h; sourceTree = "<group>"; };
@@ -208,10 +214,14 @@
 				DFF89BF51BF5C498000B1BE3 /* LCBatchRequest.m */,
 				DFD70B3F1C72ECF2008241C6 /* LCChainRequest.h */,
 				DFD70B401C72ECF2008241C6 /* LCChainRequest.m */,
+				DF40A0C61D2A37AE00A4245F /* LCQueueRequest.h */,
+				DF40A0C71D2A37AE00A4245F /* LCQueueRequest.m */,
 				DFF89BF61BF5C498000B1BE3 /* LCBatchRequestAgent.h */,
 				DFF89BF71BF5C498000B1BE3 /* LCBatchRequestAgent.m */,
 				DFD70B421C72EEB6008241C6 /* LCChainRequestAgent.h */,
 				DFD70B431C72EEB6008241C6 /* LCChainRequestAgent.m */,
+				DF40A0C31D2A365C00A4245F /* LCQueueRequestAgent.h */,
+				DF40A0C41D2A365C00A4245F /* LCQueueRequestAgent.m */,
 				DFF89BF81BF5C498000B1BE3 /* LCNetworkAgent.h */,
 				DFF89BF91BF5C498000B1BE3 /* LCNetworkAgent.m */,
 				DFF89BFA1BF5C498000B1BE3 /* LCNetworkConfig.h */,
@@ -228,12 +238,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A83F2C11B3C00D500DA3282 /* Build configuration list for PBXNativeTarget "LCNetworkDemo" */;
 			buildPhases = (
-				BDEB5B4FD5A68B98F94A99FE /* 📦 Check Pods Manifest.lock */,
+				BDEB5B4FD5A68B98F94A99FE /* [CP] Check Pods Manifest.lock */,
 				7A83F29A1B3C00D500DA3282 /* Sources */,
 				7A83F29B1B3C00D500DA3282 /* Frameworks */,
 				7A83F29C1B3C00D500DA3282 /* Resources */,
-				B67E9D31321744143F807A5D /* 📦 Embed Pods Frameworks */,
-				0159047420A1B29EB0F410A0 /* 📦 Copy Pods Resources */,
+				B67E9D31321744143F807A5D /* [CP] Embed Pods Frameworks */,
+				0159047420A1B29EB0F410A0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -321,14 +331,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0159047420A1B29EB0F410A0 /* 📦 Copy Pods Resources */ = {
+		0159047420A1B29EB0F410A0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,14 +346,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LCNetworkDemo/Pods-LCNetworkDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B67E9D31321744143F807A5D /* 📦 Embed Pods Frameworks */ = {
+		B67E9D31321744143F807A5D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,14 +361,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LCNetworkDemo/Pods-LCNetworkDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BDEB5B4FD5A68B98F94A99FE /* 📦 Check Pods Manifest.lock */ = {
+		BDEB5B4FD5A68B98F94A99FE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +385,7 @@
 			files = (
 				DFD70B411C72ECF2008241C6 /* LCChainRequest.m in Sources */,
 				7A80C2741B3D2F3900D53F00 /* LCProcessFilter.m in Sources */,
+				DF40A0C81D2A37AE00A4245F /* LCQueueRequest.m in Sources */,
 				7A80C2771B3D2FC300D53F00 /* Api1.m in Sources */,
 				7AD464691B3FE3AC000E12C4 /* Api2.m in Sources */,
 				DFF89C011BF5C498000B1BE3 /* LCNetworkAgent.m in Sources */,
@@ -382,6 +393,7 @@
 				7A83F2A71B3C00D500DA3282 /* AppDelegate.m in Sources */,
 				7A68D8A71B45280E004B77B9 /* Api3.m in Sources */,
 				7A80C2711B3D2DE800D53F00 /* LCRequestAccessory.m in Sources */,
+				DF40A0C51D2A365C00A4245F /* LCQueueRequestAgent.m in Sources */,
 				DFF89BFF1BF5C498000B1BE3 /* LCBatchRequest.m in Sources */,
 				DFD70B441C72EEB6008241C6 /* LCChainRequestAgent.m in Sources */,
 				DFF89C001BF5C498000B1BE3 /* LCBatchRequestAgent.m in Sources */,

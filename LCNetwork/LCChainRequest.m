@@ -28,6 +28,7 @@
 
 @interface LCChainRequest()<LCRequestDelegate>
 
+@property (nonatomic, strong) NSMutableArray *requestAccessories;
 @property (nonatomic, strong) NSMutableArray *requestArray;
 @property (nonatomic, strong) NSMutableArray *requestCallbackArray;
 @property (nonatomic, assign) NSUInteger nextRequestIndex;

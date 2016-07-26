@@ -7,6 +7,6 @@ target 'LCNetworkDemo' do
     pod 'AFNetworking'
     pod 'TMCache'
     pod 'MBProgressHUD'
-    
+    pod 'libextobjc'
     
 end

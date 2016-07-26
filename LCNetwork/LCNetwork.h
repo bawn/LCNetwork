@@ -29,5 +29,6 @@
 #import "LCBaseRequest.h"
 #import "LCBatchRequest.h"
 #import "LCChainRequest.h"
+#import "LCQueueRequest.h"
 
 #endif /* LCNetwork_h */

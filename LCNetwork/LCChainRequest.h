@@ -48,7 +48,6 @@ typedef void (^LCChainCallback)(LCChainRequest *chainRequest, __kindof LCBaseReq
  */
 @property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, weak) id<LCChainRequestDelegate> delegate;
-@property (nonatomic, strong) NSMutableArray *requestAccessories;
 
 /**
  *  开始Chain请求
