@@ -28,7 +28,6 @@
 #import "LCQueueRequest.h"
 #import "LCBaseRequest.h"
 #import "LCQueueRequestAgent.h"
-#import <EXTScope.h>
 
 static dispatch_group_t queueRequest_request_operation_completion_group() {
     static dispatch_group_t http_request_operation_completion_group;
