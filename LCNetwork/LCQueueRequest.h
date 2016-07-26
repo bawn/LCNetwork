@@ -25,7 +25,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "LCRequestAccessory.h"
+#import "LCBaseRequest.h"
 
 @class LCQueueRequest;
 
