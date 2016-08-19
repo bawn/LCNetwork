@@ -146,7 +146,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 
 /**
- *  添加请求 Header，比如返回@{@"Accept" : @"application/json"}，那么 application/json 对应的是 Value，Accept对应的是 HTTPHeaderField
+ *  添加请求 Header，比如@{@"Accept" : @"application/json"}，那么 application/json 对应的是 Value，Accept对应的是 HTTPHeaderField
  *
  *  @return NSDictionary
  */

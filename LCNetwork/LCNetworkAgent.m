@@ -70,6 +70,16 @@
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:query:)]) {
         argument = [self.config.processRule processArgumentWithRequest:request.requestArgument query:request.queryArgument];
     }
+    // 检查是否有统一的Header添加
+    if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(requestHeaderValue)]) {
+        NSDictionary<NSString *, NSString *> *headerValue = [self.config.processRule requestHeaderValue];
+        if ([headerValue isKindOfClass:[NSDictionary class]]){
+            [headerValue enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+                [self.manager.requestSerializer setValue:obj forHTTPHeaderField:key];
+            }];
+        }
+    }
+    
     if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
         if ([request.child requestSerializerType] == LCRequestSerializerTypeHTTP) {
             self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];

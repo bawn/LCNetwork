@@ -26,4 +26,9 @@
 //    }
 //}
 
+
+- (NSDictionary *)requestHeaderValue{
+    return @{@"X-UUID" : @"1"};
+}
+
 @end

@@ -49,6 +49,14 @@
  */
 - (id)processResponseWithRequest:(id)response;
 
+/**
+ *  请求中统一添加Header
+ *
+ *  @return Header NSDictionary
+ */
+- (NSDictionary *)requestHeaderValue;
+
+
 @end
 
 @interface LCNetworkConfig : NSObject
