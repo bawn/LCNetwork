@@ -283,7 +283,7 @@
 				TargetAttributes = {
 					7A83F29D1B3C00D500DA3282 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 8246L2QR6A;
+						DevelopmentTeam = U2HU62KF5U;
 					};
 					7A83F2B61B3C00D500DA3282 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -530,6 +530,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = U2HU62KF5U;
 				INFOPLIST_FILE = LCNetworkDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "beike.$(PRODUCT_NAME:rfc1034identifier)";
@@ -544,6 +545,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = U2HU62KF5U;
 				INFOPLIST_FILE = LCNetworkDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "beike.$(PRODUCT_NAME:rfc1034identifier)";

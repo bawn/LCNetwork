@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "LCNetwork"
-  s.version          = "1.2.4"
+  s.version          = "1.2.5"
   s.summary          = "基于AFNetworking的网络库封装"
   s.homepage         = "https://github.com/bawn/LCNetwork"
   s.license          = 'MIT'

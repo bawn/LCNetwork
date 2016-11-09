@@ -70,6 +70,18 @@
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(processArgumentWithRequest:query:)]) {
         argument = [self.config.processRule processArgumentWithRequest:request.requestArgument query:request.queryArgument];
     }
+    
+    
+    if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
+        if ([request.child requestSerializerType] == LCRequestSerializerTypeHTTP) {
+            self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        }
+        else{
+            self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        }
+    }
+    
+    
     // 检查是否有统一的Header添加
     if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(requestHeaderValue)]) {
         NSDictionary<NSString *, NSString *> *headerValue = [self.config.processRule requestHeaderValue];
@@ -80,14 +92,6 @@
         }
     }
     
-    if ([request.child respondsToSelector:@selector(requestSerializerType)]) {
-        if ([request.child requestSerializerType] == LCRequestSerializerTypeHTTP) {
-            self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        }
-        else{
-            self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        }
-    }
     if ([request.child respondsToSelector:@selector(requestHeaderValue)]) {
         NSDictionary<NSString *, NSString *> *headerValue = [request.child requestHeaderValue];
         if ([headerValue isKindOfClass:[NSDictionary class]]){
@@ -270,6 +274,10 @@
 - (NSString *)keyForRequest:(NSURLSessionDataTask *)object {
     NSString *key = [@(object.taskIdentifier) stringValue];
     return key;
+}
+
+- (void)dealloc{
+    [self.manager invalidateSessionCancelingTasks:YES];
 }
 
 @end
