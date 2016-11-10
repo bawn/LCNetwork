@@ -277,7 +277,7 @@
 }
 
 - (void)dealloc{
-    [self.manager invalidateSessionCancelingTasks:YES];
+    [self.manager invalidateSessionCancelingTasks:NO];
 }
 
 @end
