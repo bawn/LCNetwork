@@ -272,7 +272,42 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
     return @{@"Accept" : @"application/json", @"Accept" : @"application/json; charset=utf-8" : @"Content-Type"};
 }
 ```
+### 关于如何使用 LCQueueRequest
 
+当每个请求发起的时间不固定，但是又要监听所有这些请求都已经完成的场景下使用。
+
+举个例子：比如用户需要上传多张图片，每上传完一张图片服务器会返回一个图片地址，最后点击“完成”按钮后把这些图片地址提交给服务器。因为每次用户上传图片的发起时间都不是固定的，有可能在点击“完成”按钮时有些图片还没上传完成，所以这时候就需要监听这些上传的请求是否全部都已经完成
+
+初始化 `LCQueueRequest`，这个类也支持添加HUD（Loading视图）
+```
+    self.queueRequest = [[LCQueueRequest alloc] init];
+    HQRequestAccessory *accessory = [[HQRequestAccessory alloc] initWithViewController:self];
+    [self.queueRequest addAccessory:accessory];
+```
+
+每次上传图片的时候的调用的方法，使用`- (void)addRequest:(LCBaseRequest *)request`添加在并发队列中
+```
+- (void)uploadImage:(UIImage *)image imageInfo:(HQImageInfo *)imageInfo{
+    HQSingleImageUploadApi *uploadApi = [[HQSingleImageUploadApi alloc] init];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
+    uploadApi.uploadImageData = imageData;
+
+    [uploadApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
+        //
+    } failure:NULL];
+
+    [self.queueRequest addRequest:uploadApi];
+}
+```
+
+最后点击“完成”按钮，这时候会等待队列中的所有请求都完成后再执行，当然这时候HUD（Loading视图）也会正确显示
+```
+- (IBAction)doneButtonAction:(id)sender{
+    [self.queueRequest allComplete:^{
+        //
+    }];
+}
+```
 
 ### 关于HUD
 
