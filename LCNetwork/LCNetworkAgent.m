@@ -215,14 +215,19 @@
             [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:request.urlString];
         }
         
-        if (request.delegate != nil) {
-            [request.delegate requestFinished:request];
+        if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestSuccess:)]) {
+            [request.delegate requestSuccess:request];
+        }
+        if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestFinished:error:)]) {
+            [request.delegate requestFinished:request error:nil];
         }
         if (request.successCompletionBlock) {
             request.successCompletionBlock(request);
         }
+        if (request.finishedCompletionBlock) {
+            request.finishedCompletionBlock(request, nil);
+        }
         [request toggleAccessoriesDidStopCallBack];
-   
     }
     
     [self removeOperation:sessionDataTask];
@@ -234,11 +239,17 @@
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
-        if (request.delegate != nil) {
+        if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestFailed:error:)]) {
             [request.delegate requestFailed:request error:error];
+        }
+        if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestFinished:error:)]) {
+            [request.delegate requestFinished:request error:error];
         }
         if (request.failureCompletionBlock) {
             request.failureCompletionBlock(request, error);
+        }
+        if (request.finishedCompletionBlock) {
+            request.finishedCompletionBlock(request, error);
         }
         [request toggleAccessoriesDidStopCallBack];
     }

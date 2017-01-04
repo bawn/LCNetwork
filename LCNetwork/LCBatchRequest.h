@@ -46,6 +46,7 @@
 @property (nonatomic, strong, readonly) NSArray *requestArray;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBatchRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *);
+@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBatchRequest *);
 @property (nonatomic, weak) id<LCBatchRequestDelegate> delegate;
 
 
@@ -80,6 +81,17 @@ DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id requ
  */
 - (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
                       failure:(void (^)(LCBatchRequest *request))failure;
+
+/**
+ *  block回调方式
+ *
+ *  @param success 成功回调
+ *  @param failure 失败回调
+ *  @param finished 请求完成后的回调
+ */
+- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
+                      failure:(void (^)(LCBatchRequest *request))failure
+                     finished:(void (^)(LCBatchRequest *request))finished;
 
 
 

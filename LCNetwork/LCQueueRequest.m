@@ -83,7 +83,7 @@ static dispatch_group_t queueRequest_request_operation_completion_group() {
 
 #pragma mark - Network Request Delegate
 
-- (void)requestFinished:(LCBaseRequest *)request {
+- (void)requestSuccess:(LCBaseRequest *)request {
     dispatch_group_leave(queueRequest_request_operation_completion_group());
     [[LCQueueRequestAgent sharedInstance] removeRequest:self];    
 }

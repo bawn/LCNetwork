@@ -33,6 +33,7 @@
 typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
 typedef void (^LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
 typedef void (^LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError *error);
+typedef void (^LCRequestFinishedBlock)(__kindof LCBaseRequest *request, NSError *error);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -170,7 +171,8 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 @optional
 
-- (void)requestFinished:(LCBaseRequest *)request;
+- (void)requestSuccess:(LCBaseRequest *)request;
+- (void)requestFinished:(LCBaseRequest *)request error:(NSError *)error;
 - (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error;
 - (void)requestProgress:(NSProgress *)progress;
 
@@ -215,6 +217,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);
 @property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *, NSError *error);
+@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBaseRequest *, NSError *error);
 @property (nonatomic, copy) void (^progressBlock)(NSProgress * progress);
 
 /**
@@ -249,6 +252,19 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 
 /**
+ block回调方式
+
+ @param success 成功回调
+ @param failure 失败回调
+ @param finished 请求完成后的回调
+ */
+- (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
+                      failure:(LCRequestFailureBlock)failure
+                     finished:(LCRequestFinishedBlock)finished;
+
+
+
+/**
  *  block回调方式
  *
  *  @param progress 进度回调
@@ -258,6 +274,21 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 - (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
                        success:(LCRequestCompletionBlock)success
                        failure:(LCRequestFailureBlock)failure;
+
+
+/**
+ block回调方式
+
+ @param progress 进度回调
+ @param success 成功回调
+ @param failure 失败回调
+ @param finished 请求完成后的回调
+ */
+- (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
+                       success:(LCRequestCompletionBlock)success
+                       failure:(LCRequestFailureBlock)failure
+                      finished:(LCRequestFinishedBlock)finished;
+
 
 /**
  *  一般用于显示和隐藏 HUD

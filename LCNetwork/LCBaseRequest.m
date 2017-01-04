@@ -87,6 +87,26 @@
 }
 
 
+- (void)startWithBlockSuccess:(LCRequestCompletionBlock)success
+                      failure:(LCRequestFailureBlock)failure
+                     finished:(LCRequestFinishedBlock)finished{
+    self.successCompletionBlock = success;
+    self.failureCompletionBlock = failure;
+    self.finishedCompletionBlock = finished;
+    [self start];
+}
+
+- (void)startWithBlockProgress:(void (^)(NSProgress *))progress
+                       success:(LCRequestCompletionBlock)success
+                       failure:(LCRequestFailureBlock)failure
+                      finished:(LCRequestFinishedBlock)finished{
+    self.progressBlock = progress;
+    self.successCompletionBlock = success;
+    self.failureCompletionBlock = failure;
+    self.finishedCompletionBlock = finished;
+    [self start];
+}
+
 - (id)responseJSONObject{
     id responseJSONObject = nil;
     // 统一加工response
@@ -158,6 +178,7 @@
 - (void)clearCompletionBlock {
     self.successCompletionBlock = nil;
     self.failureCompletionBlock = nil;
+    self.finishedCompletionBlock = nil;
     self.progressBlock = nil;
 }
 

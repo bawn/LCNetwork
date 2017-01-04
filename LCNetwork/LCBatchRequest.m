@@ -88,25 +88,35 @@
 
 - (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
                                     failure:(void (^)(LCBatchRequest *request))failure {
-    [self setCompletionBlockWithSuccess:success failure:failure];
+    [self setCompletionBlockWithSuccess:success failure:failure finished:NULL];
     [self start];
 }
 
 - (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
                       failure:(void (^)(LCBatchRequest *request))failure{
-    [self setCompletionBlockWithSuccess:success failure:failure];
+    [self setCompletionBlockWithSuccess:success failure:failure finished:NULL];
+    [self start];
+}
+
+- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
+                      failure:(void (^)(LCBatchRequest *request))failure
+                     finished:(void (^)(LCBatchRequest *request))finished{
+    [self setCompletionBlockWithSuccess:success failure:failure finished:finished];
     [self start];
 }
 
 - (void)setCompletionBlockWithSuccess:(void (^)(LCBatchRequest *batchRequest))success
-                              failure:(void (^)(LCBatchRequest *batchRequest))failure {
+                              failure:(void (^)(LCBatchRequest *batchRequest))failure
+                              finished:(void (^)(LCBatchRequest *batchRequest))finished{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
+    self.finishedCompletionBlock = finished;
 }
 
 - (void)clearCompletionBlock {
     self.successCompletionBlock = nil;
     self.failureCompletionBlock = nil;
+    self.finishedCompletionBlock = nil;
 }
 
 
@@ -116,7 +126,8 @@
 
 #pragma mark - Network Request Delegate
 
-- (void)requestFinished:(LCBaseRequest *)request {
+
+- (void)requestSuccess:(LCBaseRequest *)request{
     _finishedCount++;
     if (_finishedCount == _requestArray.count) {
         [self toggleAccessoriesWillStopCallBack];
@@ -125,6 +136,9 @@
         }
         if (_successCompletionBlock) {
             _successCompletionBlock(self);
+        }
+        if (_finishedCompletionBlock) {
+            _finishedCompletionBlock(self);
         }
         [self requestDidStop];
     }
@@ -140,6 +154,9 @@
     }
     if (_failureCompletionBlock) {
         _failureCompletionBlock(self);
+    }
+    if (_finishedCompletionBlock) {
+        _finishedCompletionBlock(self);
     }
     [self requestDidStop];
 }
