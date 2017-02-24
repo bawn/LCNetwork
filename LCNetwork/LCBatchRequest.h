@@ -28,6 +28,12 @@
 #import "LCBaseRequest.h"
 @class LCBatchRequest;
 
+
+typedef void (^LCBatchRequestCompletionBlock)(__kindof LCBatchRequest *request);
+typedef void (^LCBatchRequestFailureBlock)(__kindof LCBatchRequest *request, NSError *error);
+typedef void (^LCBatchRequestFinishedBlock)(__kindof LCBatchRequest *request, NSError *error);
+
+
 @protocol LCBatchRequestDelegate <NSObject>
 
 - (void)batchRequestFinished:(LCBatchRequest *)batchRequest;
@@ -45,10 +51,9 @@
 @property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, strong, readonly) NSArray *requestArray;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBatchRequest *);
-@property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *);
-@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBatchRequest *);
+@property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *, NSError *);
+@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBatchRequest *, NSError *);
 @property (nonatomic, weak) id<LCBatchRequestDelegate> delegate;
-
 
 - (id)initWithRequestArray:(NSArray<LCBaseRequest *> *)requestArray;
 
@@ -69,8 +74,8 @@
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
-                                    failure:(void (^)(LCBatchRequest *request))failure
+- (void)startWithCompletionBlockWithSuccess:(LCBatchRequestCompletionBlock)success
+                                    failure:(LCBatchRequestFailureBlock)failure
 DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id request))success failure:(void (^)(id request))failure");
 
 /**
@@ -79,8 +84,8 @@ DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id requ
  *  @param success 成功回调
  *  @param failure 失败回调
  */
-- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
-                      failure:(void (^)(LCBatchRequest *request))failure;
+- (void)startWithBlockSuccess:(LCBatchRequestCompletionBlock)success
+                      failure:(LCBatchRequestFailureBlock)failure;
 
 /**
  *  block回调方式
@@ -89,9 +94,9 @@ DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id requ
  *  @param failure 失败回调
  *  @param finished 请求完成后的回调
  */
-- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
-                      failure:(void (^)(LCBatchRequest *request))failure
-                     finished:(void (^)(LCBatchRequest *request))finished;
+- (void)startWithBlockSuccess:(LCBatchRequestCompletionBlock)success
+                      failure:(LCBatchRequestFailureBlock)failure
+                     finished:(LCBatchRequestFinishedBlock)finished;
 
 
 

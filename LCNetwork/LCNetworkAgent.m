@@ -237,6 +237,7 @@
 - (void)handleRequestFailure:(NSURLSessionDataTask *)sessionDataTask error:(NSError *)error{
     NSString *key = [self keyForRequest:sessionDataTask];
     LCBaseRequest *request = _requestsRecord[key];
+    request.error = error;
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
         if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestFailed:error:)]) {

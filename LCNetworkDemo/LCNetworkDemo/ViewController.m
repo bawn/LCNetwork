@@ -32,11 +32,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Api2 *api2 = [[Api2 alloc] init];
+//    Api2 *api2 = [[Api2 alloc] init];
+//    
+//    if (api2.cacheJson) {
+//        self.city1.text = api2.cacheJson;
+//    }
     
-    if (api2.cacheJson) {
-        self.city1.text = api2.cacheJson;
-    }
+    
     
 }
 
@@ -60,7 +62,7 @@
         self.city1.text = api1.responseJSONObject;// 不需要获取 Weather 的值，是因为实现了 - (id)responseProcess:(id)responseObject 方法
         Api2 *api2 = batchRequest.requestArray[1];
         self.city1.text = api2.responseJSONObject;
-    } failure:^(LCBatchRequest *batchRequest) {
+    } failure:^(LCBatchRequest *batchRequest, NSError *error) {
         
     }];
     

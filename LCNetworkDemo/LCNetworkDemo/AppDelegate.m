@@ -21,8 +21,6 @@
     
     LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
     config.mainBaseUrl = @"http://api.zdoz.net/";
-//    config.viceBaseUrl = @"http://api.zdoz.net/";
-//    config.logEnabled = YES;
     LCProcessFilter *filter = [[LCProcessFilter alloc] init];
     config.processRule = filter;
 

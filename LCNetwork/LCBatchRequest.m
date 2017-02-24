@@ -86,28 +86,28 @@
 }
 
 
-- (void)startWithCompletionBlockWithSuccess:(void (^)(LCBatchRequest *request))success
-                                    failure:(void (^)(LCBatchRequest *request))failure {
+- (void)startWithCompletionBlockWithSuccess:(LCBatchRequestCompletionBlock)success
+                                    failure:(LCBatchRequestFailureBlock)failure {
     [self setCompletionBlockWithSuccess:success failure:failure finished:NULL];
     [self start];
 }
 
-- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
-                      failure:(void (^)(LCBatchRequest *request))failure{
+- (void)startWithBlockSuccess:(LCBatchRequestCompletionBlock)success
+                      failure:(LCBatchRequestFailureBlock)failure{
     [self setCompletionBlockWithSuccess:success failure:failure finished:NULL];
     [self start];
 }
 
-- (void)startWithBlockSuccess:(void (^)(LCBatchRequest *request))success
-                      failure:(void (^)(LCBatchRequest *request))failure
-                     finished:(void (^)(LCBatchRequest *request))finished{
+- (void)startWithBlockSuccess:(LCBatchRequestCompletionBlock)success
+                      failure:(LCBatchRequestFailureBlock)failure
+                     finished:(LCBatchRequestFinishedBlock)finished{
     [self setCompletionBlockWithSuccess:success failure:failure finished:finished];
     [self start];
 }
 
-- (void)setCompletionBlockWithSuccess:(void (^)(LCBatchRequest *batchRequest))success
-                              failure:(void (^)(LCBatchRequest *batchRequest))failure
-                              finished:(void (^)(LCBatchRequest *batchRequest))finished{
+- (void)setCompletionBlockWithSuccess:(LCBatchRequestCompletionBlock)success
+                              failure:(LCBatchRequestFailureBlock)failure
+                              finished:(LCBatchRequestFinishedBlock)finished{
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
     self.finishedCompletionBlock = finished;
@@ -138,7 +138,7 @@
             _successCompletionBlock(self);
         }
         if (_finishedCompletionBlock) {
-            _finishedCompletionBlock(self);
+            _finishedCompletionBlock(self, nil);
         }
         [self requestDidStop];
     }
@@ -153,10 +153,10 @@
         [_delegate batchRequestFailed:self];
     }
     if (_failureCompletionBlock) {
-        _failureCompletionBlock(self);
+        _failureCompletionBlock(self, error);
     }
     if (_finishedCompletionBlock) {
-        _finishedCompletionBlock(self);
+        _finishedCompletionBlock(self, error);
     }
     [self requestDidStop];
 }

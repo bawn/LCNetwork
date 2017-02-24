@@ -22,8 +22,6 @@
 - (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
     self = [super init];
     if (self) {
-//        _lat = lat;
-//        _lng = lng;
         self.requestArgument = @{
                                  @"lat" : lat,
                                  @"lng" : lng
@@ -33,21 +31,12 @@
 }
 
 
-//- (NSDictionary *)requestArgument{
-//    return @{
-//             @"lat" : _lat,
-//             @"lng" : _lng
-//             };
-//}
-
-
 - (BOOL)cacheResponse{
     return YES;
 }
 
 // 接口地址
 - (NSString *)apiMethodName{
-    
     return @"geo2loc_2.aspx";
 }
 
@@ -55,14 +44,6 @@
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodGet;
 }
-
-//- (id)responseProcess:(id)responseObject{
-//    return responseObject[@"city"];
-//}
-
-//- (BOOL)ignoreUnifiedResponseProcess{
-//    return YES;
-//}
 
 - (void)dealloc{
     NSLog(@"%s", __func__);

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "LCNetwork"
-  s.version          = "1.3.3"
+  s.version          = "1.3.4"
   s.summary          = "基于AFNetworking的网络库封装"
   s.homepage         = "https://github.com/bawn/LCNetwork"
   s.license          = 'MIT'
@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.source_files     = 'LCNetwork/*.{h,m}'
   s.dependency       "AFNetworking"
   s.dependency       "TMCache", "~> 2.1.0"
+  s.framework        = "CFNetwork"
 end

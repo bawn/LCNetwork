@@ -115,18 +115,6 @@
 
 #pragma mark - Network Request Delegate
 
-//- (void)requestFinished:(LCBaseRequest *)request {
-//    NSUInteger currentRequestIndex = _nextRequestIndex - 1;
-//    LCChainCallback callback = _requestCallbackArray[currentRequestIndex];
-//    callback(self, request);
-//    if ([self startNextRequest] == NO) {
-//        [self toggleAccessoriesWillStopCallBack];
-//        if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
-//            [_delegate chainRequestFinished:self];
-//        }
-//        [self requestDidStop];
-//    }
-//}
 
 - (void)requestSuccess:(LCBaseRequest *)request{
     NSUInteger currentRequestIndex = _nextRequestIndex - 1;
