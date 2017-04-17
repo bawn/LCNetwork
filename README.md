@@ -11,7 +11,7 @@
 
 若遇到 Demo 闪退问题，请删除 APP 重新运行，另外感谢[zdoz](http://api.zdoz.net/)提供免费的测试接口。
 
-##功能
+## 功能
 
 1. 支持`block`和`delegate`的回调方式
 2. 支持设置主、副两个服务器地址
@@ -38,15 +38,15 @@ api2.requestArgument = @{
 ```
 
 
-##集成
+## 集成
 
 CocoaPods:
 ```
 pod 'LCNetwork'
 ```
 
-##使用
-###统一配置
+## 使用
+### 统一配置
 
 
 ```
@@ -55,7 +55,7 @@ config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
 config.viceBaseUrl = @"https://api.zdoz.net/";// 设置副服务器地址
 ```
 
-###创建接口调用类
+### 创建接口调用类
 每个请求都需要一个对应的类去执行，这样的好处是接口所需要的信息都集成到了这个API类的内部，不在暴露在Controller层。
 
 创建一个API类需要继承`LCBaseRequest`类，并且遵守`LCAPIRequest`协议，下面是最基本的API类的创建。
@@ -90,7 +90,7 @@ __Api1.m__
 `- (NSString *)apiMethodName` 和 `- (LCRequestMethod)requestMethod` 是 @required 方法，所以必须实现，这在一定程度上降低了因漏写方法而crash的概率。
 
 
-###参数设置
+### 参数设置
 
 请求的参数可以在外部设置，例如：
 ```
@@ -132,7 +132,7 @@ __Api2.m__
 直接在初始化方法中使用 `self.requestArgument = @{@"lat" : lat, lng" : lng}` 其实不妥，原因请参考 [唐巧](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) 和 [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575)，如果想完全规避这样的问题，请参考demo中的实现
 
 
-###统一处理`argument` 和 `response`
+### 统一处理`argument` 和 `response`
 
 这里需要用到另外一个协议 ` <LCProcessProtocol>`，比如我们的每个请求需要添加一个关于版本的参数：
 
@@ -343,7 +343,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ```
 那么`token=token1`就会拼接到 URL 的后面
 
-####原始数据
+#### 原始数据
 
 1.1.3版本提供了一个返回原始数据的属性`rawJSONObject`，用于需要获得原始数据但response又要加工的情况下
 
@@ -354,13 +354,13 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 - [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护
 - [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
-##Requirements
+## Requirements
 * iOS 7 or higher
 * ARC
 
-##更新日志
+## 更新日志
 
-####[Releases](https://github.com/bawn/LCNetwork/releases)
+#### [Releases](https://github.com/bawn/LCNetwork/releases)
 
 ## FAQ
 __当请求失败时，如何获取错误信息中的json数据__
@@ -373,5 +373,5 @@ NSLog(@"%@",errResponse);
     }];
 ```
 
-##License
+## License
 [MIT](http://mit-license.org/)
