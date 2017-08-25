@@ -115,6 +115,7 @@
     [api2 addAccessory:accessory];
     [api2 startWithBlockSuccess:^(Api2 *api2) {
         self.city3.text = api2.responseJSONObject;// 不需要获取 city 的值，是因为设置了统一的 response 处理，查看 LCProcessFilter
+        NSLog(@"%d", api2.isSuccess);
     } failure:^(__kindof LCBaseRequest *request, NSError *error) {
         
     }];

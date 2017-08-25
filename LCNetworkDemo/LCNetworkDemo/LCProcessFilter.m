@@ -31,4 +31,8 @@
     return @{@"X-UUID" : @"1"};
 }
 
+- (BOOL)isSuccess:(id)responses{
+    return responses[@"city"];
+}
+
 @end

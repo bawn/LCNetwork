@@ -31,6 +31,7 @@
 @protocol LCProcessProtocol <NSObject>
 
 @optional
+
 /**
  *  用于统一加工参数，返回处理后的参数值
  *
@@ -40,6 +41,7 @@
  *  @return 处理后的参数
  */
 - (NSDictionary *)processArgumentWithRequest:(NSDictionary *)argument query:(NSDictionary *)queryArgument;
+
 /**
  *  用于统一加工response，返回处理后response
  *
@@ -55,6 +57,21 @@
  *  @return Header NSDictionary
  */
 - (NSDictionary *)requestHeaderValue;
+
+
+/**
+ 判断接口返回是否成功，此成功代表的是接口是否成功处理。例如赞一篇文章，但是由于服务器超时，没有赞成功，这样子就代表接口返回失败，反正成功。
+ {
+	"result": {
+ 
+	},
+	"ok": true
+ }
+ 此处，ok 就代表是否成功
+ 
+ @return 是否成功
+ */
+- (BOOL)isSuccess:(id)responses;
 
 
 @end

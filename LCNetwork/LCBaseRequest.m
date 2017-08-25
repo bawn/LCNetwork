@@ -132,6 +132,14 @@
     return _responseJSONObject;
 }
 
+- (BOOL)isSuccess{
+    if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(isSuccess:)]) {
+        BOOL isFail = [self.config.processRule isSuccess:_responseJSONObject];
+        return isFail;
+    }
+    return NO;
+}
+
 - (NSString *)urlString{
     NSString *baseUrl = nil;
     #pragma clang diagnostic push
@@ -159,6 +167,7 @@
     }
     return [self.child apiMethodName];
 }
+
 - (id)cacheJson{
     if (_cacheJson) {
         return _cacheJson;

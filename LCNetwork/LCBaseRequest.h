@@ -162,6 +162,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 - (NSURLRequestCachePolicy)cachePolicy;
 
 
+
 @end
 
 
@@ -194,24 +195,47 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 @property (nonatomic, strong) NSURLSessionDataTask *sessionDataTask;
 @property (nonatomic, strong) id requestArgument;
+
 /**
  *  用于 POST 情况下，拼接参数请求，而不是放在body里面
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> *queryArgument;
+
 @property (nonatomic, weak) id<LCRequestDelegate> delegate;
 @property (nonatomic, weak, readonly) id<LCAPIRequest> child;
+
 /**
  *  当通过get方式访问 responseJSONObject 时就会得到加工后的数据
  */
+
 @property (nonatomic, strong) id responseJSONObject;
 /**
  *  接口返回的原始数据
  */
+
 @property (nonatomic, strong, readonly) id rawJSONObject;
+
 /**
  *  是否不执行插件，默认是 NO, 也就是说当添加了插件默认是执行，比如有时候需要隐藏HUD
  */
 @property (nonatomic, assign) BOOL invalidAccessory;
+
+
+
+/**
+ 判断接口返回是否成功，此成功代表的是接口是否成功处理。例如赞一篇文章，但是由于服务器超时，没有赞成功，这样子就代表接口返回失败，反正成功。
+ {
+	"result": {
+ 
+	},
+	"ok": true
+ }
+ 此处，ok 就代表是否成功
+ 
+ 具体的逻辑请实现 LCNetworkConfig 中的 - (BOOL)isSuccess:(id)responses; 方法
+ */
+@property (nonatomic, assign, readonly) BOOL isSuccess;
+
 @property (nonatomic, strong) NSError *error;
 @property (nonatomic, strong, readonly) id cacheJson;
 @property (nonatomic, strong, readonly) NSString *urlString;
