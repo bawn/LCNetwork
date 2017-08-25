@@ -24,19 +24,25 @@
         _hud = [[MBProgressHUD alloc] initWithView:vc.view];
         [vc.view addSubview:_hud];
         _hud.mode = MBProgressHUDModeIndeterminate;
-        _hud.labelText = @"正在加载";
-        _hud.square = YES;
+//        _hud.label.text = @"正在加载";
+//        _hud.label.textColor = [UIColor whiteColor];
+//        _hud.square = YES;
+//        _hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+//        _hud.bezelView.backgroundColor = [UIColor blackColor];
+//        _hud.backgroundView.backgroundColor = [UIColor clearColor];
+//        _hud.backgroundColor = [UIColor clearColor];
+
     }
     return self;
 }
 
 
 - (void)requestWillStart:(id)request {
-    [self.hud show:YES];
+    [self.hud showAnimated:YES];
 }
 
 - (void)requestWillStop:(id)request {
-    [self.hud hide:NO];
+    [self.hud hideAnimated:NO];
 }
 
 - (void)requestDidStop:(id)request{

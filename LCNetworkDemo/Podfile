@@ -5,7 +5,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'LCNetworkDemo' do
     
     pod 'AFNetworking'
-    pod 'TMCache'
     pod 'MBProgressHUD'
     pod 'libextobjc'
     
