@@ -351,7 +351,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ## TODO
 
 - [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
-~- [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护~
+- [x] ~替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护~
 - [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ## Requirements
