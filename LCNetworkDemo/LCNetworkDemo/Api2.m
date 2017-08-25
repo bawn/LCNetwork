@@ -30,11 +30,6 @@
     return self;
 }
 
-
-- (BOOL)cacheResponse{
-    return YES;
-}
-
 // 接口地址
 - (NSString *)apiMethodName{
     return @"geo2loc_2.aspx";

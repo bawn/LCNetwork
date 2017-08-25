@@ -27,7 +27,6 @@
 #import "LCNetworkConfig.h"
 #import "LCBaseRequest.h"
 #import "AFNetworking.h"
-#import "TMCache.h"
 #import "LCBaseRequest+Internal.h"
 
 @interface LCNetworkAgent ()
@@ -201,19 +200,6 @@
     LCBaseRequest *request = _requestsRecord[key];
     if (request) {
         [request toggleAccessoriesWillStopCallBack];
-        
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        // 更新缓存
-        if (([request.child respondsToSelector:@selector(withoutCache)] && [request.child withoutCache])) {
-            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:request.urlString];
-        }
-#pragma clang diagnostic pop
-        
-        // 更新缓存
-        if (([request.child respondsToSelector:@selector(cacheResponse)] && [request.child cacheResponse])) {
-            [[[TMCache sharedCache] diskCache] setObject:request.responseJSONObject forKey:request.urlString];
-        }
         
         if (request.delegate != nil && [request.delegate respondsToSelector:@selector(requestSuccess:)]) {
             [request.delegate requestSuccess:request];

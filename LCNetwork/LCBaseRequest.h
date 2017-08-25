@@ -79,15 +79,6 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  */
 - (BOOL)useViceUrl;
 
-/**
- *  是否缓存数据 response 数据
- *
- *  @return 是否缓存数据 response 数据
- */
-- (BOOL)cacheResponse;
-
-// 是否缓存数据 response 数据(旧版)
-- (BOOL)withoutCache DEPRECATED_MSG_ATTRIBUTE("使用 - (BOOL)cacheResponse");
 
 /**
  *  自定义超时时间
@@ -237,7 +228,6 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, assign, readonly) BOOL isSuccess;
 
 @property (nonatomic, strong) NSError *error;
-@property (nonatomic, strong, readonly) id cacheJson;
 @property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
 @property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);

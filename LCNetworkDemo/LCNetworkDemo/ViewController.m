@@ -32,14 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    Api2 *api2 = [[Api2 alloc] init];
-//    
-//    if (api2.cacheJson) {
-//        self.city1.text = api2.cacheJson;
-//    }
-    
-    
-    
 }
 
 - (IBAction)firstAction:(id)sender{

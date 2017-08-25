@@ -20,10 +20,6 @@
     return LCRequestMethodGet;
 }
 
-// 是否缓存数据
-- (BOOL)cacheResponse{
-    return YES;
-}
 
 - (id)responseProcess:(id)responseObject{
     return responseObject[@"Weather"];
