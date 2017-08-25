@@ -187,6 +187,32 @@ __LCProcessFilter.m__
 ```
 也就是说当使用 `api1.responseJSONObject` 获取数据时，返回的直接是 `result` 对应的值，或者是错误信息。
 
+`LCProcessProtocol` 协议里面还有另外一个方法用来标记接口的请求是否成功，例如以下返回数据代表成功，因为 ok 的值是 true
+
+```
+{
+  "result": {
+      "_id": "564a931dbbb03c7002a2c0f3",
+      "name": "clover",
+      "count": 0
+    },
+
+  "ok": true,
+  "message" : "成功"
+}
+```
+
+当然并不是所有的接口用 ok 的字段来代表成功与否，所以在这个方法就是用来自定义判断条件：
+
+```
+- (BOOL)isSuccess:(id)response{
+    return [response[@"ok"] boolValue];
+}
+```
+
+然后 `api1.isSuccess` 的返回值能用来判断接口的成功与否。
+
+
 最后，赋值给 `LCNetworkConfig` 的 `processRule`
 ```
 LCProcessFilter *filter = [[LCProcessFilter alloc] init];
