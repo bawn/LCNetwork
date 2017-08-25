@@ -171,7 +171,7 @@ __LCProcessFilter.m__
   "message" : "成功"
 }
 ```
-那么可以这样处理
+那么就需要实现 `- (id) processResponseWithRequest:(id)response` 方法
 
 ```
 - (id) processResponseWithRequest:(id)response{
@@ -212,8 +212,6 @@ __LCProcessFilter.m__
 
 然后 `api1.isSuccess` 的返回值能用来判断接口的成功与否。
 
-
-最后，赋值给 `LCNetworkConfig` 的 `processRule`
 ```
 LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
