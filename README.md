@@ -15,7 +15,7 @@
 
 1. 支持`block`和`delegate`的回调方式
 2. 支持设置主、副两个服务器地址
-3. 支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)
+3. ~支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)~
 4. 支持统一的`argument`加工
 5. 支持统一的`response`加工
 6. 支持多个请求同时发送，并统一设置它们的回调
@@ -351,7 +351,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ## TODO
 
 - [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
-- [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护
+~- [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护~
 - [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ## Requirements
