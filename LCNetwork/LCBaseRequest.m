@@ -138,6 +138,13 @@
     return YES;
 }
 
+- (NSString *)errorMessage{
+    if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(errorMessage:)]) {
+        return [self.config.processRule errorMessage:_responseJSONObject];
+    }
+    return nil;
+}
+
 - (NSString *)urlString{
     NSString *baseUrl = nil;
     #pragma clang diagnostic push

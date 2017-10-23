@@ -71,8 +71,23 @@
  
  @return 是否成功
  */
-- (BOOL)isSuccess:(id)responses;
+- (BOOL)isSuccess:(id)response;
 
+
+/**
+ 接口请求出错返回的错误提示
+
+ @return 错误提示
+ */
+- (NSString *)errorMessage:(id)response;
+
+
+/**
+ Basic Authentication 返回形式: @[@"Username", @"Password"].
+
+ @return Basic Authentication
+ */
+- (NSArray *)authorizationHeaderFieldArray;
 
 @end
 

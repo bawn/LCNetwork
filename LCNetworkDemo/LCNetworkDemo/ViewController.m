@@ -101,7 +101,6 @@
 
 - (IBAction)thirdPress:(id)sender{
     
-    
     Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     [api2 addAccessory:accessory];

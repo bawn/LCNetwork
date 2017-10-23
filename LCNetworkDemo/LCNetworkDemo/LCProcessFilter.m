@@ -31,8 +31,16 @@
     return @{@"X-UUID" : @"1"};
 }
 
-- (BOOL)isSuccess:(id)responses{
-    return responses[@"city"];
+- (BOOL)isSuccess:(id)response{
+    return response[@"city"];
+}
+
+- (NSArray *)authorizationHeaderFieldArray{
+    return @[@"10002312", @""];
+}
+
+- (NSString *)errorMessage:(id)response{
+    return response[@"city"];
 }
 
 @end

@@ -48,7 +48,7 @@
 
 
 - (void)addRequest:(LCBaseRequest *)request;
-- (void)allComplete:(void (^)())block;
+- (void)allComplete:(void (^)(void))block;
 - (void)addAccessory:(id<LCRequestAccessory>)accessory;
 
 @end

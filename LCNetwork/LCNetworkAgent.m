@@ -99,8 +99,12 @@
             }];
         }
     }
-    else{
-        [self.manager.requestSerializer clearAuthorizationHeader];
+    
+    if (self.config.processRule && [self.config.processRule respondsToSelector:@selector(authorizationHeaderFieldArray)]) {
+        NSArray *authorizationHeaderFieldArray = [self.config.processRule authorizationHeaderFieldArray];
+        if ([authorizationHeaderFieldArray isKindOfClass:[NSArray class]]){
+            [self.manager.requestSerializer setAuthorizationHeaderFieldWithUsername:authorizationHeaderFieldArray.firstObject password:authorizationHeaderFieldArray.lastObject];
+        }
     }
     
     // 是否使用自定义超时时间

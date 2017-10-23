@@ -214,7 +214,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 
 
 /**
- 判断接口返回是否成功，此成功代表的是接口是否成功处理。例如赞一篇文章，但是由于服务器超时，没有赞成功，这样子就代表接口返回失败，反正成功。
+ 判断接口返回是否成功，此成功代表的是接口是否成功处理
  {
 	"result": {
  
@@ -226,6 +226,12 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
  具体的逻辑请实现 LCNetworkConfig 中的 - (BOOL)isSuccess:(id)responses; 方法
  */
 @property (nonatomic, assign, readonly) BOOL isSuccess;
+
+
+/**
+ 接口请求出错返回的消息
+ */
+@property (nonatomic, assign, readonly) NSString * errorMessage;
 
 @property (nonatomic, strong) NSError *error;
 @property (nonatomic, strong, readonly) NSString *urlString;

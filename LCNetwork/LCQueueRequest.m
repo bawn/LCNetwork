@@ -66,7 +66,7 @@ static dispatch_group_t queueRequest_request_operation_completion_group() {
     });
 }
 
-- (void)allComplete:(void (^)())block{
+- (void)allComplete:(void (^)(void))block{
     [self toggleAccessoriesWillStartCallBack];
     dispatch_group_notify(queueRequest_request_operation_completion_group(), dispatch_get_main_queue(), ^{
         [self toggleAccessoriesWillStopCallBack];
