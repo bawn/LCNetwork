@@ -15,7 +15,7 @@
 
 1. 支持`block`和`delegate`的回调方式
 2. 支持设置主、副两个服务器地址
-3. 支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)
+3. ~支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)~
 4. 支持统一的`argument`加工
 5. 支持统一的`response`加工
 6. 支持多个请求同时发送，并统一设置它们的回调
@@ -171,7 +171,7 @@ __LCProcessFilter.m__
   "message" : "成功"
 }
 ```
-那么可以这样处理
+那么就需要实现 `- (id) processResponseWithRequest:(id)response` 方法
 
 ```
 - (id) processResponseWithRequest:(id)response{
@@ -187,7 +187,31 @@ __LCProcessFilter.m__
 ```
 也就是说当使用 `api1.responseJSONObject` 获取数据时，返回的直接是 `result` 对应的值，或者是错误信息。
 
-最后，赋值给 `LCNetworkConfig` 的 `processRule`
+`LCProcessProtocol` 协议里面还有另外一个方法用来标记接口的请求是否成功，例如以下返回数据代表成功，因为 ok 的值是 true
+
+```
+{
+  "result": {
+      "_id": "564a931dbbb03c7002a2c0f3",
+      "name": "clover",
+      "count": 0
+    },
+
+  "ok": true,
+  "message" : "成功"
+}
+```
+
+当然并不是所有的接口用 ok 的字段来代表成功与否，所以在这个方法就是用来自定义判断条件：
+
+```
+- (BOOL)isSuccess:(id)response{
+    return [response[@"ok"] boolValue];
+}
+```
+
+然后 `api1.isSuccess` 的返回值能用来判断接口的成功与否。
+
 ```
 LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
@@ -351,7 +375,7 @@ unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ## TODO
 
 - [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
-- [ ] 替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护
+- [x] ~替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护~
 - [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ## Requirements
