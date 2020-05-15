@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 #import "LCBaseRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LCQueueRequest;
 
 @protocol LCQueueRequestDelegate <NSObject>
@@ -48,7 +50,7 @@
 
 
 - (void)addRequest:(LCBaseRequest *)request;
-- (void)allComplete:(void (^)(void))block;
+- (void)allComplete:(void (^ _Nullable)(void))block;
 - (void)addAccessory:(id<LCRequestAccessory>)accessory;
 
 @end
@@ -61,3 +63,5 @@
 - (void)toggleAccessoriesDidStopCallBack;
 
 @end
+
+NS_ASSUME_NONNULL_END

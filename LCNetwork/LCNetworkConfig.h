@@ -25,6 +25,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LCBaseRequest;
 @class AFSecurityPolicy;
 
@@ -101,3 +103,6 @@
 @property (nonatomic, strong) id <LCProcessProtocol> processRule;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

@@ -25,6 +25,10 @@
 
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+
 @class LCBatchRequest;
 
 @interface LCBatchRequestAgent : NSObject
@@ -35,5 +39,6 @@
 
 - (void)removeBatchRequest:(LCBatchRequest *)request;
 
-
 @end
+
+NS_ASSUME_NONNULL_END

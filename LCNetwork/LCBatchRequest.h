@@ -26,19 +26,21 @@
 
 #import <Foundation/Foundation.h>
 #import "LCBaseRequest.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @class LCBatchRequest;
 
-
-typedef void (^LCBatchRequestCompletionBlock)(__kindof LCBatchRequest *request);
-typedef void (^LCBatchRequestFailureBlock)(__kindof LCBatchRequest *request, NSError *error);
-typedef void (^LCBatchRequestFinishedBlock)(__kindof LCBatchRequest *request, NSError *error);
+typedef void (^ _Nullable LCBatchRequestCompletionBlock)(__kindof LCBatchRequest *request);
+typedef void (^ _Nullable LCBatchRequestFailureBlock)(__kindof LCBatchRequest *request, NSError * _Nullable error);
+typedef void (^ _Nullable LCBatchRequestFinishedBlock)(__kindof LCBatchRequest *request, NSError * _Nullable error);
 
 
 @protocol LCBatchRequestDelegate <NSObject>
 
-- (void)batchRequestFinished:(LCBatchRequest *)batchRequest;
+- (void)batchRequestFinished:(LCBatchRequest * _Nonnull)batchRequest;
 
-- (void)batchRequestFailed:(LCBatchRequest *)batchRequest;
+- (void)batchRequestFailed:(LCBatchRequest * _Nonnull)batchRequest;
 
 @end
 
@@ -50,9 +52,9 @@ typedef void (^LCBatchRequestFinishedBlock)(__kindof LCBatchRequest *request, NS
  */
 @property (nonatomic, assign) BOOL invalidAccessory;
 @property (nonatomic, strong, readonly) NSArray *requestArray;
-@property (nonatomic, copy) void (^successCompletionBlock)(LCBatchRequest *);
-@property (nonatomic, copy) void (^failureCompletionBlock)(LCBatchRequest *, NSError *);
-@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBatchRequest *, NSError *);
+@property (nonatomic, copy) LCBatchRequestCompletionBlock successCompletionBlock;
+@property (nonatomic, copy) LCBatchRequestFailureBlock failureCompletionBlock;
+@property (nonatomic, copy) LCBatchRequestFinishedBlock finishedCompletionBlock;
 @property (nonatomic, weak) id<LCBatchRequestDelegate> delegate;
 
 - (id)initWithRequestArray:(NSArray<LCBaseRequest *> *)requestArray;
@@ -116,3 +118,5 @@ DEPRECATED_MSG_ATTRIBUTE("使用 - (void)startWithBlockSuccess:(void (^)(id requ
 
 @end
 
+
+NS_ASSUME_NONNULL_END

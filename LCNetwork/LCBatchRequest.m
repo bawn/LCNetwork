@@ -114,9 +114,9 @@
 }
 
 - (void)clearCompletionBlock {
-    self.successCompletionBlock = nil;
-    self.failureCompletionBlock = nil;
-    self.finishedCompletionBlock = nil;
+    self.successCompletionBlock = NULL;
+    self.failureCompletionBlock = NULL;
+    self.finishedCompletionBlock = NULL;
 }
 
 
@@ -213,4 +213,3 @@
 }
 
 @end
-

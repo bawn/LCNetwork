@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 #import "LCBaseRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LCChainRequest;
 
 @protocol LCChainRequestDelegate <NSObject>
@@ -39,7 +41,7 @@
 
 @end
 
-typedef void (^LCChainCallback)(LCChainRequest *chainRequest, __kindof LCBaseRequest *request);
+typedef void (^_Nullable LCChainCallback)(LCChainRequest *chainRequest, __kindof LCBaseRequest *request);
 
 @interface LCChainRequest : NSObject
 
@@ -76,4 +78,5 @@ typedef void (^LCChainCallback)(LCChainRequest *chainRequest, __kindof LCBaseReq
 
 @end
 
+NS_ASSUME_NONNULL_END
 

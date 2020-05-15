@@ -54,9 +54,7 @@
         self.city1.text = api1.responseJSONObject;// 不需要获取 Weather 的值，是因为实现了 - (id)responseProcess:(id)responseObject 方法
         Api2 *api2 = batchRequest.requestArray[1];
         self.city1.text = api2.responseJSONObject;
-    } failure:^(LCBatchRequest *batchRequest, NSError *error) {
-        
-    }];
+    } failure:NULL];
     
     // api1返回的结构是：
     /*
@@ -107,25 +105,7 @@
     [api2 startWithBlockSuccess:^(Api2 *api2) {
         self.city3.text = [api2.responseJSONObject valueForKey:@"title"];
         NSLog(@"%d", api2.isSuccess);
-    } failure:^(__kindof LCBaseRequest *request, NSError *error) {
-        
-    }];
-    
-    // api2返回的结构是：
-    /*
-     {
-     "city": "杭州市",
-     "country": "中国",
-     "direction": "",
-     "distance": "",
-     "district": "江干区",
-     "province": "浙江省",
-     "street": "亭苑街",
-     "street_number": "",
-     "country_code": 0
-     }
-     */
-    
+    } failure:NULL];
 }
 
 

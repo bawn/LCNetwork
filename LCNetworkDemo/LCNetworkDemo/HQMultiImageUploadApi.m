@@ -16,11 +16,6 @@
 
 
 
-- (NSString *)customApiMethodName{
-    return @"http://daily.xinpinget.com/image/upload";
-}
-
-
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodPost;
 }
@@ -33,7 +28,7 @@
 
 - (AFConstructingBlock)constructingBodyBlock {
     return ^(id<AFMultipartFormData> formData) {
-        for (UIImage *image in _images) {
+        for (UIImage *image in self.images) {
             NSData *data = UIImageJPEGRepresentation(image, 1.0);
             NSString *name = @"images";
             NSString *formKey = @"images";

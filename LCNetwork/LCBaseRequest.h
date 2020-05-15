@@ -30,10 +30,10 @@
 NS_ASSUME_NONNULL_BEGIN
 @class LCBaseRequest;
 
-typedef void (^ _Nonnull AFConstructingBlock)(id<AFMultipartFormData> formData);
-typedef void (^ _Nonnull LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
-typedef void (^ _Nonnull LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
-typedef void (^ _Nonnull LCRequestFinishedBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
+typedef void (^ _Nullable AFConstructingBlock)(id<AFMultipartFormData> formData);
+typedef void (^ _Nullable LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
+typedef void (^ _Nullable LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
+typedef void (^ _Nullable LCRequestFinishedBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -239,7 +239,7 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, copy) LCRequestCompletionBlock successCompletionBlock;
 @property (nonatomic, copy) LCRequestFailureBlock failureCompletionBlock;
 @property (nonatomic, copy) LCRequestFinishedBlock finishedCompletionBlock;
-@property (nonatomic, copy) void (^ _Nonnull progressBlock)(NSProgress * progress);
+@property (nonatomic, copy) void (^ _Nullable progressBlock)(NSProgress * progress);
 
 /**
  *  开始请求，使用 detegate 方式使用这个方法

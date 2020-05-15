@@ -25,6 +25,8 @@
 
 #import <Foundation/Foundation.h>
 
+
+NS_ASSUME_NONNULL_BEGIN
 @class LCBaseRequest;
 
 @interface LCNetworkAgent : NSObject
@@ -33,3 +35,5 @@
 - (void)cancelRequest:(LCBaseRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END
