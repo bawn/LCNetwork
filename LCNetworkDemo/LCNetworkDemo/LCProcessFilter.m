@@ -12,9 +12,9 @@
     return argument;
 }
 
-- (id)processResponseWithRequest:(id)response{
-    return response[@"city"];
-}
+//- (id)processResponseWithRequest:(id)response{
+//    return response[@"city"];
+//}
 
 //- (id) processResponseWithRequest:(id)response{
 //    if ([response[@"result"] isEqualToString:@"error"]) {

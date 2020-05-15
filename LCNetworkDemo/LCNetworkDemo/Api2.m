@@ -22,17 +22,17 @@
 - (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
     self = [super init];
     if (self) {
-        self.requestArgument = @{
-                                 @"lat" : lat,
-                                 @"lng" : lng
-                                 };
+//        self.requestArgument = @{
+//                                 @"lat" : lat,
+//                                 @"lng" : lng
+//                                 };
     }
     return self;
 }
 
 // 接口地址
 - (NSString *)apiMethodName{
-    return @"geo2loc_2.aspx";
+    return @"todos/1";
 }
 
 // 请求方式

@@ -12,7 +12,7 @@
 
 // 接口地址
 - (NSString *)apiMethodName{
-    return @"getweather2.aspx";
+    return @"todos/1";
 }
 
 // 请求方式
@@ -22,7 +22,7 @@
 
 
 - (id)responseProcess:(id)responseObject{
-    return responseObject[@"Weather"];
+    return responseObject[@"title"];
 }
 
 // 忽略统一的 Response 加工

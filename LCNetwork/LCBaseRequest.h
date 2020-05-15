@@ -27,13 +27,13 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 
-
+NS_ASSUME_NONNULL_BEGIN
 @class LCBaseRequest;
 
-typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);
-typedef void (^LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
-typedef void (^LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError *error);
-typedef void (^LCRequestFinishedBlock)(__kindof LCBaseRequest *request, NSError *error);
+typedef void (^ _Nonnull AFConstructingBlock)(id<AFMultipartFormData> formData);
+typedef void (^ _Nonnull LCRequestCompletionBlock)(__kindof LCBaseRequest *request);
+typedef void (^ _Nonnull LCRequestFailureBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
+typedef void (^ _Nonnull LCRequestFinishedBlock)(__kindof LCBaseRequest *request, NSError * _Nullable error);
 
 typedef NS_ENUM(NSInteger , LCRequestMethod) {
     LCRequestMethodGet = 0,
@@ -164,8 +164,8 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @optional
 
 - (void)requestSuccess:(LCBaseRequest *)request;
-- (void)requestFinished:(LCBaseRequest *)request error:(NSError *)error;
-- (void)requestFailed:(LCBaseRequest *)request error:(NSError *)error;
+- (void)requestFinished:(LCBaseRequest *)request error:(NSError * _Nullable)error;
+- (void)requestFailed:(LCBaseRequest *)request error:(NSError * _Nullable)error;
 - (void)requestProgress:(NSProgress *)progress;
 
 @end
@@ -236,10 +236,10 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 @property (nonatomic, strong) NSError *error;
 @property (nonatomic, strong, readonly) NSString *urlString;
 @property (nonatomic, strong, readonly) NSMutableArray *requestAccessories;
-@property (nonatomic, copy) void (^successCompletionBlock)(LCBaseRequest *);
-@property (nonatomic, copy) void (^failureCompletionBlock)(LCBaseRequest *, NSError *error);
-@property (nonatomic, copy) void (^finishedCompletionBlock)(LCBaseRequest *, NSError *error);
-@property (nonatomic, copy) void (^progressBlock)(NSProgress * progress);
+@property (nonatomic, copy) LCRequestCompletionBlock successCompletionBlock;
+@property (nonatomic, copy) LCRequestFailureBlock failureCompletionBlock;
+@property (nonatomic, copy) LCRequestFinishedBlock finishedCompletionBlock;
+@property (nonatomic, copy) void (^ _Nonnull progressBlock)(NSProgress * progress);
 
 /**
  *  开始请求，使用 detegate 方式使用这个方法
@@ -328,3 +328,6 @@ typedef NS_ENUM(NSInteger , LCRequestSerializerType) {
 - (void)toggleAccessoriesDidStopCallBack;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

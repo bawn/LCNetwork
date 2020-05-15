@@ -20,7 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
-    config.mainBaseUrl = @"http://api.zdoz.net/";
+    config.mainBaseUrl = @"https://jsonplaceholder.typicode.com/";
     LCProcessFilter *filter = [[LCProcessFilter alloc] init];
     config.processRule = filter;
 
