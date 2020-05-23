@@ -19,24 +19,26 @@
 @implementation Api2
 
 
-- (instancetype)initWith:(NSString *)lat lng:(NSString *)lng{
-    self = [super init];
-    if (self) {
-//        self.requestArgument = @{
-//                                 @"lat" : lat,
-//                                 @"lng" : lng
-//                                 };
-    }
-    return self;
+// 接口地址
+- (NSString *)apiMethodName {
+    return @"posts";
 }
 
-// 接口地址
-- (NSString *)apiMethodName{
-    return @"todos/1";
+- (id)responseProcess:(id)responseObject {
+    if ([responseObject isKindOfClass:NSArray.class]) {
+        return [[responseObject firstObject] valueForKey:@"title"];
+    }
+    return responseObject[@"title"];
 }
+
+// 忽略统一的 Response 加工
+- (BOOL)ignoreUnifiedResponseProcess {
+    return YES;
+}
+
 
 // 请求方式
-- (LCRequestMethod)requestMethod{
+- (LCRequestMethod)requestMethod {
     return LCRequestMethodGet;
 }
 

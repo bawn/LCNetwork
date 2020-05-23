@@ -72,21 +72,21 @@
 
 - (IBAction)secondPress:(id)sender{
     Api1 *api1 = [[Api1 alloc] init];
-    api1.requestArgument = @{
-                             @"lat" : @"34.12",
-                             @"lng" : @"115.21212"
-                             };
     Api2 *api2 = [[Api2 alloc] init];
-    api2.requestArgument = @{
-                             @"lat" : @"34.345",
-                             @"lng" : @"113.678"
-                             };
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
-    
     LCChainRequest *chainRequest = [[LCChainRequest alloc] init];
     [chainRequest addAccessory:accessory];
     
-    [chainRequest addRequest:api1 callback:^(LCChainRequest *chainRequest, __kindof LCBaseRequest *request) {
+//    [chainRequest addRequest:api1 callback:^(LCChainRequest *chainRequest, __kindof LCBaseRequest *request) {
+//        NSLog(@"%@", request.responseJSONObject);
+//        self.city2.text = api1.responseJSONObject;
+//        [chainRequest addRequest:api2 callback:^(LCChainRequest *chainRequest, __kindof LCBaseRequest *request) {
+//            NSLog(@"%@", request.responseJSONObject);
+//            self.city2.text = api2.responseJSONObject;
+//        }];
+//    }];
+//    [chainRequest start];
+    [chainRequest addRequest:api1 callback:^(LCChainRequest * _Nonnull chainRequest, __kindof LCBaseRequest * _Nonnull request) {
         NSLog(@"%@", request.responseJSONObject);
         self.city2.text = api1.responseJSONObject;
         [chainRequest addRequest:api2 callback:^(LCChainRequest *chainRequest, __kindof LCBaseRequest *request) {
@@ -99,7 +99,7 @@
 
 - (IBAction)thirdPress:(id)sender{
     
-    Api2 *api2 = [[Api2 alloc] initWith:@"30.3" lng:@"120.2"];
+    Api2 *api2 = [[Api2 alloc] init];
     LCRequestAccessory *accessory = [[LCRequestAccessory alloc] initWithShowVC:self];
     [api2 addAccessory:accessory];
     [api2 startWithBlockSuccess:^(Api2 *api2) {
