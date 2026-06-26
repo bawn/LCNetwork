@@ -5,25 +5,24 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCNetwork.svg?style=flat)
 [![Support](https://img.shields.io/badge/support-iOS7+-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 
+This is a wrapper around `AFNetworking`, inspired by the implementation style of [YTKNetwork](https://github.com/yuantiku/YTKNetwork).
+API classes are constrained by `@protocol`, which makes API creation and usage clearer. Compatible with AFNetworking 3.x.
 
-基于 `AFNetworking` 的封装，参考了[YTKNetwork](https://github.com/yuantiku/YTKNetwork)的实现方式，
-接口类采用 @protocol 约束，接口类的创建和使用更清晰。已适配 AFNetworking 3.x
+If the demo crashes, please delete the app and run it again. Thanks to [zdoz](http://api.zdoz.net/) for providing a free test API.
 
-若遇到 Demo 闪退问题，请删除 APP 重新运行，另外感谢[zdoz](http://api.zdoz.net/)提供免费的测试接口。
+## Features
 
-## 功能
+1. Supports both `block` and `delegate` callbacks
+2. Supports configuring primary and secondary server addresses
+3. ~Supports `response` caching based on [TMCache](https://github.com/tumblr/TMCache)~
+4. Supports unified `argument` processing
+5. Supports unified `response` processing
+6. Supports sending multiple requests at the same time and configuring their callbacks together
+7. Supports conveniently sending dependent network requests
+8. Supports displaying a HUD in a plugin-like way
+9. Supports real-time request progress
 
-1. 支持`block`和`delegate`的回调方式
-2. 支持设置主、副两个服务器地址
-3. ~支持`response`缓存，基于[TMCache](https://github.com/tumblr/TMCache)~
-4. 支持统一的`argument`加工
-5. 支持统一的`response`加工
-6. 支持多个请求同时发送，并统一设置它们的回调
-7. 支持方便地设置有相互依赖的网络请求的发送
-8. 支持以类似于插件的形式显示HUD
-9. 支持获取请求的实时进度
-
-__最终在 `ViewController` 中调用一个接口请求的例子如下__
+__A final example of calling an API request inside `ViewController` is shown below__
 
 ```
 Api2 *api2 = [[Api2 alloc] init];
@@ -38,27 +37,27 @@ api2.requestArgument = @{
 ```
 
 
-## 集成
+## Integration
 
 CocoaPods:
 ```
 pod 'LCNetwork'
 ```
 
-## 使用
-### 统一配置
+## Usage
+### Unified configuration
 
 
 ```
 LCNetworkConfig *config = [LCNetworkConfig sharedInstance];
-config.mainBaseUrl = @"http://api.zdoz.net/";// 设置主服务器地址
-config.viceBaseUrl = @"https://api.zdoz.net/";// 设置副服务器地址
+config.mainBaseUrl = @"http://api.zdoz.net/"; // main server address
+config.viceBaseUrl = @"https://api.zdoz.net/"; // secondary server address
 ```
 
-### 创建接口调用类
-每个请求都需要一个对应的类去执行，这样的好处是接口所需要的信息都集成到了这个API类的内部，不在暴露在Controller层。
+### Creating an API request class
+Each request needs a corresponding class. The benefit is that all request-specific information lives inside the API class and is no longer exposed at the controller layer.
 
-创建一个API类需要继承`LCBaseRequest`类，并且遵守`LCAPIRequest`协议，下面是最基本的API类的创建。
+To create an API class, inherit from `LCBaseRequest` and conform to the `LCAPIRequest` protocol. The following is the most basic API class setup.
 
 __Api1.h__
 
@@ -75,24 +74,24 @@ __Api1.m__
 
 @implementation Api1
 
-// 接口地址
+// API path
 - (NSString *)apiMethodName{
     return @"getweather.aspx";
 }
 
-// 请求方式
+// Request method
 - (LCRequestMethod)requestMethod{
     return LCRequestMethodGet;
 }
 
 @end
 ```
-`- (NSString *)apiMethodName` 和 `- (LCRequestMethod)requestMethod` 是 @required 方法，所以必须实现，这在一定程度上降低了因漏写方法而crash的概率。
+`- (NSString *)apiMethodName` and `- (LCRequestMethod)requestMethod` are `@required` methods, so they must be implemented. This reduces the chance of crashes caused by missing methods.
 
 
-### 参数设置
+### Parameter setup
 
-请求的参数可以在外部设置，例如：
+Request parameters can be set externally, for example:
 ```
 Api2 *api2 = [[Api2 alloc] init];
 api2.requestArgument = @{
@@ -100,7 +99,7 @@ api2.requestArgument = @{
                           @"lng" : @"113.678"
                         };
 ```
-如果不想把参数的 key 值暴露在外部，也可以在 API 类中自定义初始化方法，例如:
+If you do not want to expose parameter keys outside the API class, you can also define a custom initializer inside the API class, for example:
 
 __Api2.h__
 ```
@@ -129,12 +128,12 @@ __Api2.m__
     return self;
 }
 ```
-直接在初始化方法中使用 `self.requestArgument = @{@"lat" : lat, lng" : lng}` 其实不妥，原因请参考 [唐巧](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) 和 [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575)，如果想完全规避这样的问题，请参考demo中的实现
+Using `self.requestArgument = @{@"lat" : lat, lng" : lng}` directly inside the initializer is not ideal. See [Tang Qiao](http://blog.devtang.com/blog/2011/08/10/do-not-use-accessor-in-init-and-dealloc-method/) and [jymn_chen](http://blog.csdn.net/jymn_chen/article/details/25000575) for details. If you want to fully avoid this issue, please refer to the demo implementation.
 
 
-### 统一处理`argument` 和 `response`
+### Unified handling of `argument` and `response`
 
-这里需要用到另外一个协议 ` <LCProcessProtocol>`，比如我们的每个请求需要添加一个关于版本的参数：
+This requires another protocol, `<LCProcessProtocol>`. For example, if every request needs a version parameter:
 
 __LCProcessFilter.h__
 ```
@@ -158,7 +157,7 @@ __LCProcessFilter.m__
 }
 ```
 
-或者是处理类似于下面的 json 数据，服务端返回的数据结构都会带`result` 和 `ok` 的 key
+Or, if you need to process JSON like the following, where the server response always includes `result` and `ok` keys:
 ```
 {
   "result": {
@@ -171,7 +170,7 @@ __LCProcessFilter.m__
   "message" : "成功"
 }
 ```
-那么就需要实现 `- (id) processResponseWithRequest:(id)response` 方法
+Then you need to implement `- (id)processResponseWithRequest:(id)response`:
 
 ```
 - (id) processResponseWithRequest:(id)response{
@@ -185,9 +184,9 @@ __LCProcessFilter.m__
 }
 
 ```
-也就是说当使用 `api1.responseJSONObject` 获取数据时，返回的直接是 `result` 对应的值，或者是错误信息。
+That means when you use `api1.responseJSONObject`, the returned value is the data under `result`, or an error object.
 
-`LCProcessProtocol` 协议里面还有另外一个方法用来标记接口的请求是否成功，例如以下返回数据代表成功，因为 ok 的值是 true
+`LCProcessProtocol` also defines another method for marking whether a request succeeded. The following response represents success because the value of `ok` is `true`:
 
 ```
 {
@@ -202,7 +201,7 @@ __LCProcessFilter.m__
 }
 ```
 
-当然并不是所有的接口用 ok 的字段来代表成功与否，所以在这个方法就是用来自定义判断条件：
+Of course, not every API uses the `ok` field to indicate success, so this method is used to define custom success conditions:
 
 ```
 - (BOOL)isSuccess:(id)response{
@@ -210,24 +209,24 @@ __LCProcessFilter.m__
 }
 ```
 
-然后 `api1.isSuccess` 的返回值能用来判断接口的成功与否。
+Then `api1.isSuccess` can be used to determine whether the request succeeded.
 
 ```
 LCProcessFilter *filter = [[LCProcessFilter alloc] init];
 config.processRule = filter;
 ```
 
-当然，如果你某个接口的 response 你不想做统一的处理，可以在请求子类中实现
+If you do not want a particular request's response to go through the unified processing flow, you can implement the following in the request subclass:
 ```
 - (BOOL)ignoreUnifiedResponseProcess{
     return YES;
 }
 ```
-这样返回的 responseJSONObject 就是原始数据
+In that case, `responseJSONObject` will contain the raw data.
 
 ### multipart/form-data
 
-通常我们会用到上传图片或者其他文件就需要用到 `multipart/form-data`，同样的只需要实现`- (AFConstructingBlock)constructingBodyBlock;`协议方法即可，比如
+When uploading images or other files, `multipart/form-data` is usually needed. You only need to implement the `- (AFConstructingBlock)constructingBodyBlock;` protocol method, for example:
 ```
 - (AFConstructingBlock)constructingBodyBlock {
     return ^(id<AFMultipartFormData> formData) {
@@ -239,13 +238,13 @@ config.processRule = filter;
     };
 }
 ```
-对于多图上传可能还会需要知道进度情况，LCNetwork 在 1.1.0 版本之后提供了监听进度的方法，只需要调用
+For multi-image uploads, you may also want to track progress. Starting from LCNetwork 1.1.0, a progress callback is available. Just call:
 ```
  (void)startWithBlockProgress:(void (^)(NSProgress *progress))progress
                        success:(void (^)(id request))success
                        failure:(void (^)(id request))failure;
 ```
-或者 `- (void)requestProgress:(NSProgress *)progress` 的协议方法，下面是一个具体例子：
+Or implement the `- (void)requestProgress:(NSProgress *)progress` protocol method. Here is a concrete example:
 ```
 MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
     multiImageUploadApi.images = @[[UIImage imageNamed:@"test"], [UIImage imageNamed:@"test1"]];
@@ -256,9 +255,9 @@ MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
     } failure:NULL];
 ```
 
-### response 再加工
+### Further response processing
 
-当类似于
+When the response looks like this:
 ```
 {
   "result": {
@@ -268,48 +267,48 @@ MultiImageUploadApi *multiImageUploadApi = [[MultiImageUploadApi alloc] init];
     },
 
   "ok": true,
-  "message" : "成功"
+  "message" : "success"
 }
 ```
-这样的数据，如果已经对 response 做了统一的加工，比如成功后统一返回的数据是 result 中的数据，那么返回的也是一个 `NSDictionary`，可能无法满足需求，这时候再把数据交给 `LCBaseRequest` 子类处理再合适不过了。比如需要直接获取`count`值，那么只需要实现 `- (id)responseProcess:(id)responseObject;` 协议方法，具体如下
+If the response has already been processed in a unified way, for example by returning the data inside `result` after success, the returned value may still be an `NSDictionary`, which might not meet your needs. In that case, it is better to let the `LCBaseRequest` subclass process the data again. For example, if you need to extract the `count` value directly, just implement `- (id)responseProcess:(id)responseObject;` as follows:
 
 ```
 - (id)responseProcess:(id)responseObject{
     return responseObject[@"count"];
 }
 ```
-__注意，不应该调用`self.responseJSONObject`作为处理数据，请使用`responseObject`来处理__，当实现这个协议方法后，使用 `api1.responseJSONObject` 获取数据时，返回将是 `count` 的值。
+__Note: do not use `self.responseJSONObject` when processing the data. Use `responseObject` instead.__ After implementing this protocol method, `api1.responseJSONObject` will return the value of `count`.
 
+### Adding headers
 
-### 添加 header
-
-只需要实现`- (NSDictionary *)requestHeaderValue`方法即可，比如
+You only need to implement `- (NSDictionary *)requestHeaderValue`, for example:
 
 ```
 - (NSDictionary *)requestHeaderValue{
     return @{@"Accept" : @"application/json"};
 }
 ```
-或者添加多个header
+Or add multiple headers:
 ```
 - (NSDictionary *)requestHeaderValue{
-    return @{@"Accept" : @"application/json", @"Accept" : @"application/json; charset=utf-8" : @"Content-Type"};
+    return @{@"Accept" : @"application/json", @"Content-Type" : @"application/json; charset=utf-8"};
 }
 ```
-### 关于如何使用 LCQueueRequest
 
-当每个请求发起的时间不固定，但是又要监听所有这些请求都已经完成的场景下使用。
+### How to use LCQueueRequest
 
-举个例子：比如用户需要上传多张图片，每上传完一张图片服务器会返回一个图片地址，最后点击“完成”按钮后把这些图片地址提交给服务器。因为每次用户上传图片的发起时间都不是固定的，有可能在点击“完成”按钮时有些图片还没上传完成，所以这时候就需要监听这些上传的请求是否全部都已经完成
+Use this when each request starts at an unpredictable time, but you still need to know when all of them have finished.
 
-初始化 `LCQueueRequest`，这个类也支持添加HUD（Loading视图）
+For example: a user uploads multiple images, and after each image upload the server returns an image URL. When the user finally taps the "Done" button, those URLs are submitted to the server. Since each upload may start at a different time, some uploads may still be in progress when the user taps "Done". In that case, you need to wait until all upload requests have completed.
+
+Initialize `LCQueueRequest`. This class also supports adding a HUD (loading view):
 ```
     self.queueRequest = [[LCQueueRequest alloc] init];
     HQRequestAccessory *accessory = [[HQRequestAccessory alloc] initWithViewController:self];
     [self.queueRequest addAccessory:accessory];
 ```
 
-每次上传图片的时候的调用的方法，使用`- (void)addRequest:(LCBaseRequest *)request`添加在并发队列中
+When uploading each image, use `- (void)addRequest:(LCBaseRequest *)request` to add the request to the concurrent queue:
 ```
 - (void)uploadImage:(UIImage *)image imageInfo:(HQImageInfo *)imageInfo{
     HQSingleImageUploadApi *uploadApi = [[HQSingleImageUploadApi alloc] init];
@@ -324,7 +323,7 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 }
 ```
 
-最后点击“完成”按钮，这时候会等待队列中的所有请求都完成后再执行，当然这时候HUD（Loading视图）也会正确显示
+Finally, when the user taps the "Done" button, execution will wait until all requests in the queue have completed. The HUD (loading view) will also be displayed correctly.
 ```
 - (IBAction)doneButtonAction:(id)sender{
     [self.queueRequest allComplete:^{
@@ -333,11 +332,11 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
 }
 ```
 
-### 关于HUD
+### About the HUD
 
-如何显示 "正在加载"的 HUD，请参考Demo中的 `LCRequestAccessory` 类
+To show a "loading" HUD, please refer to the `LCRequestAccessory` class in the demo.
 
-1.1.9 版本新增了，是否执行插件的功能，用于隐藏和显示HUD。比如第一次进入页面时调用以下代码请求数据并显示HUD
+Version 1.1.9 added the ability to enable or disable accessories, which can be used to hide or show the HUD. For example, when entering a page for the first time, you can request data and show the HUD with the following code:
 ```
     self.userLikeApi = [[HQUserLikesApi alloc] init];
     HQRequestAccessory *requestAccessory = [[HQRequestAccessory alloc] initWithShowVC:self];
@@ -347,7 +346,7 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
        //
     } failure:NULL];
 ```
-如果但是如果这时候有上拉加载更多数据功能时，一般情况下都不需要显示HUD，所以
+If you also have a "load more" feature at this time, you usually do not need to show the HUD, so:
 ```
 - (void)loadMoreData{
     self.userLikeApi.invalidAccessory = YES;
@@ -356,38 +355,38 @@ __注意，不应该调用`self.responseJSONObject`作为处理数据，请使�
     } failure:NULL];
 }
 ```
-设置`invalidAccessory`属性为YES即可
+Set `invalidAccessory` to `YES`.
 
-### 其他
+### Others
 
 #### Query
-某些 POST 请求希望参数不放在 body（或者说是payload）里面，需要用`Query`来附带信息，那么就需要用到 queryArgument 属性，比如
+Some POST requests need parameters to be sent outside the body (or payload). In that case, use `Query` to attach the information through the `queryArgument` property, for example:
 ```
 unsubscribeChannelApi.queryArgument = @{@"token" : @"token1"};
 ```
-那么`token=token1`就会拼接到 URL 的后面
+Then `token=token1` will be appended to the end of the URL.
 
-#### 原始数据
+#### Raw data
 
-1.1.3版本提供了一个返回原始数据的属性`rawJSONObject`，用于需要获得原始数据但response又要加工的情况下
+Version 1.1.3 introduced a `rawJSONObject` property for cases where you need the raw data while still processing the response.
 
 
 ## TODO
 
-- [x] response 加工可选功能，比如有些接口返回需要特殊处理，这时候就需要忽略统一的加工方式
-- [x] ~替换 Cache 库，由于 [TMCache](https://github.com/tumblr/TMCache) 不在维护~
-- [x] 适配 [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
+- [x] Optional response processing, for example when some API responses require special handling and should skip the unified processing flow
+- [x] ~Replace the cache library, since [TMCache](https://github.com/tumblr/TMCache) is no longer maintained~
+- [x] Compatible with [AFNetworking](https://github.com/AFNetworking/AFNetworking/releases) 3.0
 
 ## Requirements
 * iOS 7 or higher
 * ARC
 
-## 更新日志
+## Changelog
 
 #### [Releases](https://github.com/bawn/LCNetwork/releases)
 
 ## FAQ
-__当请求失败时，如何获取错误信息中的json数据__
+__How do I get JSON data from the error info when a request fails?__
 ```
 [self.userLikeApi startWithBlockSuccess:^(__kindof LCBaseRequest *request) {
       //
